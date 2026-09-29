@@ -1,0 +1,2617 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="root-html" class="theme-light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>المكتبة والكتب الدراسية | Academic Digital Library & Textbooks</title>
+  
+  <!-- Google Fonts: Cairo, Inter & Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            // الهوية اللونية الخضراء المشتركة والمتناسقة (Unified Academic Forest & Mint)
+            forest: {
+              sidebar: "#132821",       // القائمة في اللايت مود (أخضر صنوبري أكاديمي)
+              sidebarHover: "#1b382e",  // هوفر القائمة
+              sidebarActive: "#244d3f", // العنصر النشط في اللايت
+              primary: "#1e3e34",       // الأخضر الرئيسي للأزرار
+              primaryHover: "#162e27",  // الأخضر عند التمرير
+              accent: "#34d399",        // الأخضر الزمردي المتناسق
+              mint: "#57f1db",          // المينت المضيء
+              border: "#d1ded9",        // الحدود الفاتحة
+              light: "#e9f2ee"          // خلفية الشارات
+            },
+            // الدارك مود: أسود هادئ ناعم مريح للعين مع صبغة خضراء خفيفة متناسقة
+            softdark: {
+              bg: "#121514",            // أسود فاتح مريح
+              surface: "#171c1a",       // هيدر وفوتر
+              card: "#1b221f",          // بطاقات المحتوى
+              cardBorder: "#27332e",    // حدود البطاقات
+              sidebar: "#0d1815",       // قائمة الدارك مود بلون غابي متميز
+              sidebarBorder: "#1c2b25", // حد القائمة الداكن
+              sidebarActive: "#1a382d", // العنصر النشط بالدارك
+              text: "#e1ebe6",          // نصوص واضحة وعالية التباين
+              muted: "#8fa39b"          // نصوص ثانوية
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'Inter', 'sans-serif'],
+            serif: ['Newsreader', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+      transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  color 0.25s ease, 
+                  transform 0.2s ease,
+                  box-shadow 0.2s ease;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(30, 62, 52, 0.25);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(52, 211, 153, 0.6);
+    }
+    /* Modal Animation */
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .pill-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .pill-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    /* Book cover 3D shadow effect */
+    .book-cover-3d {
+      box-shadow: -4px 6px 16px rgba(0, 0, 0, 0.2), inset 2px 0 3px rgba(255, 255, 255, 0.2);
+    }
+    .book-cover-spine {
+      box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.35);
+    }
+    /* Toast slide in */
+    @keyframes toastSlide {
+      from { transform: translateY(100%) scale(0.9); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .animate-toast {
+      animation: toastSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body id="body-app" class="min-h-screen flex text-right antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300">
+
+  <!-- ================= 1. القائمة الجانبية (SIDEBAR) ================= -->
+  <aside id="sidebar" class="w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 border-l border-[#1f3f35] select-none shadow-xl transition-all duration-300">
+    <!-- Top Section -->
+    <div class="p-5 flex flex-col gap-6">
+      <!-- Logo Header -->
+      <a href="index.html" id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer">
+        <div id="sidebar-logo-icon" class="w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300 group-hover:bg-[#2c5f4e] transition-colors">
+          <span class="material-symbols-outlined text-2xl">school</span>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span id="txt-brand-name" class="font-bold text-base text-white tracking-wide">النظام الأكاديمي</span>
+            <span id="txt-brand-badge" class="text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight">المنصة</span>
+          </div>
+          <span id="txt-brand-sub" class="text-xs text-emerald-100/60 mt-0.5">بوابة هيئة التدريس</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-col gap-1.5" id="sidebar-nav">
+        <!-- Item 1 - الرئيسية (Links back to index.html) -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">dashboard</span>
+            <span class="nav-label text-sm" id="nav-lbl-dashboard">لوحة التحكم الأكاديمية</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 2 - الفيديوهات التعليمية (Link to videos.html) -->
+        <a href="videos.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">smart_display</span>
+            <span class="nav-label text-sm" id="nav-lbl-videos">الفيديوهات التعليمية</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 3 - الكتب والمناهج الدراسية (Active on this page) -->
+        <a href="books.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-300">menu_book</span>
+            <span class="nav-label text-sm" id="nav-lbl-books">المكتبة والمناهج الدراسية</span>
+          </div>
+          <span class="nav-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        </a>
+
+        <!-- Item 4 - تقارير وسجل الدرجات -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">bar_chart</span>
+            <span class="nav-label text-sm" id="nav-lbl-reports">سجل الدرجات والتقييم</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 5 - الحرم الجامعي والمختبرات -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">domain</span>
+            <span class="nav-label text-sm" id="nav-lbl-campus">الحرم والمختبرات</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom Profile Box in Green -->
+    <div id="sidebar-footer-box" class="p-4 border-t border-[#224439] bg-[#0f211b]">
+      <button onclick="openModal('user')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#1b382e] transition-colors cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <div id="user-avatar-box" class="w-8 h-8 rounded-lg bg-[#244d3f] text-emerald-200 flex items-center justify-center text-sm font-bold border border-[#356655]/50">
+            <span class="material-symbols-outlined text-lg">person</span>
+          </div>
+          <div class="text-start">
+            <div id="txt-user-name" class="text-xs font-bold text-white group-hover:text-emerald-200 transition-colors">د. أحمد عبد الرحمن</div>
+            <div id="txt-user-role" class="text-[11px] text-emerald-100/50">أستاذ المادة • منسق المراجع العلمية</div>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-emerald-100/50 text-[18px]">more_vert</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= 2. منطقة المحتوى الرئيسي (MAIN CONTENT) ================= -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Bar with Buttons -->
+    <header id="main-header" class="bg-white border-b border-gray-100 sticky top-0 z-20 px-8 py-3.5 shadow-xs transition-colors duration-300">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        
+        <!-- Title & Badge -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]" id="header-icon-box">
+            <span class="material-symbols-outlined text-xl">auto_stories</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 id="txt-page-title" class="text-xl font-bold tracking-tight text-gray-900">المكتبة الرقمية والكتب الدراسية</h1>
+              <span id="txt-page-badge" class="text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]">المراجع المعتمدة 2026</span>
+            </div>
+            <p id="txt-page-desc" class="text-xs text-gray-500 font-medium mt-0.5">تصفح وقراءة وتحميل الكتب الأكاديمية والملخصات المقررة لكافة التخصصات الجامعية</p>
+          </div>
+        </div>
+
+        <!-- Action & Toggle Buttons -->
+        <div class="flex items-center flex-wrap gap-2.5 text-xs">
+          
+          <!-- زر إضافة كتاب جديد (Add Book Button) -->
+          <button onclick="openUploadModal()" id="btn-upload-book" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">post_add</span>
+            <span id="txt-upload-btn">إضافة كتاب جديد</span>
+          </button>
+
+          <!-- زر المفضلة / المحفوظات (Bookmarks Filter Button) -->
+          <button onclick="toggleFavoritesOnly()" id="btn-fav-filter" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
+            <span class="material-symbols-outlined text-[18px] text-rose-500" id="icon-fav-filter">bookmark</span>
+            <span id="txt-fav-filter">المحفوظات</span>
+            <span class="text-[10px] bg-rose-50 text-rose-700 font-bold px-1.5 py-0.2 rounded-full border border-rose-200" id="fav-count-badge">0</span>
+          </button>
+
+          <!-- زر تقويم (Calendar) -->
+          <button onclick="openModal('calendar')" id="btn-calendar" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-calendar">calendar_today</span>
+            <span id="txt-calendar-btn">التقويم</span>
+          </button>
+
+          <!-- زر إشعارات (Notifications) -->
+          <button onclick="openModal('notifications')" id="btn-notifications" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer relative">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-notifications">notifications</span>
+            <span id="txt-notifications-btn">الإشعارات</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 end-1.5 ring-2 ring-white"></span>
+          </button>
+
+          <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
+          <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
+            <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
+            <span id="txt-theme-toggle">الوضع الداكن</span>
+          </button>
+
+          <!-- زر تبديل اللغة (LANGUAGE TOGGLE: AR / EN) -->
+          <button onclick="toggleLanguage()" id="btn-lang-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200" title="تبديل اللغة (العربية / English)">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-lang">translate</span>
+            <span id="txt-lang-toggle">English</span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Information & Stats Banner (Green Border matching design) -->
+    <div class="px-8 pt-6">
+      <div id="info-banner" class="bg-white border border-[#1e3e34] p-4 rounded-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]" id="info-icon-wrapper">
+            <span class="material-symbols-outlined text-[24px]" id="info-icon">library_books</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span id="txt-banner-title" class="font-bold text-gray-900 text-sm sm:text-base">المستودع الرقمي للكتب والمناهج الأكاديمية</span>
+              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full border border-emerald-200">نسخ أصلية 100%</span>
+            </div>
+            <p id="txt-banner-sub" class="text-xs text-gray-600 font-normal mt-0.5">توفير الكتب الدراسية بصيغ إلكترونية عالية الدقة (PDF / ePub) مع ميزات القراءة المباشرة وتدوين الملاحظات التفاعلية.</p>
+          </div>
+        </div>
+
+        <!-- Metric Badges Row -->
+        <div class="flex items-center flex-wrap gap-2.5 shrink-0 text-xs font-semibold">
+          <div id="stat-box-1" class="flex items-center gap-1.5 bg-[#e9f2ee] text-[#1e3e34] px-3 py-1.5 rounded-lg border border-[#d1ded9]">
+            <span class="material-symbols-outlined text-[16px]">menu_book</span>
+            <span id="total-books-count">12</span>
+            <span id="txt-stat-books-lbl">كتاب معتمد</span>
+          </div>
+          <div id="stat-box-2" class="flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">
+            <span class="material-symbols-outlined text-[16px] text-emerald-600">download</span>
+            <span id="total-downloads-count">42,560</span>
+            <span id="txt-stat-dl-lbl">تحميل</span>
+          </div>
+          <div id="stat-box-3" class="flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">
+            <span class="material-symbols-outlined text-[16px] text-amber-500">verified</span>
+            <span id="txt-stat-year-lbl">طبعات 2026</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 3. شريط اختيار المادة والبحث والتصفية (SUBJECT SELECTION LIST & FILTERS) ================= -->
+    <section class="px-8 pt-6">
+      <div id="filter-container" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300">
+        
+        <!-- Header row of filters -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100" id="filter-header-row">
+          
+          <!-- Subject Dropdown List -->
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="material-symbols-outlined text-[20px] text-[#1e3e34]" id="filter-subject-icon">category</span>
+              <label for="subject-select" id="lbl-subject-select" class="text-xs sm:text-sm font-bold text-gray-800">
+                اختيار التخصص الأكاديمي:
+              </label>
+            </div>
+            
+            <div class="relative flex-1 max-w-md">
+              <select id="subject-select" onchange="handleSubjectDropdown(this.value)" class="w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs">
+                <option value="all">📚 جميع التخصصات الأكاديمية (عرض الكل)</option>
+                <option value="physics">⚡ قسم الفيزياء (Physics)</option>
+                <option value="math">📐 الرياضيات وحساب التفاضل (Mathematics)</option>
+                <option value="chemistry">🧪 الكيمياء العامة والعضوية (Chemistry)</option>
+                <option value="cs">💻 علوم الحاسب وهندسة البرمجيات (Computer Science)</option>
+                <option value="biology">🧬 علم الأحياء والوراثة الخلوية (Biology)</option>
+                <option value="arabic">📖 اللغة العربية والبلاغة والنقد (Arabic)</option>
+                <option value="english">✍️ اللغة الإنجليزية والكتابة الأكاديمية (English)</option>
+                <option value="history">🏛️ التاريخ والحضارة العالمية (History)</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-3 text-gray-500">
+                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search, Sorting & View Toggle Controls -->
+          <div class="flex items-center flex-wrap gap-2.5">
+            <!-- Search Input -->
+            <div class="relative flex-1 sm:w-64">
+              <span class="absolute inset-y-0 start-0 flex items-center ps-3 text-gray-400 pointer-events-none">
+                <span class="material-symbols-outlined text-[18px]">search</span>
+              </span>
+              <input 
+                type="text" 
+                id="search-input" 
+                oninput="handleSearch(this.value)" 
+                placeholder="ابحث باسم الكتاب، المؤلف، أو الكلمات المفتاحية..." 
+                class="w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent shadow-xs transition-all"
+              />
+            </div>
+
+            <!-- Sort By Select -->
+            <div class="relative">
+              <select id="sort-select" onchange="handleSort(this.value)" class="text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] shadow-xs cursor-pointer">
+                <option value="latest">الأحدث إضافة</option>
+                <option value="popular">الأكثر تحميلاً</option>
+                <option value="rating">الأعلى تقييماً ★</option>
+                <option value="pages">الأكثر صفحات</option>
+                <option value="title">أبجدياً (أ - ي)</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-2 text-gray-500">
+                <span class="material-symbols-outlined text-[16px]">sort</span>
+              </div>
+            </div>
+
+            <!-- View Switcher (Grid vs List) -->
+            <div class="flex items-center rounded-xl border border-gray-300 p-0.5 bg-gray-50" id="view-mode-container">
+              <button onclick="setViewMode('grid')" id="btn-view-grid" class="p-1.5 rounded-lg bg-white shadow-xs text-[#1e3e34] font-bold transition cursor-pointer" title="عرض الشبكة (Grid View)">
+                <span class="material-symbols-outlined text-[18px]">grid_view</span>
+              </button>
+              <button onclick="setViewMode('list')" id="btn-view-list" class="p-1.5 rounded-lg text-gray-500 hover:text-gray-900 transition cursor-pointer" title="عرض القائمة (List View)">
+                <span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Subject Quick Filter Pills -->
+        <div class="pt-4">
+          <div class="flex items-center gap-2 overflow-x-auto pill-scroll pb-1 text-xs" id="subject-pills">
+            <button onclick="filterBySubject('all')" data-subject="all" class="sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e3e34] text-white flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer">
+              <span class="material-symbols-outlined text-[16px]">library_books</span>
+              <span class="sub-pill-name">الكل</span>
+              <span class="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full" id="count-all">12</span>
+            </button>
+
+            <button onclick="filterBySubject('physics')" data-subject="physics" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-amber-600">bolt</span>
+              <span class="sub-pill-name">الفيزياء</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-physics">2</span>
+            </button>
+
+            <button onclick="filterBySubject('math')" data-subject="math" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-emerald-600">functions</span>
+              <span class="sub-pill-name">الرياضيات</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-math">2</span>
+            </button>
+
+            <button onclick="filterBySubject('chemistry')" data-subject="chemistry" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-blue-600">science</span>
+              <span class="sub-pill-name">الكيمياء</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-chemistry">2</span>
+            </button>
+
+            <button onclick="filterBySubject('cs')" data-subject="cs" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-indigo-600">code</span>
+              <span class="sub-pill-name">الحاسب والبرمجة</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-cs">2</span>
+            </button>
+
+            <button onclick="filterBySubject('biology')" data-subject="biology" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-teal-600">biotech</span>
+              <span class="sub-pill-name">الأحياء</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-biology">1</span>
+            </button>
+
+            <button onclick="filterBySubject('arabic')" data-subject="arabic" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-rose-600">auto_stories</span>
+              <span class="sub-pill-name">اللغة العربية</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-arabic">1</span>
+            </button>
+
+            <button onclick="filterBySubject('english')" data-subject="english" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-sky-600">history_edu</span>
+              <span class="sub-pill-name">اللغة الإنجليزية</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-english">1</span>
+            </button>
+
+            <button onclick="filterBySubject('history')" data-subject="history" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-amber-700">museum</span>
+              <span class="sub-pill-name">التاريخ والحضارة</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-history">1</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 4. شبكة كروت الكتب والمراجع (BOOKS CARDS CONTAINER) ================= -->
+    <main class="p-8 flex-1">
+      
+      <!-- Book Status / Counter Bar -->
+      <div class="flex items-center justify-between mb-5 text-xs text-gray-500 font-medium">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="grid-status-icon">check_circle</span>
+          <span id="txt-results-count">المعروض حالياً: <strong class="text-gray-900" id="visible-count">12</strong> كتب ومراجع معتمدة</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <span id="fav-filter-indicator" class="hidden items-center gap-1 text-rose-600 font-bold bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
+            <span class="material-symbols-outlined text-sm">bookmark</span>
+            <span>تصفية المحفوظات فقط</span>
+            <button onclick="toggleFavoritesOnly()" class="ms-1 hover:text-rose-900 cursor-pointer text-xs">✕</button>
+          </span>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span id="txt-filter-active-label">المادة: جميع التخصصات</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid View: 3-4 Columns modern card layout with 3D aesthetic -->
+      <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Rendered dynamically via JavaScript -->
+      </div>
+
+      <!-- List View: Comprehensive Academic Table view -->
+      <div id="books-list" class="hidden overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xs">
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead id="books-table-head" class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
+              <tr>
+                <th scope="col" class="px-5 py-3.5">الكتاب والغلاف</th>
+                <th scope="col" class="px-4 py-3.5">المؤلف والناشر</th>
+                <th scope="col" class="px-4 py-3.5">التخصص الأكاديمي</th>
+                <th scope="col" class="px-4 py-3.5">الطبعة / السنة</th>
+                <th scope="col" class="px-4 py-3.5">الحجم / الصفحات</th>
+                <th scope="col" class="px-4 py-3.5">التقييم والتحميلات</th>
+                <th scope="col" class="px-5 py-3.5 text-center">الإجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="books-table-body" class="divide-y divide-gray-100">
+              <!-- Rendered dynamically in list mode -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Empty State (When no results found) -->
+      <div id="empty-state" class="hidden flex-col items-center justify-center p-14 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-[#1e3e34] flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined text-3xl">auto_stories</span>
+        </div>
+        <h3 class="text-base font-bold text-gray-800 mb-1" id="empty-title">لا توجد كتب دراسية مطابقة لبحثك</h3>
+        <p class="text-xs text-gray-500 max-w-sm mb-4" id="empty-desc">يمكنك إضافة كتاب جديد لهذا التخصص، أو إعادة ضبط خيارات البحث والتصفية.</p>
+        <div class="flex items-center gap-3">
+          <button onclick="resetFilters()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 text-xs font-bold rounded-xl flex items-center gap-1.5 transition cursor-pointer">
+            <span class="material-symbols-outlined text-base">refresh</span>
+            <span id="txt-reset-btn">إعادة ضبط الفلاتر</span>
+          </button>
+          <button onclick="openUploadModal()" class="px-4 py-2 bg-[#1e3e34] hover:bg-[#162e27] text-white text-xs font-bold rounded-xl flex items-center gap-1.5 shadow-xs transition cursor-pointer">
+            <span class="material-symbols-outlined text-base">post_add</span>
+            <span id="txt-add-empty-btn">إضافة كتاب جديد</span>
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span id="txt-footer-left-1" class="font-bold text-gray-800">بوابة النظام الأكاديمي</span>
+          <span>•</span>
+          <span id="txt-footer-left-2">المكتبة الرقمية والمناهج المعتمدة</span>
+        </div>
+        <div>
+          <span id="txt-footer-right">جميع الحقوق الأكاديمية محفوظة © 2026</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ================= 5. نَافِذَة قِرَاءَة وَاسْتِعْرَاض الْكِتَاب (INTERACTIVE BOOK READER MODAL) ================= -->
+  <div id="book-reader-modal" class="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="book-modal-container" class="bg-white text-gray-900 rounded-2xl max-w-5xl w-full border border-gray-200 shadow-2xl animate-modal relative overflow-hidden flex flex-col max-h-[94vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-4 sm:p-5 border-b border-gray-200 flex items-center justify-between bg-gray-50/70" id="book-modal-header">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]" id="bmodal-icon-box">
+            <span class="material-symbols-outlined text-xl">menu_book</span>
+          </div>
+          <div class="min-w-0">
+            <h2 id="bmodal-title" class="text-base sm:text-lg font-bold text-gray-900 truncate">عنوان الكتاب الأكاديمي</h2>
+            <p id="bmodal-subtitle" class="text-xs text-gray-500 truncate mt-0.5">المؤلف • التخصص • الطبعة</p>
+          </div>
+        </div>
+
+        <!-- Controls (Bookmark, Share, Close) -->
+        <div class="flex items-center gap-2 shrink-0">
+          <button onclick="toggleModalFavorite()" id="bmodal-btn-fav" class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition cursor-pointer" title="إضافة للمحفوظات">
+            <span class="material-symbols-outlined text-[20px]" id="bmodal-fav-icon">bookmark_border</span>
+          </button>
+          <button onclick="copyCitation()" id="bmodal-btn-cite" class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition cursor-pointer" title="نسخ الاستشهاد الأكاديمي (Citation)">
+            <span class="material-symbols-outlined text-[20px]">format_quote</span>
+          </button>
+          <button onclick="closeBookModal()" id="bmodal-close-btn" class="w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition cursor-pointer" title="إغلاق">
+            <span class="material-symbols-outlined text-[20px]">close</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Two-Column Layout: Left Book Details & TOC, Right Simulated Reader) -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6" id="bmodal-content-area">
+        
+        <!-- Left Column: Cover, Metadata & Table of Contents (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col gap-4">
+          
+          <!-- Book Cover Card & Badges -->
+          <div class="flex gap-4 p-4 rounded-xl border border-gray-200 bg-gray-50/50" id="bmodal-info-card">
+            <!-- 3D Book Cover -->
+            <div class="w-28 sm:w-32 h-40 sm:h-44 rounded-lg overflow-hidden shrink-0 book-cover-3d relative bg-gray-900 border border-gray-300">
+              <img id="bmodal-cover-img" src="assets/images/physics.jpg" alt="غلاف الكتاب" class="w-full h-full object-cover"/>
+              <div class="absolute inset-y-0 start-0 w-2.5 bg-black/40 book-cover-spine"></div>
+            </div>
+
+            <!-- Quick Specs -->
+            <div class="flex-1 flex flex-col justify-between text-xs">
+              <div>
+                <span id="bmodal-subject-tag" class="inline-block text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 mb-2 border border-emerald-200">الفيزياء</span>
+                <div class="font-bold text-gray-800" id="bmodal-edition">الطبعة الخامسة 2026</div>
+                <div class="text-gray-500 mt-0.5" id="bmodal-authors">أ.د. هدى عبد الرحمن</div>
+              </div>
+              
+              <div class="space-y-1.5 pt-2 border-t border-gray-200 text-[11px] text-gray-600" id="bmodal-specs-list">
+                <div class="flex items-center justify-between">
+                  <span id="txt-bmodal-format-lbl">صيغة الملف:</span>
+                  <span class="font-bold text-gray-800" id="bmodal-format">PDF عالي الجودة</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span id="txt-bmodal-pages-lbl">عدد الصفحات:</span>
+                  <span class="font-bold text-gray-800" id="bmodal-pages">520 صفحة</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span id="txt-bmodal-size-lbl">حجم الملف:</span>
+                  <span class="font-bold text-gray-800" id="bmodal-size">24.5 MB</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span id="txt-bmodal-rating-lbl">التقييم الأكاديمي:</span>
+                  <span class="font-bold text-amber-600 flex items-center gap-0.5" id="bmodal-rating">
+                    <span class="material-symbols-outlined text-[14px]">star</span>
+                    <span>4.9 (420 تقييم)</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description Box -->
+          <div class="p-4 rounded-xl border border-gray-200 bg-white" id="bmodal-desc-card">
+            <h4 class="text-xs font-bold text-gray-900 mb-1.5 flex items-center gap-1.5" id="bmodal-desc-title">
+              <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-desc-heading">description</span>
+              <span id="txt-bmodal-desc-heading">نبذة وتفاصيل المقرر الدراسي:</span>
+            </h4>
+            <p id="bmodal-description" class="text-xs text-gray-600 leading-relaxed">
+              المرجع الرسمي المعتمد لطلاب كليات العلوم والهندسة، يغطي الميكانيكا الكلاسيكية وقوانين نيوتن والحركة التوافقية البسيطة.
+            </p>
+          </div>
+
+          <!-- Table of Contents (فهرس الفصول) -->
+          <div class="p-4 rounded-xl border border-gray-200 bg-white flex-1" id="bmodal-toc-card">
+            <h4 class="text-xs font-bold text-gray-900 mb-2.5 flex items-center justify-between" id="bmodal-toc-title">
+              <span class="flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-toc-heading">list_alt</span>
+                <span id="txt-bmodal-toc-heading">فهرس الأبواب والفصول:</span>
+              </span>
+              <span class="text-[10px] text-gray-400 font-normal" id="txt-toc-hint">انقر للتنقل في العرض</span>
+            </h4>
+            <div class="space-y-1.5 max-h-48 overflow-y-auto pe-1" id="bmodal-toc-list">
+              <!-- Dynamic chapters rendered via script -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Realistic Academic Page Previewer (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col rounded-xl border border-gray-200 bg-gray-50/50 overflow-hidden" id="bmodal-reader-container">
+          
+          <!-- Reader Toolbar -->
+          <div class="p-3 border-b border-gray-200 bg-white flex items-center justify-between flex-wrap gap-2 text-xs" id="reader-toolbar">
+            <div class="flex items-center gap-2">
+              <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="reader-preview-icon">find_in_page</span>
+              <span class="font-bold text-gray-800" id="txt-reader-title">معاينة صفحات الكتاب الأكاديمي</span>
+            </div>
+
+            <!-- Page Navigation Controls -->
+            <div class="flex items-center gap-1.5">
+              <button onclick="prevPage()" class="p-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" title="الصفحة السابقة">
+                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
+              </button>
+              <span class="text-[11px] font-mono px-2 py-0.5 bg-gray-100 rounded text-gray-700" id="reader-page-indicator">صفحة 12 من 520</span>
+              <button onclick="nextPage()" class="p-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" title="الصفحة التالية">
+                <span class="material-symbols-outlined text-[16px]">chevron_left</span>
+              </button>
+              <span class="h-4 w-px bg-gray-300 mx-1"></span>
+              <button onclick="zoomIn()" class="p-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" title="تكبير">
+                <span class="material-symbols-outlined text-[16px]">zoom_in</span>
+              </button>
+              <button onclick="zoomOut()" class="p-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" title="تصغير">
+                <span class="material-symbols-outlined text-[16px]">zoom_out</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Realistic Academic Book Page Canvas -->
+          <div class="flex-1 p-6 overflow-y-auto flex items-center justify-center bg-gray-100/60" id="reader-viewport">
+            <div id="book-page-sheet" class="w-full max-w-xl bg-white rounded-lg shadow-md border border-gray-300 p-8 text-right font-serif leading-relaxed text-gray-900 transition-all duration-300 relative select-none">
+              
+              <!-- Page Header -->
+              <div class="flex items-center justify-between text-[11px] text-gray-400 font-sans border-b border-gray-200 pb-3 mb-5">
+                <span id="page-sheet-chapter">الفصل الثاني: الميكانيكا الكلاسيكية وقوانين الحركة</span>
+                <span id="page-sheet-num">12</span>
+              </div>
+
+              <!-- Page Content -->
+              <div id="page-sheet-content" class="space-y-4 text-xs sm:text-sm text-gray-800">
+                <h3 class="text-base font-bold text-gray-900 font-sans text-emerald-900" id="page-sheet-heading">2.1 المبادئ الأساسية وقانون نيوتن الثاني</h3>
+                <p>
+                  ينص قانون نيوتن الثاني في الحركة على أن المعدل الزمني لتغير كمية الحركة لجسم ما يتناسب طردياً مع القوة المحصلة المؤثرة عليه ويكون في اتجاهها. رياضياً يُعبر عن ذلك بالمعادلة:
+                </p>
+                
+                <!-- Formula Box -->
+                <div class="bg-gray-50 border border-emerald-200 rounded-lg p-3 text-center font-mono text-sm text-emerald-900 shadow-2xs my-3">
+                  <strong>F = m · a &nbsp; | &nbsp; ΣF = dp / dt</strong>
+                </div>
+
+                <p>
+                  حيث تمثل <em>F</em> متجه القوة المحصلة بوحدة النيوتن (N)، و<em>m</em> هي كتلة القصور الذاتي للجسم بوحدة الكيلوجرام (kg)، بينما تمثل <em>a</em> متجه التسارع الحركي (m/s²).
+                </p>
+
+                <!-- Educational Note Box -->
+                <div class="bg-emerald-50/70 border-s-4 border-emerald-600 p-3 rounded-e-lg text-xs font-sans text-emerald-900">
+                  <div class="font-bold flex items-center gap-1 mb-1">
+                    <span class="material-symbols-outlined text-sm">lightbulb</span>
+                    <span>ملاحظة تطبيقية للمختبر:</span>
+                  </div>
+                  <span>تأكد دائماً عند إجراء تجارب مسار الهواء من معايرة أجهزة الاستشعار الضوئية وإهمال قوى الاحتكاك الهوائي في السرعات المنخفضة.</span>
+                </div>
+
+                <p>
+                  تتجلى أهمية هذا القانون في حساب مسارات المقذوفات، استقرار الهياكل الهندسية، وتحليل مدارات الأقمار الاصطناعية حول الأرض بدقة رياضية متناهية.
+                </p>
+              </div>
+
+              <!-- Page Footer -->
+              <div class="mt-8 pt-3 border-t border-gray-100 flex items-center justify-between text-[10px] text-gray-400 font-sans">
+                <span id="page-sheet-footer-brand">المكتبة الأكاديمية • المناهج المعتمدة 2026</span>
+                <span>الصفحة 12</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Modal Footer Action Buttons -->
+      <div class="p-4 sm:p-5 border-t border-gray-200 bg-gray-50/70 flex flex-wrap items-center justify-between gap-3" id="book-modal-footer">
+        <div class="flex items-center gap-3">
+          <button onclick="downloadBookPdf()" id="btn-modal-dl" class="px-5 py-2.5 text-xs font-bold rounded-xl bg-[#1e3e34] hover:bg-[#162e27] text-white flex items-center gap-2 shadow-xs hover:shadow transition cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">download</span>
+            <span id="txt-bmodal-dl-btn">تحميل النسخة الكاملة (PDF)</span>
+          </button>
+          <button onclick="simulateOnlineReading()" id="btn-modal-fullscreen" class="px-4 py-2.5 text-xs font-semibold rounded-xl bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 flex items-center gap-2 transition cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">fullscreen</span>
+            <span id="txt-bmodal-full-btn">وضع القراءة بملء الشاشة</span>
+          </button>
+        </div>
+
+        <button onclick="closeBookModal()" id="btn-modal-close-bottom" class="px-5 py-2.5 text-xs font-semibold rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 transition cursor-pointer">
+          إغلاق
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 6. نَافِذَة إِضَافَة / رَفْع كِتَاب جَدِيد (UPLOAD / ADD BOOK MODAL) ================= -->
+  <div id="upload-book-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="upload-modal-container" class="bg-white text-gray-900 rounded-2xl max-w-xl w-full p-6 border border-gray-200 shadow-2xl animate-modal relative max-h-[92vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-4 border-b border-gray-200 mb-5">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]">
+            <span class="material-symbols-outlined text-2xl">post_add</span>
+          </div>
+          <div>
+            <h3 id="upload-modal-title" class="text-lg font-bold text-gray-900">إضافة كتاب ومقرر دراسي جديد</h3>
+            <p id="upload-modal-sub" class="text-xs text-gray-500">نشر وتوثيق مرجع أكاديمي جديد في المكتبة الرقمية</p>
+          </div>
+        </div>
+        <button onclick="closeUploadModal()" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Upload Form -->
+      <form id="upload-book-form" onsubmit="handleBookUpload(event)" class="space-y-4 text-xs">
+        
+        <!-- Book Title -->
+        <div>
+          <label id="lbl-up-title" class="block font-bold text-gray-800 mb-1.5">عنوان الكتاب / المرجع الدراسي *</label>
+          <input 
+            type="text" 
+            id="up-title" 
+            required 
+            placeholder="مثال: أسس الكيمياء الحيوية وتطبيقاتها السريرية" 
+            class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+          />
+        </div>
+
+        <!-- Subject & Edition Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label id="lbl-up-subject" class="block font-bold text-gray-800 mb-1.5">القسم / التخصص الأكاديمي *</label>
+            <select id="up-subject" required class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] cursor-pointer">
+              <option value="physics">⚡ الفيزياء (Physics)</option>
+              <option value="math">📐 الرياضيات (Mathematics)</option>
+              <option value="chemistry">🧪 الكيمياء (Chemistry)</option>
+              <option value="cs">💻 الحاسب والبرمجة (Computer Science)</option>
+              <option value="biology">🧬 الأحياء والعلوم الطبية (Biology)</option>
+              <option value="arabic">📖 اللغة العربية (Arabic)</option>
+              <option value="english">✍️ اللغة الإنجليزية (English)</option>
+              <option value="history">🏛️ التاريخ والحضارة (History)</option>
+            </select>
+          </div>
+
+          <div>
+            <label id="lbl-up-edition" class="block font-bold text-gray-800 mb-1.5">الطبعة وسنة النشر *</label>
+            <input 
+              type="text" 
+              id="up-edition" 
+              required 
+              placeholder="مثال: الطبعة الثالثة 2026" 
+              class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+            />
+          </div>
+        </div>
+
+        <!-- Authors / Instructors -->
+        <div>
+          <label id="lbl-up-authors" class="block font-bold text-gray-800 mb-1.5">أسماء المؤلفين / أعضاء هيئة التدريس *</label>
+          <input 
+            type="text" 
+            id="up-authors" 
+            required 
+            placeholder="مثال: أ.د. سامي رضوان، د. منى فؤاد" 
+            class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+          />
+        </div>
+
+        <!-- Pages & File Size Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label id="lbl-up-pages" class="block font-bold text-gray-800 mb-1.5">عدد الصفحات *</label>
+            <input 
+              type="number" 
+              id="up-pages" 
+              required 
+              min="1" 
+              placeholder="مثال: 480" 
+              class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+            />
+          </div>
+
+          <div>
+            <label id="lbl-up-size" class="block font-bold text-gray-800 mb-1.5">حجم الملف التقديري (MB)</label>
+            <input 
+              type="text" 
+              id="up-size" 
+              placeholder="مثال: 22.4 MB" 
+              class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+            />
+          </div>
+        </div>
+
+        <!-- Cover Image Selector -->
+        <div>
+          <label id="lbl-up-cover" class="block font-bold text-gray-800 mb-1.5">صورة الغلاف الأكاديمي</label>
+          <select id="up-cover" class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] cursor-pointer">
+            <option value="assets/images/books.jpg">📚 مكتبة ومراجع كلاسيكية (books.jpg)</option>
+            <option value="assets/images/books2.jpg">📖 مجلدات ومراجع أكاديمية (books2.jpg)</option>
+            <option value="assets/images/physics.jpg">⚡ مرجع الفيزياء المتقدمة (physics.jpg)</option>
+            <option value="assets/images/math.jpg">📐 مرجع الرياضيات والتفاضل (math.jpg)</option>
+            <option value="assets/images/chemistry.jpg">🧪 مرجع الكيمياء والمعامل (chemistry.jpg)</option>
+            <option value="assets/images/cs.jpg">💻 مرجع البرمجة والخوارزميات (cs.jpg)</option>
+            <option value="assets/images/desk.jpg">✍️ طاولة دراسة وأبحاث (desk.jpg)</option>
+            <option value="assets/images/campus.jpg">🏛️ الحرم الجامعي والمكتبة المركزية (campus.jpg)</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label id="lbl-up-desc" class="block font-bold text-gray-800 mb-1.5">ملخص ومحتوى الكتاب</label>
+          <textarea 
+            id="up-description" 
+            rows="3" 
+            placeholder="اكتب نبذة مختصرة عن الوحدات والأبواب ومخرجات التعلم المستهدفة من الكتاب..." 
+            class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+          ></textarea>
+        </div>
+
+        <!-- Submit & Cancel Buttons -->
+        <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-200">
+          <button type="button" onclick="closeUploadModal()" id="btn-up-cancel" class="px-4 py-2.5 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer">
+            إلغاء
+          </button>
+          <button type="submit" id="btn-up-submit" class="px-5 py-2.5 text-xs font-bold rounded-lg bg-[#1e3e34] hover:bg-[#162e27] text-white flex items-center gap-2 shadow-xs cursor-pointer">
+            <span class="material-symbols-outlined text-base">cloud_upload</span>
+            <span id="txt-btn-up-submit">نشر الكتاب في المكتبة</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 7. نَافِذَة حِوَار عَامَّة (GENERIC INTERACTIVE MODAL) ================= -->
+  <div id="interactive-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="modal-container" class="bg-white text-gray-900 rounded-2xl max-w-lg w-full p-6 border border-gray-200 shadow-2xl animate-modal relative">
+      <div class="flex items-center justify-between pb-3 border-b border-gray-200">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-50 text-[#1e3e34] flex items-center justify-center">
+            <span class="material-symbols-outlined text-2xl" id="modal-icon">info</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900" id="modal-title">عنوان النافذة</h3>
+            <p class="text-xs text-gray-500" id="modal-subtitle">وصف النافذة التفاعلية</p>
+          </div>
+        </div>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <div class="py-4 text-xs leading-relaxed text-gray-600" id="modal-body">
+        محتوى تفاعلي...
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-3 border-t border-gray-200">
+        <button onclick="closeModal()" id="btn-modal-cancel" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer">
+          إغلاق
+        </button>
+        <button onclick="closeModal()" id="btn-modal-confirm" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#1e3e34] text-white hover:opacity-90 transition cursor-pointer">
+          تأكيد
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 8. إِشْعَار عُوَيْم (FLOATING TOAST NOTIFICATION) ================= -->
+  <div id="toast-notification" class="fixed bottom-6 end-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl bg-[#1e3e34] text-white shadow-2xl border border-emerald-400/40 text-xs hidden animate-toast">
+    <span class="material-symbols-outlined text-[20px] text-emerald-300" id="toast-icon">check_circle</span>
+    <span id="toast-message" class="font-medium">تمت العملية بنجاح!</span>
+  </div>
+
+  <!-- ================= 9. جَافَاسْكْرِيبْت (JAVASCRIPT LOGIC & STATE) ================= -->
+  <script>
+    // State
+    let currentTheme = localStorage.getItem('site_theme') || 'light';
+    let currentLang = localStorage.getItem('site_lang') || 'ar';
+    let currentSubjectFilter = 'all';
+    let currentSearchTerm = '';
+    let currentSortOption = 'latest';
+    let currentViewMode = 'grid'; // 'grid' | 'list'
+    let showFavoritesOnly = false;
+    let currentModalBook = null;
+    let currentPreviewPage = 12;
+    let currentZoomLevel = 1.0;
+
+    // Bookmarks stored in localStorage
+    let bookmarkedBookIds = [];
+    try {
+      const storedFavs = localStorage.getItem('platform_bookmarked_books');
+      if (storedFavs) bookmarkedBookIds = JSON.parse(storedFavs);
+    } catch(e) {
+      bookmarkedBookIds = [];
+    }
+
+    // Comprehensive Initial Academic Books Collection
+    const initialBooks = [
+      {
+        id: "book-1",
+        subject: "physics",
+        subjectNameAr: "الفيزياء",
+        subjectNameEn: "Physics",
+        titleAr: "أسس الفيزياء العامة: الميكانيكا، الحرارة والديناميكا",
+        titleEn: "Principles of General Physics: Mechanics & Thermodynamics",
+        authorsAr: "أ.د. هدى عبد الرحمن • د. كمال الدين زكي",
+        authorsEn: "Prof. Huda Abdelrahman • Dr. Kamal Zaki",
+        editionAr: "الطبعة الخامسة 2026 المعتمدة",
+        editionEn: "5th Certified Edition 2026",
+        pages: 520,
+        fileSize: "24.5 MB",
+        format: "PDF عالي الجودة",
+        downloads: 3890,
+        rating: 4.9,
+        reviewsCount: 420,
+        badgeAr: "مقرر أساسي 2026",
+        badgeEn: "Core Syllabus 2026",
+        badgeColor: "emerald",
+        thumbnail: "assets/images/physics.jpg",
+        date: "2026-09-28",
+        descriptionAr: "المرجع الرسمي المعتمد لطلاب كليات العلوم والهندسة، يغطي الميكانيكا الكلاسيكية، قوانين نيوتن، الديناميكا الحرارية، مع أكثر من 300 مسألة محلولة ونماذج اختبارات.",
+        descriptionEn: "The official academic standard textbook for Science & Engineering majors covering Newtonian mechanics, thermodynamics, and over 300 solved practical problems.",
+        chaptersAr: [
+          "الباب الأول: المتجهات والقياسات الفيزيائية المعيارية",
+          "الباب الثاني: الميكانيكا الكلاسيكية وقوانين الحركة لنيوتن",
+          "الباب الثالث: الشغل، الطاقة الميكانيكية وقانون حفظ الطاقة",
+          "الباب الرابع: الديناميكا الحرارية والغازات المثالية",
+          "الباب الخامس: الحركة التوافقية البسيطة والموجات الميكانيكية"
+        ],
+        chaptersEn: [
+          "Chapter 1: Vectors & Standard Dimensional Analysis",
+          "Chapter 2: Classical Mechanics & Newton's Laws of Motion",
+          "Chapter 3: Work, Mechanical Energy & Conservation Laws",
+          "Chapter 4: Thermodynamics & Ideal Gas Laws",
+          "Chapter 5: Simple Harmonic Motion & Mechanical Waves"
+        ]
+      },
+      {
+        id: "book-2",
+        subject: "math",
+        subjectNameAr: "الرياضيات",
+        subjectNameEn: "Mathematics",
+        titleAr: "حساب التفاضل والتكامل المتقدم والجبر الخطي والتطبيقات",
+        titleEn: "Advanced Calculus, Linear Algebra & Multivariable Analysis",
+        authorsAr: "أ.د. طارق السعيد • د. ماجد الشناوي",
+        authorsEn: "Prof. Tarek El-Saeed • Dr. Maged El-Shennawy",
+        editionAr: "الطبعة الرابعة المحدثة 2025",
+        editionEn: "4th Updated Edition 2025",
+        pages: 640,
+        fileSize: "31.2 MB",
+        format: "PDF تفاعلي + حلول",
+        downloads: 5120,
+        rating: 4.8,
+        reviewsCount: 580,
+        badgeAr: "الأكثر تحميلاً",
+        badgeEn: "Most Downloaded",
+        badgeColor: "blue",
+        thumbnail: "assets/images/math.jpg",
+        date: "2026-09-25",
+        descriptionAr: "دراسة معمقة في الدوال المتعددة المتغيرات، التكاملات الثنائية والثلاثية، نظرية جرين وستوكس، ومصفوفات الجبر الخطي وتطبيقاتها الهندسية.",
+        descriptionEn: "Comprehensive study in multivariable functions, double and triple integrals, Green & Stokes theorems, matrix linear algebra, and computational applications.",
+        chaptersAr: [
+          "الفصل 1: المتجهات والهندسة الفراغية ثلاثية الأبعاد",
+          "الفصل 2: الاشتقاق الجزئي والسطوح ومضاعفات لاجرانج",
+          "الفصل 3: التكاملات المتعددة الحجمية والسطحية",
+          "الفصل 4: الجبر الخطي، المصفوفات والقيم الذاتية",
+          "الفصل 5: نظريات التحليل الشعاعي (جرين وستوكس والتباعد)"
+        ],
+        chaptersEn: [
+          "Chapter 1: Vectors & 3D Analytic Geometry",
+          "Chapter 2: Partial Derivatives & Lagrange Multipliers",
+          "Chapter 3: Multiple Surface & Volume Integrals",
+          "Chapter 4: Linear Algebra, Matrices & Eigenvalues",
+          "Chapter 5: Vector Calculus (Green's, Stokes' & Divergence Theorems)"
+        ]
+      },
+      {
+        id: "book-3",
+        subject: "chemistry",
+        subjectNameAr: "الكيمياء",
+        subjectNameEn: "Chemistry",
+        titleAr: "الكيمياء العضوية وتفاعلات البوليمرات والمركبات الحيوية",
+        titleEn: "Organic Chemistry, Polymer Reactions & Biomolecules",
+        authorsAr: "د. سامي رضوان • د. ريهام محفوظ",
+        authorsEn: "Dr. Sami Radwan • Dr. Reham Mahfouz",
+        editionAr: "الطبعة الثالثة 2026 بالألوان الكاملة",
+        editionEn: "3rd Full-Color Edition 2026",
+        pages: 480,
+        fileSize: "19.8 MB",
+        format: "PDF مع أطلس تفاعلي",
+        downloads: 2750,
+        rating: 4.9,
+        reviewsCount: 310,
+        badgeAr: "طبعة ملونة",
+        badgeEn: "Full-Color",
+        badgeColor: "amber",
+        thumbnail: "assets/images/chemistry.jpg",
+        date: "2026-09-29",
+        descriptionAr: "الدليل الشامل في الكيمياء العضوية وتصنيف المركبات الهيدروكربونية، ميكانيكية التفاعلات الاستبدالية والإضافية، وأطلس ثلاثي الأبعاد للمركبات الجزيئية.",
+        descriptionEn: "Complete manual in organic nomenclature, stereochemistry, substitution/addition reaction mechanisms, and 3D molecular structure visualization.",
+        chaptersAr: [
+          "الوحدة 1: البنية الجزيئية والروابط والتصاوغ الفراغي",
+          "الوحدة 2: الألكانات والألكينات وتفاعلات الإضافة الإلكتروفيلية",
+          "الوحدة 3: المركبات الأروماتية وتفاعلات البنزين ومشتقاته",
+          "الوحدة 4: كيمياء الكربونيل والإسترات والأميدات",
+          "الوحدة 5: البوليمرات الاصطناعية والجزيئات الحيوية الكبيرة"
+        ],
+        chaptersEn: [
+          "Unit 1: Molecular Structure, Bonding & Stereochemistry",
+          "Unit 2: Alkanes, Alkenes & Electrophilic Additions",
+          "Unit 3: Aromatic Chemistry & Benzene Derivatives",
+          "Unit 4: Carbonyl Chemistry, Esters & Amides",
+          "Unit 5: Synthetic Polymers & Biological Macromolecules"
+        ]
+      },
+      {
+        id: "book-4",
+        subject: "cs",
+        subjectNameAr: "الحاسب والبرمجة",
+        subjectNameEn: "Computer Science",
+        titleAr: "هياكل البيانات والخوارزميات المتقدمة في هندسة البرمجيات",
+        titleEn: "Advanced Data Structures & Algorithms in Software Engineering",
+        authorsAr: "م. منى العطار • أ.د. هيثم البحيري",
+        authorsEn: "Eng. Mona El-Attar • Prof. Haitham El-Beheiry",
+        editionAr: "الطبعة السادسة 2026 + مستودع GitHub",
+        editionEn: "6th Edition 2026 + GitHub Repo",
+        pages: 580,
+        fileSize: "22.4 MB",
+        format: "PDF + مستودع أكواد كامل",
+        downloads: 7420,
+        rating: 5.0,
+        reviewsCount: 890,
+        badgeAr: "الأعلى تقييماً ★",
+        badgeEn: "Top Rated ★",
+        badgeColor: "purple",
+        thumbnail: "assets/images/cs.jpg",
+        date: "2026-09-20",
+        descriptionAr: "يشرح الأشجار الثنائية، الرسوم البيانية (Graphs)، خوارزميات المسار الأقصر، وتحليل الأداء O(n) بلغات C++ وPython مع مشاريع برمجية واقعية.",
+        descriptionEn: "In-depth guide to binary search trees, graph algorithms, dynamic programming, Dijkstra's algorithm, and asymptotic complexity analysis in C++ and Python.",
+        chaptersAr: [
+          "الفصل 1: تحليل التعقيد الزمني والمكاني Big-O",
+          "الفصل 2: القوائم المترابطة والستاك والكيو والهاش تابل",
+          "الفصل 3: الأشجار الثنائية وأشجار التوازن الذاتي AVL وRed-Black",
+          "الفصل 4: الرسوم البيانية وخوارزميات Dijkstra وKruskal",
+          "الفصل 5: البرمجة الديناميكية وتقسيم المشكلات (Divide & Conquer)"
+        ],
+        chaptersEn: [
+          "Chapter 1: Asymptotic Complexity & Big-O Notation",
+          "Chapter 2: Linked Lists, Stacks, Queues & Hash Tables",
+          "Chapter 3: Binary Trees, AVL & Red-Black Trees",
+          "Chapter 4: Graph Traversals, Dijkstra & Kruskal Algorithms",
+          "Chapter 5: Dynamic Programming & Divide-and-Conquer Paradigms"
+        ]
+      },
+      {
+        id: "book-5",
+        subject: "biology",
+        subjectNameAr: "الأحياء",
+        subjectNameEn: "Biology",
+        titleAr: "علم الأحياء الخلوية وعلم الوراثة الجزيئية وتطبيقات DNA",
+        titleEn: "Cell Biology, Molecular Genetics & Genomic Engineering",
+        authorsAr: "د. نهى الشريف • د. خالد عبد العليم",
+        authorsEn: "Dr. Noha El-Sherif • Dr. Khaled Abdel-Aleem",
+        editionAr: "الطبعة الثانية 2025 المزودة بالأطالس",
+        editionEn: "2nd Edition 2025 with Cell Atlas",
+        pages: 460,
+        fileSize: "28.0 MB",
+        format: "PDF + شرائح مجهرية",
+        downloads: 2340,
+        rating: 4.8,
+        reviewsCount: 260,
+        badgeAr: "رسومات مجهرية",
+        badgeEn: "Microscopic Atlas",
+        badgeColor: "emerald",
+        thumbnail: "assets/images/books2.jpg",
+        date: "2026-09-22",
+        descriptionAr: "تفصيل دقيق لآليات انقسام الخلية الميتوزي والميوزي، الشفرة الوراثية وتطبيقات الهندسة الجينية الحديثة وتقنية CRISPR في الطب الحيوي.",
+        descriptionEn: "Comprehensive cell anatomy, protein synthesis, cellular mitosis, Mendelian and molecular genetics, alongside modern CRISPR technology.",
+        chaptersAr: [
+          "الفصل 1: الغشاء الخلوي والنقل النشط وعضيات الخلية",
+          "الفصل 2: تضاعف الحمض النووي DNA وتخليق البروتينات",
+          "الفصل 3: الانقسام المتساوي والمنصف والدورات الخلوية",
+          "الفصل 4: الوراثة المندلية والخرائط الجينية الكروموسومية",
+          "الفصل 5: تكنولوجيا الهندسة الوراثية والعلاج الجيني الحديث"
+        ],
+        chaptersEn: [
+          "Chapter 1: Plasma Membrane, Active Transport & Organelles",
+          "Chapter 2: DNA Replication, Transcription & Protein Translation",
+          "Chapter 3: Mitosis, Meiosis & Cell Cycle Regulation",
+          "Chapter 4: Mendelian Inheritance & Chromosome Mapping",
+          "Chapter 5: Recombinant DNA & Modern Gene Editing"
+        ]
+      },
+      {
+        id: "book-6",
+        subject: "arabic",
+        subjectNameAr: "اللغة العربية",
+        subjectNameEn: "Arabic",
+        titleAr: "أصول البلاغة والنقد الأدبي وشواهد النظم في التراث العربي",
+        titleEn: "Classical Arabic Rhetoric, Literary Criticism & Stylistics",
+        authorsAr: "أ.د. عبد الله فاروق • د. ثريا جاد",
+        authorsEn: "Prof. Abdullah Farouk • Dr. Thoraya Gad",
+        editionAr: "الطبعة الذهبية المحققة 2026",
+        editionEn: "Golden Critical Edition 2026",
+        pages: 390,
+        fileSize: "14.1 MB",
+        format: "PDF محقق ومفهرس",
+        downloads: 1890,
+        rating: 4.9,
+        reviewsCount: 190,
+        badgeAr: "إصدار محقق",
+        badgeEn: "Annotated",
+        badgeColor: "rose",
+        thumbnail: "assets/images/books.jpg",
+        date: "2026-09-27",
+        descriptionAr: "مباحث علم البيان والمعاني والبديع، وتحليل شواهد كبار الشعراء والكتاب، ودراسة إعجاز القرآن اللغوي والبلاغي.",
+        descriptionEn: "Comprehensive exploration of Arabic rhetorical sciences (Bayan, Ma'ani, Badi'), critical analysis of monumental classical poetry, and stylistic structures.",
+        chaptersAr: [
+          "الباب الأول: علم المعاني وأحوال الإسناد والإنشاء والخبر",
+          "الباب الثاني: علم البيان، التشبيه والاستعارة والمجاز المرسل",
+          "الباب الثالث: علم البديع، المحسنات اللفظية والمعنوية",
+          "الباب الرابع: مناهج النقد الأدبي الكلاسيكي والحديث",
+          "الباب الخامس: دراسات تطبيقية في روائع النثر والشعر العربي"
+        ],
+        chaptersEn: [
+          "Part 1: Ilm al-Ma'ani: Predication, Speech Acts & Sentences",
+          "Part 2: Ilm al-Bayan: Metaphor, Simile, Allegory & Metonymy",
+          "Part 3: Ilm al-Badi': Rhetorical Embellishments & Figures",
+          "Part 4: Classical and Modern Arab Literary Criticism",
+          "Part 5: Applied Analytical Studies in Masterpiece Poetry & Prose"
+        ]
+      },
+      {
+        id: "book-7",
+        subject: "english",
+        subjectNameAr: "اللغة الإنجليزية",
+        subjectNameEn: "English",
+        titleAr: "مهارات الكتابة والبحث الأكاديمي والتوثيق المرجعي APA",
+        titleEn: "Academic Writing & Research Methodology: APA & IEEE Standards",
+        authorsAr: "د. كاثرين ميلر • أ.د. سامح منصور",
+        authorsEn: "Dr. Katherine Miller • Prof. Sameh Mansour",
+        editionAr: "الطبعة العالمية الرابعة 2026",
+        editionEn: "4th Global Edition 2026",
+        pages: 340,
+        fileSize: "16.5 MB",
+        format: "PDF + نماذج أبحاث جاهزة",
+        downloads: 3980,
+        rating: 4.7,
+        reviewsCount: 430,
+        badgeAr: "دليل الباحثين",
+        badgeEn: "Researchers Guide",
+        badgeColor: "blue",
+        thumbnail: "assets/images/desk.jpg",
+        date: "2026-09-24",
+        descriptionAr: "دليل متكامل لكتابة الأبحاث الأكاديمية ونشرها في المجلات المحكمة، صياغة الفرضيات، التوثيق بنظام APA وIEEE، وتفادي الاقتباس غير المقبول.",
+        descriptionEn: "The essential guide for writing publishable scientific papers, thesis formulation, literature reviews, citations via APA 7th & IEEE, and research ethics.",
+        chaptersAr: [
+          "Chapter 1: Formulating Academic Research Questions & Theses",
+          "Chapter 2: Literature Review & Critical Synthesis",
+          "Chapter 3: Methodology, Quantitative & Qualitative Data",
+          "Chapter 4: Referencing Standards: APA 7th Edition & IEEE",
+          "Chapter 5: Avoiding Plagiarism, Paraphrasing & Peer Review"
+        ],
+        chaptersEn: [
+          "Chapter 1: Formulating Academic Research Questions & Theses",
+          "Chapter 2: Literature Review & Critical Synthesis",
+          "Chapter 3: Methodology, Quantitative & Qualitative Data",
+          "Chapter 4: Referencing Standards: APA 7th Edition & IEEE",
+          "Chapter 5: Avoiding Plagiarism, Paraphrasing & Peer Review"
+        ]
+      },
+      {
+        id: "book-8",
+        subject: "history",
+        subjectNameAr: "التاريخ والجغرافيا",
+        subjectNameEn: "History",
+        titleAr: "تاريخ الحضارات والتبادل الثقافي عبر طريق الحرير والمتوسط",
+        titleEn: "World Civilizations & Cultural Exchange: The Silk Road & Mediterranean",
+        authorsAr: "أ.د. يوسف زهران • د. نجلاء رفعت",
+        authorsEn: "Prof. Youssef Zahran • Dr. Naglaa Refaat",
+        editionAr: "الطبعة الثالثة 2025 مع أطلس خرائط نادرة",
+        editionEn: "3rd Edition 2025 with Historical Maps",
+        pages: 510,
+        fileSize: "26.8 MB",
+        format: "PDF + أطلس خرائط تاريخية",
+        downloads: 2150,
+        rating: 4.8,
+        reviewsCount: 210,
+        badgeAr: "أطلس خرائط",
+        badgeEn: "Historical Atlas",
+        badgeColor: "amber",
+        thumbnail: "assets/images/campus.jpg",
+        date: "2026-09-18",
+        descriptionAr: "دراسة تاريخية وجغرافية موثقة لحضارات حوض البحر المتوسط وطريق الحرير والتأثيرات المتبادلة في العلوم والفلسفة والعمارة.",
+        descriptionEn: "Documented historical and geopolitical survey of Mediterranean civilizations and trans-continental Silk Road trade networks and cultural diffusion.",
+        chaptersAr: [
+          "الباب 1: جغرافية الحضارات القديمة ومراكز الاستيطان الأولى",
+          "الباب 2: طرق القوافل الكبرى وطريق الحرير البري والبحري",
+          "الباب 3: التبادل العلمي والفلسفي بين الشرق والغرب",
+          "الباب 4: عمارة المدن التاريخية وحصونها وموانئها الكبرى",
+          "الباب 5: الوثائق والخرائط التاريخية والنقوش الأثرية"
+        ],
+        chaptersEn: [
+          "Part 1: Geography of Ancient Civilizations & Early Settlement Centers",
+          "Part 2: Trans-Eurasian Trade Networks & The Silk Road",
+          "Part 3: Scientific & Philosophical Transmission East and West",
+          "Part 4: Urban Architecture of Historic Citadels & Ports",
+          "Part 5: Historical Cartography, Inscriptions & Numismatics"
+        ]
+      },
+      {
+        id: "book-9",
+        subject: "physics",
+        subjectNameAr: "الفيزياء",
+        subjectNameEn: "Physics",
+        titleAr: "الفيزياء الحديثة والكهرومغناطيسية وتطبيقات ميكانيكا الكم",
+        titleEn: "Modern Physics, Electromagnetism & Quantum Mechanics",
+        authorsAr: "د. هدى عبد الرحمن • د. عصام رضوان",
+        authorsEn: "Dr. Huda Abdelrahman • Dr. Essam Radwan",
+        editionAr: "الطبعة الأولى 2026 للمقررات المتقدمة",
+        editionEn: "1st Advanced Edition 2026",
+        pages: 440,
+        fileSize: "21.0 MB",
+        format: "PDF + محاكاة معملية",
+        downloads: 1940,
+        rating: 4.9,
+        reviewsCount: 185,
+        badgeAr: "طبعة 2026",
+        badgeEn: "2026 Edition",
+        badgeColor: "emerald",
+        thumbnail: "assets/images/desk2.jpg",
+        date: "2026-09-29",
+        descriptionAr: "نظريات النسبية الخاصة، معادلات ماكسويل، إشعاع الجسم الأسود، والتطبيقات الحديثة في أشباه الموصلات والحوسبة الكمية.",
+        descriptionEn: "Special relativity, Maxwell's electromagnetic equations, quantum wave functions, blackbody radiation, and modern semiconductor physics.",
+        chaptersAr: [
+          "الفصل 1: معادلات ماكسويل والأمواج الكهرومغناطيسية",
+          "الفصل 2: النسبية الخاصة وتمدد الزمن وتقلص الأطوال",
+          "الفصل 3: ازدواجية الموجة والجسيم وفرضية دي برولي",
+          "الفصل 4: معادلة شرودنجر وتطبيقات بئر الجهد اللانهائي",
+          "الفصل 5: فيزياء الحالة الصلبة وأشباه الموصلات والليزرات"
+        ],
+        chaptersEn: [
+          "Chapter 1: Maxwell's Equations & Electromagnetic Waves",
+          "Chapter 2: Special Relativity: Time Dilation & Length Contraction",
+          "Chapter 3: Wave-Particle Duality & De Broglie Hypothesis",
+          "Chapter 4: Schrödinger Equation & Quantum Wells",
+          "Chapter 5: Solid State Physics, Semiconductors & Lasers"
+        ]
+      },
+      {
+        id: "book-10",
+        subject: "cs",
+        subjectNameAr: "الحاسب والبرمجة",
+        subjectNameEn: "Computer Science",
+        titleAr: "الذكاء الاصطناعي وتعلم الآلة والشبكات العصبية العميقة",
+        titleEn: "Artificial Intelligence, Machine Learning & Deep Neural Networks",
+        authorsAr: "د. منى العطار • د. وسيم الصاوي",
+        authorsEn: "Eng. Mona El-Attar • Dr. Wassim El-Sawy",
+        editionAr: "طبعة 2026 المعتمدة + دفاتر Jupyter Notebook",
+        editionEn: "2026 Certified Edition + Jupyter Notebooks",
+        pages: 490,
+        fileSize: "25.3 MB",
+        format: "PDF + دفاتر Jupyter كاملة",
+        downloads: 8100,
+        rating: 5.0,
+        reviewsCount: 940,
+        badgeAr: "الأعلى طلباً",
+        badgeEn: "Trending",
+        badgeColor: "purple",
+        thumbnail: "assets/images/report2.jpg",
+        date: "2026-09-29",
+        descriptionAr: "المفاهيم الرياضية لتعلم الآلة والشبكات العصبية العميقة، معالجة اللغات الطبيعية (NLP)، ورؤية الحاسب مع مشاريع عملية كاملة بلغة Python.",
+        descriptionEn: "Mathematical fundamentals of Machine Learning, Deep Neural Networks, Natural Language Processing, Computer Vision with hands-on PyTorch & TensorFlow projects.",
+        chaptersAr: [
+          "الفصل 1: مقدمة في الذكاء الاصطناعي والجبر الخطي للإحصاء",
+          "الفصل 2: خوارزميات الانحدار والتصنيف الخطي واللوجستي",
+          "الفصل 3: الشبكات العصبية الاصطناعية وخوارزمية Backpropagation",
+          "الفصل 4: الشبكات التلافيفية CNN ونماذج الرؤية الحاسوبية",
+          "الفصل 5: نماذج المحولات Transformers ومعالجة اللغات الطبيعية LLMs"
+        ],
+        chaptersEn: [
+          "Chapter 1: AI Foundations & Computational Statistics",
+          "Chapter 2: Linear & Logistic Regression, Decision Trees",
+          "Chapter 3: Artificial Neural Networks & Backpropagation",
+          "Chapter 4: Convolutional Neural Networks (CNN) & Computer Vision",
+          "Chapter 5: Transformers, Large Language Models (LLMs) & GenAI"
+        ]
+      },
+      {
+        id: "book-11",
+        subject: "math",
+        subjectNameAr: "الرياضيات",
+        subjectNameEn: "Mathematics",
+        titleAr: "التحليل الإحصائي الحيوي ونماذج الاحتمالات والتطبيقات",
+        titleEn: "Biostatistics, Probability Models & Experimental Design",
+        authorsAr: "أ.د. طارق السعيد • د. سلمى فؤاد",
+        authorsEn: "Prof. Tarek El-Saeed • Dr. Salma Fouad",
+        editionAr: "الطبعة الثانية 2025 مع بيانات SPSS",
+        editionEn: "2nd Edition 2025 with SPSS Data",
+        pages: 380,
+        fileSize: "17.6 MB",
+        format: "PDF + ملفات تجارب عملية",
+        downloads: 2420,
+        rating: 4.7,
+        reviewsCount: 240,
+        badgeAr: "تطبيقات طبية",
+        badgeEn: "Applied Science",
+        badgeColor: "emerald",
+        thumbnail: "assets/images/report.jpg",
+        date: "2026-09-23",
+        descriptionAr: "التوزيعات الاحتمالية، اختبارات الفروض الإحصائية (T-Test, ANOVA, Chi-Square)، وتحليل الانحدار الخطي وتطبيقاته في العلوم الطبية والبيولوجية.",
+        descriptionEn: "Probability distributions, statistical hypothesis testing (T-Test, ANOVA, Chi-Square), regression models, and clinical research data analysis.",
+        chaptersAr: [
+          "الفصل 1: الإحصاء الوصفي ومقاييس النزعة المركزية والتشتت",
+          "الفصل 2: قواعد الاحتمالات والتوزيع الطبيعي وتوزيع بواسون",
+          "الفصل 3: اختبارات الفروض الإحصائية والعينات المزدوجة",
+          "الفصل 4: تحليل التباين الأحادي والثنائي ANOVA",
+          "الفصل 5: تحليل الانحدار والارتباط وتصميم التجارب العملية"
+        ],
+        chaptersEn: [
+          "Chapter 1: Descriptive Statistics, Dispersion & Sampling",
+          "Chapter 2: Probability Rules, Normal & Poisson Distributions",
+          "Chapter 3: Hypothesis Testing, Z-Tests & Student's T-Test",
+          "Chapter 4: One-way and Two-way ANOVA Testing",
+          "Chapter 5: Linear Regression, Correlation & Experimental Design"
+        ]
+      },
+      {
+        id: "book-12",
+        subject: "chemistry",
+        subjectNameAr: "الكيمياء",
+        subjectNameEn: "Chemistry",
+        titleAr: "الكيمياء التحليلية وأجهزة القياس والمعايرة المعملية الحديثة",
+        titleEn: "Analytical Chemistry & Modern Instrumental Laboratory Methods",
+        authorsAr: "د. سامي رضوان • د. نهال غنيم",
+        authorsEn: "Dr. Sami Radwan • Dr. Nehal Ghoneim",
+        editionAr: "الطبعة الرابعة 2026 المعتمدة للمختبرات",
+        editionEn: "4th Laboratory Edition 2026",
+        pages: 410,
+        fileSize: "20.4 MB",
+        format: "PDF + دليل السلامة المعملية",
+        downloads: 1670,
+        rating: 4.8,
+        reviewsCount: 195,
+        badgeAr: "دليل معملي",
+        badgeEn: "Lab Manual",
+        badgeColor: "amber",
+        thumbnail: "assets/images/chemistry.jpg",
+        date: "2026-09-26",
+        descriptionAr: "طرق التحليل الوزني والحجمي والكروماتوغرافيا (HPLC, GC)، والتحليل الطيفي بالأشعة فوق البنفسجية ومطياف الكتلة.",
+        descriptionEn: "Gravimetric and volumetric analyses, chromatographic separations (HPLC, GC), UV-Vis spectroscopy, and mass spectrometry instrumental methods.",
+        chaptersAr: [
+          "الوحدة 1: المعايرة الحجمية وتفاعلات التعادل وحسابات pH",
+          "الوحدة 2: التحليل الوزني وتكوين الرواسب والترشيح",
+          "الوحدة 3: الطرق الكهروكيميائية وقياس الجهد والتوصيل",
+          "الوحدة 4: التحليل الطيفي بالمطياف الضوئي والأشعة UV-Vis",
+          "الوحدة 5: الكروماتوغرافيا السائلة والغازية وفصل العينات"
+        ],
+        chaptersEn: [
+          "Unit 1: Volumetric Titrations, Neutralization & pH Equilibria",
+          "Unit 2: Gravimetric Analysis & Precipitation Mechanisms",
+          "Unit 3: Potentiometry & Electrochemical Analytical Methods",
+          "Unit 4: UV-Visible Spectrophotometry & Spectroscopic Instruments",
+          "Unit 5: High Performance Liquid Chromatography (HPLC) & Gas Chromatography"
+        ]
+      }
+    ];
+
+    // Load from localStorage if present
+    let allBooks = [];
+    try {
+      const stored = localStorage.getItem('platform_books');
+      if (stored) {
+        allBooks = JSON.parse(stored);
+      } else {
+        allBooks = [...initialBooks];
+        localStorage.setItem('platform_books', JSON.stringify(allBooks));
+      }
+    } catch (e) {
+      allBooks = [...initialBooks];
+    }
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTheme(currentTheme);
+      applyLanguage(currentLang);
+      updateFavoriteCounter();
+      renderBooks();
+      updatePillCounts();
+    });
+
+    // ================= THEME TOGGLE =================
+    function toggleTheme() {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('site_theme', currentTheme);
+      applyTheme(currentTheme);
+      renderBooks();
+    }
+
+    // ================= LANGUAGE TOGGLE =================
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('site_lang', currentLang);
+      applyLanguage(currentLang);
+      renderBooks();
+    }
+
+    // Apply Theme Function
+    function applyTheme(theme) {
+      const root = document.getElementById('root-html');
+      const body = document.getElementById('body-app');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarHeaderBox = document.getElementById('sidebar-header-box');
+      const sidebarLogoIcon = document.getElementById('sidebar-logo-icon');
+      const sidebarFooterBox = document.getElementById('sidebar-footer-box');
+      const userAvatarBox = document.getElementById('user-avatar-box');
+      const mainHeader = document.getElementById('main-header');
+      const mainFooter = document.getElementById('main-footer');
+      const infoBanner = document.getElementById('info-banner');
+      const infoIconWrapper = document.getElementById('info-icon-wrapper');
+      const infoIcon = document.getElementById('info-icon');
+      const filterContainer = document.getElementById('filter-container');
+      const filterSubjectIcon = document.getElementById('filter-subject-icon');
+      const subjectSelect = document.getElementById('subject-select');
+      const searchInput = document.getElementById('search-input');
+      const sortSelect = document.getElementById('sort-select');
+      const headerIconBox = document.getElementById('header-icon-box');
+      const viewModeContainer = document.getElementById('view-mode-container');
+
+      const btnTheme = document.getElementById('btn-theme-toggle');
+      const iconTheme = document.getElementById('icon-theme');
+      const txtTheme = document.getElementById('txt-theme-toggle');
+
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        
+        body.className = "min-h-screen flex antialiased bg-[#121514] text-[#e1ebe6] transition-colors duration-300";
+
+        // Sidebar
+        sidebar.className = "w-64 bg-[#0d1815] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 select-none shadow-2xl transition-all duration-300 " + (currentLang === 'ar' ? 'border-l border-[#1c2b25]' : 'border-r border-[#1c2b25]');
+        sidebarHeaderBox.className = "flex items-center gap-3 pb-5 border-b border-[#1c2b25] group cursor-pointer";
+        sidebarLogoIcon.className = "w-10 h-10 rounded-xl bg-[#14261f] border border-[#234235] flex items-center justify-center shrink-0 shadow-sm text-[#34d399]";
+        document.getElementById('txt-brand-name').className = "font-bold text-base text-white tracking-wide";
+        document.getElementById('txt-brand-badge').className = "text-[10px] bg-[#173328] text-[#57f1db] px-1.5 py-0.5 rounded border border-[#275340] font-semibold leading-tight";
+        document.getElementById('txt-brand-sub').className = "text-xs text-[#8fa39b] mt-0.5";
+
+        sidebarFooterBox.className = "p-4 border-t border-[#1c2b25] bg-[#08100e]";
+        userAvatarBox.className = "w-8 h-8 rounded-lg bg-[#14261f] text-[#34d399] flex items-center justify-center text-sm font-bold border border-[#234235]";
+        document.getElementById('txt-user-name').className = "text-xs font-bold text-white group-hover:text-[#34d399] transition-colors";
+        document.getElementById('txt-user-role').className = "text-[11px] text-[#8fa39b]";
+
+        // Header
+        mainHeader.className = "bg-[#171c1a] border-b border-[#25332d] sticky top-0 z-20 px-8 py-3.5 transition-colors duration-300";
+        headerIconBox.className = "w-9 h-9 rounded-xl bg-[#14261f] text-[#34d399] flex items-center justify-center border border-[#234235]";
+        document.getElementById('txt-page-title').className = "text-xl font-bold tracking-tight text-white";
+        document.getElementById('txt-page-badge').className = "text-xs bg-[#173328] text-[#57f1db] font-bold px-2.5 py-0.5 rounded-md border border-[#275340]";
+        document.getElementById('txt-page-desc').className = "text-xs text-[#8fa39b] font-medium mt-0.5";
+
+        // Header action buttons
+        document.querySelectorAll('.header-action-btn').forEach(btn => {
+          btn.className = "header-action-btn bg-[#1d2622] hover:bg-[#25312c] text-[#cbdad3] font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-[#2a3a33] transition-colors cursor-pointer shadow-xs";
+        });
+        document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#34d399]";
+        document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#34d399]";
+
+        // Theme Toggle Button
+        btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-[#34d399] border-[#2a3a33]";
+        iconTheme.className = "material-symbols-outlined text-[18px] text-[#34d399]";
+        iconTheme.innerText = "light_mode";
+        txtTheme.innerText = currentLang === 'ar' ? 'الوضع النهاري' : 'Light Mode';
+
+        // Lang Toggle Button
+        document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-white border-[#2a3a33]";
+        document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#34d399]";
+
+        // Info Banner
+        infoBanner.className = "bg-[#171c1a] border border-[#2dd4bf] p-4 rounded-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        infoIconWrapper.className = "w-10 h-10 rounded-xl bg-[#14261f] text-[#2dd4bf] flex items-center justify-center shrink-0 border border-[#234235]";
+        infoIcon.className = "material-symbols-outlined text-[#2dd4bf] text-[24px]";
+        document.getElementById('txt-banner-title').className = "font-bold text-white text-sm sm:text-base";
+        document.getElementById('txt-banner-sub').className = "text-xs text-[#8fa39b] font-normal mt-0.5";
+        
+        document.getElementById('stat-box-1').className = "flex items-center gap-1.5 bg-[#173328] text-[#57f1db] px-3 py-1.5 rounded-lg border border-[#275340]";
+        document.getElementById('stat-box-2').className = "flex items-center gap-1.5 bg-[#1d2622] text-[#cbdad3] px-3 py-1.5 rounded-lg border border-[#2a3a33]";
+        document.getElementById('stat-box-3').className = "flex items-center gap-1.5 bg-[#1d2622] text-[#cbdad3] px-3 py-1.5 rounded-lg border border-[#2a3a33]";
+
+        // Filter Container
+        filterContainer.className = "bg-[#1b221f] rounded-2xl border border-[#27332e] p-5 shadow-sm transition-all duration-300";
+        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#27332e]";
+        filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#34d399]";
+        document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-[#e1ebe6]";
+        
+        subjectSelect.className = "w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399] transition-all cursor-pointer shadow-xs";
+        searchInput.className = "w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] placeholder-[#8fa39b] focus:outline-none focus:ring-2 focus:ring-[#34d399] shadow-xs transition-all";
+        sortSelect.className = "text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399] shadow-xs cursor-pointer";
+        
+        viewModeContainer.className = "flex items-center rounded-xl border border-[#2a3a33] p-0.5 bg-[#151c19]";
+        updateViewButtonsStyle('dark');
+
+        // Table Styles (List Mode)
+        const tableHead = document.getElementById('books-table-head');
+        const booksListContainer = document.getElementById('books-list');
+        if (tableHead) tableHead.className = "bg-[#151c19] text-[#cbdad3] uppercase font-bold border-b border-[#27332e]";
+        if (booksListContainer) booksListContainer.className = "overflow-hidden rounded-2xl border border-[#27332e] bg-[#1b221f] shadow-sm";
+
+        // Footer
+        mainFooter.className = "bg-[#171c1a] border-t border-[#25332d] py-4 px-8 text-xs text-[#8fa39b] mt-auto transition-colors duration-300";
+        document.getElementById('txt-footer-left-1').className = "font-bold text-white";
+
+        updatePillsTheme('dark');
+
+      } else {
+        // LIGHT THEME
+        root.classList.remove('dark');
+        body.className = "min-h-screen flex antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300";
+
+        // Sidebar
+        sidebar.className = "w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 select-none shadow-xl transition-all duration-300 " + (currentLang === 'ar' ? 'border-l border-[#1f3f35]' : 'border-r border-[#1f3f35]');
+        sidebarHeaderBox.className = "flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer";
+        sidebarLogoIcon.className = "w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300";
+        document.getElementById('txt-brand-name').className = "font-bold text-base text-white tracking-wide";
+        document.getElementById('txt-brand-badge').className = "text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight";
+        document.getElementById('txt-brand-sub').className = "text-xs text-emerald-100/60 mt-0.5";
+
+        sidebarFooterBox.className = "p-4 border-t border-[#224439] bg-[#0f211b]";
+        userAvatarBox.className = "w-8 h-8 rounded-lg bg-[#244d3f] text-emerald-200 flex items-center justify-center text-sm font-bold border border-[#356655]/50";
+        document.getElementById('txt-user-name').className = "text-xs font-bold text-white group-hover:text-emerald-200 transition-colors";
+        document.getElementById('txt-user-role').className = "text-[11px] text-emerald-100/50";
+
+        // Header
+        mainHeader.className = "bg-white border-b border-gray-100 sticky top-0 z-20 px-8 py-3.5 shadow-xs transition-colors duration-300";
+        headerIconBox.className = "w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]";
+        document.getElementById('txt-page-title').className = "text-xl font-bold tracking-tight text-gray-900";
+        document.getElementById('txt-page-badge').className = "text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]";
+        document.getElementById('txt-page-desc').className = "text-xs text-gray-500 font-medium mt-0.5";
+
+        // Header buttons
+        document.querySelectorAll('.header-action-btn').forEach(btn => {
+          btn.className = "header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer";
+        });
+        document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+        document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+
+        // Theme Toggle Button
+        btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200";
+        iconTheme.className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+        iconTheme.innerText = "dark_mode";
+        txtTheme.innerText = currentLang === 'ar' ? 'الوضع الداكن' : 'Dark Mode';
+
+        // Lang Toggle Button
+        document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200";
+        document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+
+        // Info Banner
+        infoBanner.className = "bg-white border border-[#1e3e34] p-4 rounded-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        infoIconWrapper.className = "w-10 h-10 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]";
+        infoIcon.className = "material-symbols-outlined text-[#1e3e34] text-[24px]";
+        document.getElementById('txt-banner-title').className = "font-bold text-gray-900 text-sm sm:text-base";
+        document.getElementById('txt-banner-sub').className = "text-xs text-gray-600 font-normal mt-0.5";
+        
+        document.getElementById('stat-box-1').className = "flex items-center gap-1.5 bg-[#e9f2ee] text-[#1e3e34] px-3 py-1.5 rounded-lg border border-[#d1ded9]";
+        document.getElementById('stat-box-2').className = "flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200";
+        document.getElementById('stat-box-3').className = "flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200";
+
+        // Filter Container
+        filterContainer.className = "bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300";
+        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100";
+        filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#1e3e34]";
+        document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-gray-800";
+        
+        subjectSelect.className = "w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs";
+        searchInput.className = "w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent shadow-xs transition-all";
+        sortSelect.className = "text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] shadow-xs cursor-pointer";
+        
+        viewModeContainer.className = "flex items-center rounded-xl border border-gray-300 p-0.5 bg-gray-50";
+        updateViewButtonsStyle('light');
+
+        // Table Styles (List Mode)
+        const tableHead = document.getElementById('books-table-head');
+        const booksListContainer = document.getElementById('books-list');
+        if (tableHead) tableHead.className = "bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200";
+        if (booksListContainer) booksListContainer.className = "overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xs";
+
+        // Footer
+        mainFooter.className = "bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300";
+        document.getElementById('txt-footer-left-1').className = "font-bold text-gray-800";
+
+        updatePillsTheme('light');
+      }
+    }
+
+    // Apply Language Function
+    function applyLanguage(lang) {
+      const root = document.getElementById('root-html');
+      const body = document.getElementById('body-app');
+      const sidebar = document.getElementById('sidebar');
+      const btnLang = document.getElementById('btn-lang-toggle');
+      const txtTheme = document.getElementById('txt-theme-toggle');
+
+      if (lang === 'ar') {
+        root.setAttribute('dir', 'rtl');
+        root.setAttribute('lang', 'ar');
+        body.className = body.className.replace('text-left', 'text-right');
+        btnLang.querySelector('span:last-child').innerText = "English";
+        txtTheme.innerText = currentTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الداكن';
+
+        document.getElementById('txt-brand-name').innerText = "النظام الأكاديمي";
+        document.getElementById('txt-brand-badge').innerText = "المنصة";
+        document.getElementById('txt-brand-sub').innerText = "بوابة هيئة التدريس";
+        document.getElementById('txt-user-name').innerText = "د. أحمد عبد الرحمن";
+        document.getElementById('txt-user-role').innerText = "أستاذ المادة • منسق المراجع العلمية";
+        
+        document.getElementById('txt-page-title').innerText = "المكتبة الرقمية والكتب الدراسية";
+        document.getElementById('txt-page-badge').innerText = "المراجع المعتمدة 2026";
+        document.getElementById('txt-page-desc').innerText = "تصفح وقراءة وتحميل الكتب الأكاديمية والملخصات المقررة لكافة التخصصات الجامعية";
+        
+        document.getElementById('txt-upload-btn').innerText = "إضافة كتاب جديد";
+        document.getElementById('txt-fav-filter').innerText = "المحفوظات";
+        document.getElementById('txt-calendar-btn').innerText = "التقويم";
+        document.getElementById('txt-notifications-btn').innerText = "الإشعارات";
+        
+        document.getElementById('txt-banner-title').innerText = "المستودع الرقمي للكتب والمناهج الأكاديمية";
+        document.getElementById('txt-banner-sub').innerText = "توفير الكتب الدراسية بصيغ إلكترونية عالية الدقة (PDF / ePub) مع ميزات القراءة المباشرة وتدوين الملاحظات التفاعلية.";
+        document.getElementById('txt-stat-books-lbl').innerText = "كتاب معتمد";
+        document.getElementById('txt-stat-dl-lbl').innerText = "تحميل";
+        document.getElementById('txt-stat-year-lbl').innerText = "طبعات 2026";
+
+        document.getElementById('lbl-subject-select').innerText = "اختيار التخصص الأكاديمي:";
+        document.getElementById('search-input').placeholder = "ابحث باسم الكتاب، المؤلف، أو الكلمات المفتاحية...";
+
+        document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
+        document.getElementById('nav-lbl-videos').innerText = "الفيديوهات التعليمية";
+        document.getElementById('nav-lbl-books').innerText = "المكتبة والمناهج الدراسية";
+        document.getElementById('nav-lbl-reports').innerText = "سجل الدرجات والتقييم";
+        document.getElementById('nav-lbl-campus').innerText = "الحرم والمختبرات";
+
+        document.getElementById('txt-footer-left-1').innerText = "بوابة النظام الأكاديمي";
+        document.getElementById('txt-footer-left-2').innerText = "المكتبة الرقمية والمناهج المعتمدة";
+        document.getElementById('txt-footer-right').innerText = "جميع الحقوق الأكاديمية محفوظة © 2026";
+
+        document.querySelectorAll('.nav-chevron').forEach(icon => {
+          icon.innerText = "chevron_left";
+        });
+
+        sidebar.classList.remove('border-r');
+        sidebar.classList.add('border-l');
+
+      } else {
+        // ENGLISH
+        root.setAttribute('dir', 'ltr');
+        root.setAttribute('lang', 'en');
+        body.className = body.className.replace('text-right', 'text-left');
+        btnLang.querySelector('span:last-child').innerText = "العربية";
+        txtTheme.innerText = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+        document.getElementById('txt-brand-name').innerText = "Academic System";
+        document.getElementById('txt-brand-badge').innerText = "Portal";
+        document.getElementById('txt-brand-sub').innerText = "Faculty Workspace";
+        document.getElementById('txt-user-name').innerText = "Dr. Ahmed Abdelrahman";
+        document.getElementById('txt-user-role').innerText = "Course Professor • Library Coordinator";
+
+        document.getElementById('txt-page-title').innerText = "Academic Library & Textbooks";
+        document.getElementById('txt-page-badge').innerText = "Accredited Syllabi 2026";
+        document.getElementById('txt-page-desc').innerText = "Explore, read, and download university textbooks, references, and curated lecture manuals";
+
+        document.getElementById('txt-upload-btn').innerText = "Add New Book";
+        document.getElementById('txt-fav-filter').innerText = "Bookmarks";
+        document.getElementById('txt-calendar-btn').innerText = "Calendar";
+        document.getElementById('txt-notifications-btn').innerText = "Notifications";
+
+        document.getElementById('txt-banner-title').innerText = "Digital Academic Repository & Textbooks";
+        document.getElementById('txt-banner-sub').innerText = "High-definition textbook library (PDF / ePub) with real-time in-browser reading and citation tools.";
+        document.getElementById('txt-stat-books-lbl').innerText = "Certified Books";
+        document.getElementById('txt-stat-dl-lbl').innerText = "Downloads";
+        document.getElementById('txt-stat-year-lbl').innerText = "2026 Editions";
+
+        document.getElementById('lbl-subject-select').innerText = "Select Academic Department:";
+        document.getElementById('search-input').placeholder = "Search by book title, author, or keywords...";
+
+        document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
+        document.getElementById('nav-lbl-videos').innerText = "Lecture Videos";
+        document.getElementById('nav-lbl-books').innerText = "Library & Textbooks";
+        document.getElementById('nav-lbl-reports').innerText = "Grades & Assessment";
+        document.getElementById('nav-lbl-campus').innerText = "Campus & Laboratories";
+
+        document.getElementById('txt-footer-left-1').innerText = "Academic Faculty Portal";
+        document.getElementById('txt-footer-left-2').innerText = "Digital Textbooks & Library";
+        document.getElementById('txt-footer-right').innerText = "All Academic Rights Reserved © 2026";
+
+        document.querySelectorAll('.nav-chevron').forEach(icon => {
+          icon.innerText = "chevron_right";
+        });
+
+        sidebar.classList.remove('border-l');
+        sidebar.classList.add('border-r');
+      }
+    }
+
+    // Update Pills Theme
+    function updatePillsTheme(theme) {
+      const pills = document.querySelectorAll('.sub-pill');
+      pills.forEach(pill => {
+        const isSelected = pill.getAttribute('data-subject') === currentSubjectFilter;
+        if (theme === 'dark') {
+          if (isSelected) {
+            pill.className = "sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e382e] text-[#57f1db] border border-[#2e5446] flex items-center gap-1.5 shrink-0 transition shadow-sm cursor-pointer";
+          } else {
+            pill.className = "sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-[#17211d] hover:bg-[#1f2d27] text-[#cbdad3] border border-[#27332e] flex items-center gap-1.5 shrink-0 transition cursor-pointer";
+          }
+        } else {
+          if (isSelected) {
+            pill.className = "sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e3e34] text-white flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer";
+          } else {
+            pill.className = "sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer";
+          }
+        }
+      });
+    }
+
+    // Update View Buttons Style
+    function updateViewButtonsStyle(theme) {
+      const btnGrid = document.getElementById('btn-view-grid');
+      const btnList = document.getElementById('btn-view-list');
+      const isDark = theme === 'dark';
+
+      if (currentViewMode === 'grid') {
+        btnGrid.className = isDark ? 
+          "p-1.5 rounded-lg bg-[#1e382e] text-[#57f1db] font-bold shadow-xs cursor-pointer" : 
+          "p-1.5 rounded-lg bg-white shadow-xs text-[#1e3e34] font-bold cursor-pointer";
+        btnList.className = isDark ? 
+          "p-1.5 rounded-lg text-[#8fa39b] hover:text-white cursor-pointer" : 
+          "p-1.5 rounded-lg text-gray-500 hover:text-gray-900 cursor-pointer";
+      } else {
+        btnList.className = isDark ? 
+          "p-1.5 rounded-lg bg-[#1e382e] text-[#57f1db] font-bold shadow-xs cursor-pointer" : 
+          "p-1.5 rounded-lg bg-white shadow-xs text-[#1e3e34] font-bold cursor-pointer";
+        btnGrid.className = isDark ? 
+          "p-1.5 rounded-lg text-[#8fa39b] hover:text-white cursor-pointer" : 
+          "p-1.5 rounded-lg text-gray-500 hover:text-gray-900 cursor-pointer";
+      }
+    }
+
+    // Update Counts on Pills and Total Badges
+    function updatePillCounts() {
+      const counts = { all: allBooks.length };
+      allBooks.forEach(b => {
+        counts[b.subject] = (counts[b.subject] || 0) + 1;
+      });
+      document.getElementById('count-all').innerText = counts.all;
+      ['physics', 'math', 'chemistry', 'cs', 'biology', 'arabic', 'english', 'history'].forEach(s => {
+        const el = document.getElementById(`count-${s}`);
+        if (el) el.innerText = counts[s] || 0;
+      });
+      document.getElementById('total-books-count').innerText = counts.all;
+
+      // Calculate total downloads
+      const totalDownloads = allBooks.reduce((sum, b) => sum + (b.downloads || 0), 0);
+      document.getElementById('total-downloads-count').innerText = totalDownloads.toLocaleString();
+    }
+
+    // ================= FILTERING & SORTING =================
+    function handleSubjectDropdown(val) {
+      currentSubjectFilter = val;
+      updatePillsTheme(currentTheme);
+      renderBooks();
+    }
+
+    function filterBySubject(sub) {
+      currentSubjectFilter = sub;
+      document.getElementById('subject-select').value = sub;
+      updatePillsTheme(currentTheme);
+      renderBooks();
+    }
+
+    function handleSearch(query) {
+      currentSearchTerm = query.trim().toLowerCase();
+      renderBooks();
+    }
+
+    function handleSort(sortVal) {
+      currentSortOption = sortVal;
+      renderBooks();
+    }
+
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      updateViewButtonsStyle(currentTheme);
+      renderBooks();
+    }
+
+    function toggleFavoritesOnly() {
+      showFavoritesOnly = !showFavoritesOnly;
+      const ind = document.getElementById('fav-filter-indicator');
+      const btn = document.getElementById('btn-fav-filter');
+      if (showFavoritesOnly) {
+        ind.classList.remove('hidden');
+        ind.classList.add('flex');
+        btn.classList.add('ring-2', 'ring-rose-400');
+      } else {
+        ind.classList.add('hidden');
+        ind.classList.remove('flex');
+        btn.classList.remove('ring-2', 'ring-rose-400');
+      }
+      renderBooks();
+    }
+
+    function resetFilters() {
+      currentSubjectFilter = 'all';
+      currentSearchTerm = '';
+      showFavoritesOnly = false;
+      document.getElementById('subject-select').value = 'all';
+      document.getElementById('search-input').value = '';
+      document.getElementById('fav-filter-indicator').classList.add('hidden');
+      document.getElementById('fav-filter-indicator').classList.remove('flex');
+      document.getElementById('btn-fav-filter').classList.remove('ring-2', 'ring-rose-400');
+      updatePillsTheme(currentTheme);
+      renderBooks();
+    }
+
+    // Get Filtered & Sorted Books
+    function getFilteredBooks() {
+      let list = allBooks.filter(item => {
+        // Favorites filter
+        if (showFavoritesOnly && !bookmarkedBookIds.includes(item.id)) {
+          return false;
+        }
+        // Subject filter
+        if (currentSubjectFilter !== 'all' && item.subject !== currentSubjectFilter) {
+          return false;
+        }
+        // Search filter
+        if (currentSearchTerm) {
+          const matchTitle = (item.titleAr + " " + item.titleEn).toLowerCase().includes(currentSearchTerm);
+          const matchAuthor = (item.authorsAr + " " + item.authorsEn).toLowerCase().includes(currentSearchTerm);
+          const matchEdition = (item.editionAr + " " + item.editionEn).toLowerCase().includes(currentSearchTerm);
+          const matchDesc = (item.descriptionAr + " " + item.descriptionEn).toLowerCase().includes(currentSearchTerm);
+          return matchTitle || matchAuthor || matchEdition || matchDesc;
+        }
+        return true;
+      });
+
+      // Sorting
+      if (currentSortOption === 'latest') {
+        list.sort((a, b) => new Date(b.date || '2026-09-01') - new Date(a.date || '2026-09-01'));
+      } else if (currentSortOption === 'popular') {
+        list.sort((a, b) => b.downloads - a.downloads);
+      } else if (currentSortOption === 'rating') {
+        list.sort((a, b) => b.rating - a.rating);
+      } else if (currentSortOption === 'pages') {
+        list.sort((a, b) => b.pages - a.pages);
+      } else if (currentSortOption === 'title') {
+        const key = currentLang === 'ar' ? 'titleAr' : 'titleEn';
+        list.sort((a, b) => a[key].localeCompare(b[key]));
+      }
+
+      return list;
+    }
+
+    // ================= RENDER BOOKS =================
+    function renderBooks() {
+      const grid = document.getElementById('books-grid');
+      const listContainer = document.getElementById('books-list');
+      const tableBody = document.getElementById('books-table-body');
+      const empty = document.getElementById('empty-state');
+      const filtered = getFilteredBooks();
+      const isAr = currentLang === 'ar';
+      const isDark = currentTheme === 'dark';
+
+      document.getElementById('visible-count').innerText = filtered.length;
+      
+      const subName = currentSubjectFilter === 'all' ? 
+        (isAr ? 'جميع التخصصات' : 'All Departments') : 
+        (isAr ? (allBooks.find(b => b.subject === currentSubjectFilter)?.subjectNameAr || currentSubjectFilter) : 
+                (allBooks.find(b => b.subject === currentSubjectFilter)?.subjectNameEn || currentSubjectFilter));
+      
+      document.getElementById('txt-filter-active-label').innerText = isAr ? `المادة: ${subName}` : `Subject: ${subName}`;
+      document.getElementById('txt-results-count').innerHTML = isAr ? 
+        `المعروض حالياً: <strong class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> كتب ومراجع معتمدة` :
+        `Showing: <strong class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> accredited textbooks`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        listContainer.classList.add('hidden');
+        grid.classList.add('hidden');
+        empty.classList.remove('hidden');
+        empty.classList.add('flex');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      empty.classList.remove('flex');
+
+      if (currentViewMode === 'grid') {
+        listContainer.classList.add('hidden');
+        grid.classList.remove('hidden');
+        renderGridView(filtered, isAr, isDark);
+      } else {
+        grid.classList.add('hidden');
+        listContainer.classList.remove('hidden');
+        renderListView(filtered, isAr, isDark);
+      }
+    }
+
+    // Render Grid View
+    function renderGridView(filtered, isAr, isDark) {
+      const grid = document.getElementById('books-grid');
+      
+      grid.innerHTML = filtered.map(item => {
+        const title = isAr ? item.titleAr : item.titleEn;
+        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
+        const authors = isAr ? item.authorsAr : item.authorsEn;
+        const edition = isAr ? item.editionAr : item.editionEn;
+        const badge = isAr ? item.badgeAr : item.badgeEn;
+        const isBookmarked = bookmarkedBookIds.includes(item.id);
+        const readBtnText = isAr ? 'قراءة الكتاب' : 'Read Book';
+        const dlBtnText = isAr ? 'تحميل PDF' : 'Download';
+
+        const cardBgClass = isDark ? 
+          "bg-[#1b221f] border-[#27332e] hover:border-[#2dd4bf]/40" : 
+          "bg-white border-gray-200 hover:shadow-lg";
+        const titleClass = isDark ? 
+          "text-white group-hover:text-[#34d399]" : 
+          "text-gray-900 group-hover:text-emerald-700";
+        const subTagClass = isDark ? 
+          "bg-[#121514]/90 text-[#34d399] border-[#27332e]" : 
+          "bg-white/95 text-[#1e3e34] border-gray-200/60";
+        const btnClass = isDark ? 
+          "bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white border-[#2e5446]" : 
+          "bg-[#1e3e34] hover:bg-[#162e27] text-white";
+
+        // Badge styling
+        let badgeStyle = "bg-emerald-50 text-emerald-800 border-emerald-100";
+        if (isDark) {
+          if (item.badgeColor === 'blue') badgeStyle = "bg-[#172d3f] text-[#7bd0ff] border-[#204969]";
+          else if (item.badgeColor === 'amber') badgeStyle = "bg-[#362712] text-[#ffc66e] border-[#583f1d]";
+          else if (item.badgeColor === 'purple') badgeStyle = "bg-[#2e1d3d] text-[#c084fc] border-[#4c2d66]";
+          else if (item.badgeColor === 'rose') badgeStyle = "bg-[#38181e] text-[#fda4af] border-[#592631]";
+          else badgeStyle = "bg-[#152e26] text-[#34d399] border-[#225042]";
+        } else {
+          if (item.badgeColor === 'blue') badgeStyle = "bg-blue-50 text-blue-800 border-blue-100";
+          else if (item.badgeColor === 'amber') badgeStyle = "bg-amber-50 text-amber-800 border-amber-100";
+          else if (item.badgeColor === 'purple') badgeStyle = "bg-purple-50 text-purple-800 border-purple-100";
+          else if (item.badgeColor === 'rose') badgeStyle = "bg-rose-50 text-rose-800 border-rose-100";
+        }
+
+        return `
+          <div class="card-item ${cardBgClass} rounded-2xl border overflow-hidden shadow-xs transition-all duration-300 flex flex-col group justify-between" id="${item.id}">
+            
+            <!-- Book Visual Area (3D Spine & Cover) -->
+            <div class="p-4 pb-0 bg-gradient-to-b ${isDark ? 'from-[#141b18] to-transparent' : 'from-gray-50/70 to-transparent'}">
+              <div class="h-52 w-full overflow-hidden rounded-xl bg-gray-900 relative cursor-pointer flex items-center justify-center" onclick="openBookModal('${item.id}')">
+                <img 
+                  alt="${title}" 
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
+                  src="${item.thumbnail}" 
+                  onerror="this.src='assets/images/desk.jpg'"
+                />
+                
+                <!-- Book Spine shadow gradient -->
+                <div class="absolute inset-y-0 start-0 w-3 bg-black/40 book-cover-spine pointer-events-none"></div>
+
+                <!-- Subject Tag (top-start) -->
+                <div class="absolute top-3 start-3 backdrop-blur-xs text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border ${subTagClass}">
+                  <span>${subject}</span>
+                </div>
+
+                <!-- Bookmark Button (top-end) -->
+                <button 
+                  onclick="event.stopPropagation(); toggleCardBookmark('${item.id}')" 
+                  class="absolute top-3 end-3 w-8 h-8 rounded-full ${isBookmarked ? 'bg-rose-500 text-white' : 'bg-black/60 text-white hover:bg-black/80'} backdrop-blur-md flex items-center justify-center transition shadow-sm cursor-pointer"
+                  title="${isBookmarked ? (isAr ? 'إزالة من المحفوظات' : 'Remove bookmark') : (isAr ? 'حفظ في المفضلة' : 'Add to bookmarks')}"
+                >
+                  <span class="material-symbols-outlined text-[18px]">${isBookmarked ? 'bookmark' : 'bookmark_border'}</span>
+                </button>
+
+                <!-- Pages & Size Badge (bottom-end) -->
+                <div class="absolute bottom-2.5 end-2.5 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                  <span class="material-symbols-outlined text-[13px] text-emerald-400">auto_stories</span>
+                  <span>${item.pages} ${isAr ? 'صفحة' : 'pages'}</span>
+                  <span>•</span>
+                  <span>${item.fileSize}</span>
+                </div>
+
+                <!-- Hover Open Overlay Glow -->
+                <div class="absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div class="w-11 h-11 rounded-full bg-[#1e3e34]/90 text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-all border border-emerald-400/50">
+                    <span class="material-symbols-outlined text-xl">menu_book</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Content Body -->
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <!-- Top metadata: Edition & Rating -->
+                <div class="flex items-center justify-between gap-2 mb-2 text-[11px]">
+                  <span class="font-semibold text-gray-500 truncate ${isDark ? 'text-[#8fa39b]' : 'text-gray-500'}">
+                    ${edition}
+                  </span>
+                  <div class="flex items-center gap-1 font-bold text-amber-500 shrink-0">
+                    <span class="material-symbols-outlined text-[14px]">star</span>
+                    <span>${item.rating}</span>
+                  </div>
+                </div>
+
+                <!-- Title -->
+                <h3 
+                  onclick="openBookModal('${item.id}')" 
+                  class="font-bold text-sm leading-snug line-clamp-2 ${titleClass} cursor-pointer transition-colors mb-2" 
+                  title="${title}"
+                >
+                  ${title}
+                </h3>
+
+                <!-- Authors -->
+                <div class="flex items-center gap-1.5 text-xs ${isDark ? 'text-[#8fa39b]' : 'text-gray-600'} mb-3">
+                  <span class="material-symbols-outlined text-[16px] text-emerald-600 shrink-0">person</span>
+                  <span class="line-clamp-1">${authors}</span>
+                </div>
+
+                <!-- Badge Pill -->
+                <div class="mb-4">
+                  <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-md border ${badgeStyle}">
+                    ${badge}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Action Buttons Bottom Row -->
+              <div class="pt-3 border-t ${isDark ? 'border-[#27332e]' : 'border-gray-100'} flex items-center gap-2">
+                <button 
+                  onclick="openBookModal('${item.id}')" 
+                  class="flex-1 py-2 px-3 rounded-xl text-xs font-bold ${btnClass} flex items-center justify-center gap-1.5 shadow-xs transition-all cursor-pointer"
+                >
+                  <span class="material-symbols-outlined text-[16px]">menu_book</span>
+                  <span>${readBtnText}</span>
+                </button>
+
+                <button 
+                  onclick="simulateDownloadCard('${item.id}')" 
+                  class="p-2 rounded-xl text-xs font-bold ${isDark ? 'bg-[#151c19] text-[#cbdad3] hover:text-white border border-[#27332e]' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'} transition cursor-pointer"
+                  title="${dlBtnText}"
+                >
+                  <span class="material-symbols-outlined text-[18px]">download</span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render List View
+    function renderListView(filtered, isAr, isDark) {
+      const tbody = document.getElementById('books-table-body');
+      
+      tbody.innerHTML = filtered.map(item => {
+        const title = isAr ? item.titleAr : item.titleEn;
+        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
+        const authors = isAr ? item.authorsAr : item.authorsEn;
+        const edition = isAr ? item.editionAr : item.editionEn;
+        const isBookmarked = bookmarkedBookIds.includes(item.id);
+        const rowBg = isDark ? 
+          "hover:bg-[#151c19] text-[#e1ebe6]" : 
+          "hover:bg-gray-50/80 text-gray-900";
+
+        return `
+          <tr class="${rowBg} transition-colors cursor-pointer" onclick="openBookModal('${item.id}')">
+            <!-- Book & Cover -->
+            <td class="px-5 py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-14 rounded-md overflow-hidden bg-gray-900 shrink-0 border border-gray-300 relative shadow-2xs">
+                  <img src="${item.thumbnail}" alt="${title}" class="w-full h-full object-cover" onerror="this.src='assets/images/desk.jpg'"/>
+                </div>
+                <div class="min-w-0 max-w-xs">
+                  <div class="font-bold text-xs line-clamp-1 hover:text-emerald-600 transition-colors">${title}</div>
+                  <div class="text-[10px] text-gray-500 mt-0.5 line-clamp-1">${item.format}</div>
+                </div>
+              </div>
+            </td>
+
+            <!-- Authors -->
+            <td class="px-4 py-3 text-xs text-gray-500">
+              <span class="line-clamp-1">${authors}</span>
+            </td>
+
+            <!-- Subject -->
+            <td class="px-4 py-3">
+              <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-md ${isDark ? 'bg-[#152e26] text-[#34d399]' : 'bg-emerald-50 text-emerald-800'}">
+                ${subject}
+              </span>
+            </td>
+
+            <!-- Edition -->
+            <td class="px-4 py-3 text-xs text-gray-500">
+              <span>${edition}</span>
+            </td>
+
+            <!-- Pages & Size -->
+            <td class="px-4 py-3 text-xs font-mono">
+              <div>${item.pages} ${isAr ? 'صفحة' : 'p.'}</div>
+              <div class="text-[10px] text-gray-400">${item.fileSize}</div>
+            </td>
+
+            <!-- Rating & Downloads -->
+            <td class="px-4 py-3 text-xs">
+              <div class="flex items-center gap-1 font-bold text-amber-500">
+                <span class="material-symbols-outlined text-[14px]">star</span>
+                <span>${item.rating}</span>
+              </div>
+              <div class="text-[10px] text-gray-400 mt-0.5">${item.downloads.toLocaleString()} ${isAr ? 'تحميل' : 'dl'}</div>
+            </td>
+
+            <!-- Actions -->
+            <td class="px-5 py-3 text-center" onclick="event.stopPropagation()">
+              <div class="flex items-center justify-center gap-2">
+                <button onclick="openBookModal('${item.id}')" class="p-1.5 rounded-lg bg-[#1e3e34] hover:bg-[#162e27] text-white transition" title="${isAr ? 'قراءة' : 'Read'}">
+                  <span class="material-symbols-outlined text-[16px]">menu_book</span>
+                </button>
+                <button onclick="simulateDownloadCard('${item.id}')" class="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition" title="${isAr ? 'تحميل' : 'Download'}">
+                  <span class="material-symbols-outlined text-[16px]">download</span>
+                </button>
+                <button onclick="toggleCardBookmark('${item.id}')" class="p-1.5 rounded-lg ${isBookmarked ? 'bg-rose-100 text-rose-600' : 'bg-gray-100 hover:bg-gray-200 text-gray-600'} transition" title="${isAr ? 'حفظ' : 'Bookmark'}">
+                  <span class="material-symbols-outlined text-[16px]">${isBookmarked ? 'bookmark' : 'bookmark_border'}</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ================= BOOKMARKING =================
+    function toggleCardBookmark(bookId) {
+      const idx = bookmarkedBookIds.indexOf(bookId);
+      const isAr = currentLang === 'ar';
+      if (idx > -1) {
+        bookmarkedBookIds.splice(idx, 1);
+        showToast(isAr ? "تمت إزالة الكتاب من المحفوظات" : "Book removed from bookmarks", "bookmark_remove");
+      } else {
+        bookmarkedBookIds.push(bookId);
+        showToast(isAr ? "تم حفظ الكتاب في مفضلتك الأكاديمية!" : "Book added to your bookmarks!", "bookmark_added");
+      }
+      try {
+        localStorage.setItem('platform_bookmarked_books', JSON.stringify(bookmarkedBookIds));
+      } catch(e) {}
+      updateFavoriteCounter();
+      renderBooks();
+    }
+
+    function toggleModalFavorite() {
+      if (!currentModalBook) return;
+      toggleCardBookmark(currentModalBook.id);
+      updateModalBookmarkButton();
+    }
+
+    function updateModalBookmarkButton() {
+      if (!currentModalBook) return;
+      const isBookmarked = bookmarkedBookIds.includes(currentModalBook.id);
+      const icon = document.getElementById('bmodal-fav-icon');
+      const btn = document.getElementById('bmodal-btn-fav');
+      if (isBookmarked) {
+        icon.innerText = "bookmark";
+        btn.className = "w-9 h-9 rounded-lg bg-rose-50 text-rose-600 border border-rose-200 flex items-center justify-center transition cursor-pointer";
+      } else {
+        icon.innerText = "bookmark_border";
+        btn.className = "w-9 h-9 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 transition cursor-pointer";
+      }
+    }
+
+    function updateFavoriteCounter() {
+      const badge = document.getElementById('fav-count-badge');
+      if (badge) badge.innerText = bookmarkedBookIds.length;
+    }
+
+    // ================= INTERACTIVE BOOK READER MODAL =================
+    function openBookModal(bookId) {
+      const book = allBooks.find(b => b.id === bookId);
+      if (!book) return;
+      currentModalBook = book;
+      currentPreviewPage = 12;
+      currentZoomLevel = 1.0;
+
+      const modal = document.getElementById('book-reader-modal');
+      const container = document.getElementById('book-modal-container');
+      const isDark = currentTheme === 'dark';
+      const isAr = currentLang === 'ar';
+
+      // Apply modal dark / light styles
+      if (isDark) {
+        container.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-5xl w-full border border-[#27332e] shadow-2xl animate-modal relative overflow-hidden flex flex-col max-h-[94vh]";
+        document.getElementById('book-modal-header').className = "p-4 sm:p-5 border-b border-[#27332e] flex items-center justify-between bg-[#151c19]";
+        document.getElementById('bmodal-title').className = "text-base sm:text-lg font-bold text-white truncate";
+        document.getElementById('bmodal-subtitle').className = "text-xs text-[#8fa39b] truncate mt-0.5";
+        document.getElementById('bmodal-info-card').className = "flex gap-4 p-4 rounded-xl border border-[#27332e] bg-[#151c19]";
+        document.getElementById('bmodal-desc-card').className = "p-4 rounded-xl border border-[#27332e] bg-[#151c19]";
+        document.getElementById('bmodal-toc-card').className = "p-4 rounded-xl border border-[#27332e] bg-[#151c19] flex-1";
+        document.getElementById('bmodal-reader-container').className = "lg:col-span-7 flex flex-col rounded-xl border border-[#27332e] bg-[#151c19] overflow-hidden";
+        document.getElementById('reader-toolbar').className = "p-3 border-b border-[#27332e] bg-[#1b221f] flex items-center justify-between flex-wrap gap-2 text-xs";
+        document.getElementById('txt-reader-title').className = "font-bold text-[#e1ebe6]";
+        document.getElementById('reader-viewport').className = "flex-1 p-6 overflow-y-auto flex items-center justify-center bg-[#0e1211]";
+        document.getElementById('book-modal-footer').className = "p-4 sm:p-5 border-t border-[#27332e] bg-[#151c19] flex flex-wrap items-center justify-between gap-3";
+        document.getElementById('btn-modal-close-bottom').className = "px-5 py-2.5 text-xs font-semibold rounded-xl bg-[#24332c] hover:bg-[#2e4038] text-white transition cursor-pointer";
+        document.getElementById('btn-modal-fullscreen').className = "px-4 py-2.5 text-xs font-semibold rounded-xl bg-[#24332c] hover:bg-[#2e4038] text-white border border-[#2e5446] flex items-center gap-2 transition cursor-pointer";
+      } else {
+        container.className = "bg-white text-gray-900 rounded-2xl max-w-5xl w-full border border-gray-200 shadow-2xl animate-modal relative overflow-hidden flex flex-col max-h-[94vh]";
+        document.getElementById('book-modal-header').className = "p-4 sm:p-5 border-b border-gray-200 flex items-center justify-between bg-gray-50/70";
+        document.getElementById('bmodal-title').className = "text-base sm:text-lg font-bold text-gray-900 truncate";
+        document.getElementById('bmodal-subtitle').className = "text-xs text-gray-500 truncate mt-0.5";
+        document.getElementById('bmodal-info-card').className = "flex gap-4 p-4 rounded-xl border border-gray-200 bg-gray-50/50";
+        document.getElementById('bmodal-desc-card').className = "p-4 rounded-xl border border-gray-200 bg-white";
+        document.getElementById('bmodal-toc-card').className = "p-4 rounded-xl border border-gray-200 bg-white flex-1";
+        document.getElementById('bmodal-reader-container').className = "lg:col-span-7 flex flex-col rounded-xl border border-gray-200 bg-gray-50/50 overflow-hidden";
+        document.getElementById('reader-toolbar').className = "p-3 border-b border-gray-200 bg-white flex items-center justify-between flex-wrap gap-2 text-xs";
+        document.getElementById('txt-reader-title').className = "font-bold text-gray-800";
+        document.getElementById('reader-viewport').className = "flex-1 p-6 overflow-y-auto flex items-center justify-center bg-gray-100/60";
+        document.getElementById('book-modal-footer').className = "p-4 sm:p-5 border-t border-gray-200 bg-gray-50/70 flex flex-wrap items-center justify-between gap-3";
+        document.getElementById('btn-modal-close-bottom').className = "px-5 py-2.5 text-xs font-semibold rounded-xl bg-gray-200 hover:bg-gray-300 text-gray-800 transition cursor-pointer";
+        document.getElementById('btn-modal-fullscreen').className = "px-4 py-2.5 text-xs font-semibold rounded-xl bg-white hover:bg-gray-100 text-gray-700 border border-gray-300 flex items-center gap-2 transition cursor-pointer";
+      }
+
+      // Populate Data
+      document.getElementById('bmodal-title').innerText = isAr ? book.titleAr : book.titleEn;
+      document.getElementById('bmodal-subtitle').innerText = isAr ? 
+        `${book.authorsAr} • ${book.subjectNameAr} • ${book.editionAr}` : 
+        `${book.authorsEn} • ${book.subjectNameEn} • ${book.editionEn}`;
+      document.getElementById('bmodal-cover-img').src = book.thumbnail;
+      document.getElementById('bmodal-subject-tag').innerText = isAr ? book.subjectNameAr : book.subjectNameEn;
+      document.getElementById('bmodal-edition').innerText = isAr ? book.editionAr : book.editionEn;
+      document.getElementById('bmodal-authors').innerText = isAr ? book.authorsAr : book.authorsEn;
+      document.getElementById('bmodal-format').innerText = book.format;
+      document.getElementById('bmodal-pages').innerText = `${book.pages} ${isAr ? 'صفحة' : 'pages'}`;
+      document.getElementById('bmodal-size').innerText = book.fileSize;
+      document.getElementById('bmodal-rating').innerHTML = `
+        <span class="material-symbols-outlined text-[14px]">star</span>
+        <span>${book.rating} (${book.reviewsCount} ${isAr ? 'تقييم' : 'reviews'})</span>
+      `;
+      document.getElementById('bmodal-description').innerText = isAr ? book.descriptionAr : book.descriptionEn;
+
+      // Render TOC
+      const tocList = document.getElementById('bmodal-toc-list');
+      const chapters = isAr ? (book.chaptersAr || []) : (book.chaptersEn || []);
+      tocList.innerHTML = chapters.map((ch, idx) => `
+        <div onclick="selectChapterPage(${idx + 1})" class="p-2 rounded-lg text-xs flex items-center justify-between ${isDark ? 'hover:bg-[#1f2d27] text-[#cbdad3]' : 'hover:bg-gray-100 text-gray-700'} cursor-pointer transition">
+          <span class="line-clamp-1">${ch}</span>
+          <span class="text-[10px] text-gray-400 font-mono ms-2">ص ${idx * 40 + 12}</span>
+        </div>
+      `).join('');
+
+      // Update Reader Page Content
+      updateReaderPageSheet();
+      updateModalBookmarkButton();
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeBookModal() {
+      document.getElementById('book-reader-modal').classList.add('hidden');
+      currentModalBook = null;
+    }
+
+    // Reader Page Controls
+    function selectChapterPage(chapIndex) {
+      currentPreviewPage = (chapIndex - 1) * 40 + 12;
+      updateReaderPageSheet();
+      showToast(currentLang === 'ar' ? `الانتقال إلى الفصل ${chapIndex}` : `Navigated to Chapter ${chapIndex}`, "auto_stories");
+    }
+
+    function prevPage() {
+      if (currentPreviewPage > 1) {
+        currentPreviewPage--;
+        updateReaderPageSheet();
+      }
+    }
+
+    function nextPage() {
+      if (currentModalBook && currentPreviewPage < currentModalBook.pages) {
+        currentPreviewPage++;
+        updateReaderPageSheet();
+      }
+    }
+
+    function zoomIn() {
+      if (currentZoomLevel < 1.3) {
+        currentZoomLevel += 0.1;
+        document.getElementById('book-page-sheet').style.transform = `scale(${currentZoomLevel})`;
+      }
+    }
+
+    function zoomOut() {
+      if (currentZoomLevel > 0.8) {
+        currentZoomLevel -= 0.1;
+        document.getElementById('book-page-sheet').style.transform = `scale(${currentZoomLevel})`;
+      }
+    }
+
+    function updateReaderPageSheet() {
+      if (!currentModalBook) return;
+      const isAr = currentLang === 'ar';
+      document.getElementById('reader-page-indicator').innerText = isAr ? 
+        `صفحة ${currentPreviewPage} من ${currentModalBook.pages}` : 
+        `Page ${currentPreviewPage} of ${currentModalBook.pages}`;
+      document.getElementById('page-sheet-num').innerText = currentPreviewPage;
+      document.getElementById('page-sheet-chapter').innerText = isAr ? 
+        `الفصل الدراسي • ${currentModalBook.titleAr}` : 
+        `Academic Chapter • ${currentModalBook.titleEn}`;
+    }
+
+    function simulateOnlineReading() {
+      const isAr = currentLang === 'ar';
+      alert(isAr ? 
+        "تم تفعيل وضع القراءة بملء الشاشة، استمتع بتصفح المرجع كاملاً!" : 
+        "Fullscreen reading mode activated. Enjoy your study session!");
+    }
+
+    function copyCitation() {
+      if (!currentModalBook) return;
+      const isAr = currentLang === 'ar';
+      const citation = isAr ? 
+        `${currentModalBook.authorsAr} (2026). ${currentModalBook.titleAr}. ${currentModalBook.editionAr}، مطبعة جامعة المنصة الأكاديمية.` : 
+        `${currentModalBook.authorsEn} (2026). ${currentModalBook.titleEn}. ${currentModalBook.editionEn}, Academic Faculty Press.`;
+      
+      navigator.clipboard.writeText(citation).then(() => {
+        showToast(isAr ? "تم نسخ الاستشهاد الأكاديمي (APA) بنجاح!" : "Academic APA citation copied to clipboard!", "assignment_turned_in");
+      }).catch(() => {
+        showToast(isAr ? "تم نسخ الاستشهاد الأكاديمي!" : "Citation copied!", "assignment_turned_in");
+      });
+    }
+
+    function downloadBookPdf() {
+      if (!currentModalBook) return;
+      const isAr = currentLang === 'ar';
+      const title = isAr ? currentModalBook.titleAr : currentModalBook.titleEn;
+      showToast(isAr ? `جاري بدء تحميل "${title}" (${currentModalBook.fileSize})...` : `Starting download for "${title}" (${currentModalBook.fileSize})...`, "download");
+      
+      // Increment downloads
+      currentModalBook.downloads++;
+      try {
+        localStorage.setItem('platform_books', JSON.stringify(allBooks));
+      } catch(e) {}
+      updatePillCounts();
+
+      setTimeout(() => {
+        showToast(isAr ? `🎉 اكتمل تحميل كتاب "${title}" بنجاح!` : `🎉 Successfully downloaded "${title}"!`, "check_circle");
+      }, 1400);
+    }
+
+    function simulateDownloadCard(bookId) {
+      const book = allBooks.find(b => b.id === bookId);
+      if (!book) return;
+      const isAr = currentLang === 'ar';
+      const title = isAr ? book.titleAr : book.titleEn;
+      showToast(isAr ? `جاري تحميل "${title}" (${book.fileSize})...` : `Downloading "${title}" (${book.fileSize})...`, "download");
+      
+      book.downloads++;
+      try {
+        localStorage.setItem('platform_books', JSON.stringify(allBooks));
+      } catch(e) {}
+      updatePillCounts();
+      renderBooks();
+
+      setTimeout(() => {
+        showToast(isAr ? `🎉 اكتمل تحميل كتاب "${title}" بنجاح!` : `🎉 Successfully downloaded "${title}"!`, "check_circle");
+      }, 1200);
+    }
+
+    // ================= UPLOAD BOOK MODAL =================
+    function openUploadModal() {
+      const modal = document.getElementById('upload-book-modal');
+      const container = document.getElementById('upload-modal-container');
+      const isDark = currentTheme === 'dark';
+      const isAr = currentLang === 'ar';
+
+      if (isDark) {
+        container.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-xl w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative max-h-[92vh] overflow-y-auto";
+        document.getElementById('upload-modal-title').className = "text-lg font-bold text-white";
+        document.getElementById('upload-modal-sub').className = "text-xs text-[#8fa39b]";
+        document.querySelectorAll('#upload-book-form input, #upload-book-form select, #upload-book-form textarea').forEach(el => {
+          el.className = "w-full p-2.5 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399]";
+        });
+        document.getElementById('btn-up-cancel').className = "px-4 py-2.5 text-xs font-semibold rounded-lg bg-[#24332c] hover:bg-[#2e4038] text-white transition cursor-pointer";
+      } else {
+        container.className = "bg-white text-gray-900 rounded-2xl max-w-xl w-full p-6 border border-gray-200 shadow-2xl animate-modal relative max-h-[92vh] overflow-y-auto";
+        document.getElementById('upload-modal-title').className = "text-lg font-bold text-gray-900";
+        document.getElementById('upload-modal-sub').className = "text-xs text-gray-500";
+        document.querySelectorAll('#upload-book-form input, #upload-book-form select, #upload-book-form textarea').forEach(el => {
+          el.className = "w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]";
+        });
+        document.getElementById('btn-up-cancel').className = "px-4 py-2.5 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer";
+      }
+
+      document.getElementById('upload-modal-title').innerText = isAr ? "إضافة كتاب ومقرر دراسي جديد" : "Upload Academic Textbook";
+      document.getElementById('upload-modal-sub').innerText = isAr ? "نشر وتوثيق مرجع أكاديمي جديد في المكتبة الرقمية" : "Publish a certified course syllabus or textbook";
+      document.getElementById('lbl-up-title').innerText = isAr ? "عنوان الكتاب / المرجع الدراسي *" : "Book / Syllabus Title *";
+      document.getElementById('lbl-up-subject').innerText = isAr ? "القسم / التخصص الأكاديمي *" : "Academic Department *";
+      document.getElementById('lbl-up-edition').innerText = isAr ? "الطبعة وسنة النشر *" : "Edition & Year *";
+      document.getElementById('lbl-up-authors').innerText = isAr ? "أسماء المؤلفين / أعضاء هيئة التدريس *" : "Authors / Faculty Members *";
+      document.getElementById('lbl-up-pages').innerText = isAr ? "عدد الصفحات *" : "Number of Pages *";
+      document.getElementById('lbl-up-size').innerText = isAr ? "حجم الملف التقديري (MB)" : "Estimated File Size (MB)";
+      document.getElementById('lbl-up-cover').innerText = isAr ? "صورة الغلاف الأكاديمي" : "Cover Visual";
+      document.getElementById('lbl-up-desc').innerText = isAr ? "ملخص ومحتوى الكتاب" : "Textbook Abstract & Content";
+      document.getElementById('btn-up-cancel').innerText = isAr ? "إلغاء" : "Cancel";
+      document.getElementById('txt-btn-up-submit').innerText = isAr ? "نشر الكتاب في المكتبة" : "Publish to Library";
+
+      if (currentSubjectFilter !== 'all') {
+        document.getElementById('up-subject').value = currentSubjectFilter;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('upload-book-modal').classList.add('hidden');
+      document.getElementById('upload-book-form').reset();
+    }
+
+    function handleBookUpload(e) {
+      e.preventDefault();
+      const title = document.getElementById('up-title').value.trim();
+      const subject = document.getElementById('up-subject').value;
+      const edition = document.getElementById('up-edition').value.trim();
+      const authors = document.getElementById('up-authors').value.trim();
+      const pages = parseInt(document.getElementById('up-pages').value) || 350;
+      const size = document.getElementById('up-size').value.trim() || "18.5 MB";
+      const cover = document.getElementById('up-cover').value;
+      const desc = document.getElementById('up-description').value.trim();
+
+      const subjectNames = {
+        physics: { ar: "الفيزياء", en: "Physics" },
+        math: { ar: "الرياضيات", en: "Mathematics" },
+        chemistry: { ar: "الكيمياء", en: "Chemistry" },
+        cs: { ar: "الحاسب والبرمجة", en: "Computer Science" },
+        biology: { ar: "الأحياء", en: "Biology" },
+        arabic: { ar: "اللغة العربية", en: "Arabic" },
+        english: { ar: "اللغة الإنجليزية", en: "English" },
+        history: { ar: "التاريخ والحضارة", en: "History" }
+      };
+
+      const newBook = {
+        id: "book-" + Date.now(),
+        subject: subject,
+        subjectNameAr: subjectNames[subject]?.ar || subject,
+        subjectNameEn: subjectNames[subject]?.en || subject,
+        titleAr: title,
+        titleEn: title,
+        authorsAr: authors,
+        authorsEn: authors,
+        editionAr: edition,
+        editionEn: edition,
+        pages: pages,
+        fileSize: size,
+        format: "PDF عالي الجودة",
+        downloads: 1,
+        rating: 5.0,
+        reviewsCount: 1,
+        badgeAr: "جديد 2026",
+        badgeEn: "New 2026",
+        badgeColor: "emerald",
+        thumbnail: cover,
+        date: new Date().toISOString().split('T')[0],
+        descriptionAr: desc || "تم نشر وتوثيق هذا المرجع الأكاديمي بنجاح ضمن مقررات الفصل الدراسي الحالي.",
+        descriptionEn: desc || "Officially published academic textbook for the current university curriculum.",
+        chaptersAr: [
+          "الفصل الأول: المفاهيم التمهيدية والأسس المنهجية",
+          "الفصل الثاني: الدراسات النظرية والنماذج التحليلية",
+          "الفصل الثالث: التطبيقات العملية وحل المسائل",
+          "الفصل الرابع: الاختبارات النموذجية والمصطلحات"
+        ],
+        chaptersEn: [
+          "Chapter 1: Foundational Principles & Methodology",
+          "Chapter 2: Theoretical Models & Analytical Frameworks",
+          "Chapter 3: Applied Case Studies & Practical Solutions",
+          "Chapter 4: Specimen Exams & Glossary"
+        ]
+      };
+
+      allBooks.unshift(newBook);
+      try {
+        localStorage.setItem('platform_books', JSON.stringify(allBooks));
+      } catch (err) {
+        console.error(err);
+      }
+
+      closeUploadModal();
+      updatePillCounts();
+      renderBooks();
+
+      const isAr = currentLang === 'ar';
+      showToast(isAr ? `🎉 تم نشر كتاب "${title}" بنجاح في المكتبة!` : `🎉 Successfully published "${title}" to the library!`, "check_circle");
+    }
+
+    // ================= GENERIC MODAL OPERATIONS =================
+    function openModal(type) {
+      const modal = document.getElementById('interactive-modal');
+      const mContainer = document.getElementById('modal-container');
+      const mTitle = document.getElementById('modal-title');
+      const mSub = document.getElementById('modal-subtitle');
+      const mBody = document.getElementById('modal-body');
+      const mIcon = document.getElementById('modal-icon');
+      const isAr = currentLang === 'ar';
+      const isDark = currentTheme === 'dark';
+
+      if (isDark) {
+        mContainer.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-lg w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative";
+      } else {
+        mContainer.className = "bg-white text-gray-900 rounded-2xl max-w-lg w-full p-6 border border-gray-200 shadow-2xl animate-modal relative";
+      }
+
+      if (type === 'calendar') {
+        mTitle.innerText = isAr ? "التقويم الأكاديمي ومواعيد تسليم المقررات" : "Academic Calendar & Syllabus Deadlines";
+        mSub.innerText = isAr ? "مواعيد الاختبارات وتحديثات المناهج الدراسية" : "Midterm dates and textbook revision milestones";
+        mIcon.innerText = "calendar_month";
+        mBody.innerHTML = isAr ? 
+          `<p>موعد تحديث مقررات <strong>الفيزياء والرياضيات</strong> للفصل القادم يبدأ يوم 15 أكتوبر القادم.</p>` :
+          `<p>Syllabus updates for <strong>Physics and Mathematics</strong> will commence on October 15th.</p>`;
+      } else if (type === 'notifications') {
+        mTitle.innerText = isAr ? "مركز إشعارات المكتبة والمراجع" : "Library & Textbooks Notifications";
+        mSub.innerText = isAr ? "تنبيهات الكتب الجديدة والاستعارة" : "New acquisitions and syllabus alerts";
+        mIcon.innerText = "notifications_active";
+        mBody.innerHTML = isAr ? 
+          `<p>تم اعتماد الطبعة الجديدة لكتاب <strong>الذكاء الاصطناعي وهياكل البيانات</strong> وإضافتها للطلاب.</p>` :
+          `<p>The new 2026 edition for <strong>Artificial Intelligence & Data Structures</strong> is now accessible.</p>`;
+      } else {
+        mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Profile";
+        mSub.innerText = isAr ? "د. أحمد عبد الرحمن" : "Dr. Ahmed Abdelrahman";
+        mIcon.innerText = "person";
+        mBody.innerHTML = isAr ? 
+          `<p>أستاذ مشارك ومسؤول المستودع الرقمي للمراجع والكتب المقررة بقسم العلوم والرياضيات.</p>` :
+          `<p>Associate Professor & Digital Textbook Coordinator for Science & Mathematics.</p>`;
+      }
+
+      document.getElementById('btn-modal-cancel').innerText = isAr ? "إغلاق" : "Close";
+      document.getElementById('btn-modal-confirm').innerText = isAr ? "تأكيد" : "Confirm";
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('interactive-modal').classList.add('hidden');
+    }
+
+    // ================= TOAST NOTIFICATION =================
+    function showToast(message, icon = 'check_circle') {
+      const toast = document.getElementById('toast-notification');
+      document.getElementById('toast-message').innerText = message;
+      document.getElementById('toast-icon').innerText = icon;
+
+      toast.classList.remove('hidden');
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3500);
+    }
+
+    // Close on ESC or backdrop
+    window.addEventListener('click', (e) => {
+      const bmodal = document.getElementById('book-reader-modal');
+      const upmodal = document.getElementById('upload-book-modal');
+      const gmodal = document.getElementById('interactive-modal');
+      if (e.target === bmodal) closeBookModal();
+      if (e.target === upmodal) closeUploadModal();
+      if (e.target === gmodal) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeBookModal();
+        closeUploadModal();
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

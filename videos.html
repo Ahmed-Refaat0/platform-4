@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="root-html" class="theme-light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الفيديوهات التعليمية | Academic Video Library</title>
+  
+  <!-- Google Fonts: Cairo, Inter & Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            // الهوية اللونية الخضراء المشتركة والمتناسقة (Unified Academic Forest & Mint)
+            forest: {
+              sidebar: "#132821",       // القائمة في اللايت مود (أخضر صنوبري أكاديمي)
+              sidebarHover: "#1b382e",  // هوفر القائمة
+              sidebarActive: "#244d3f", // العنصر النشط في اللايت
+              primary: "#1e3e34",       // الأخضر الرئيسي للأزرار
+              primaryHover: "#162e27",  // الأخضر عند التمرير
+              accent: "#34d399",        // الأخضر الزمردي المتناسق
+              mint: "#57f1db",          // المينت المضيء
+              border: "#d1ded9",        // الحدود الفاتحة
+              light: "#e9f2ee"          // خلفية الشارات
+            },
+            // الدارك مود: أسود هادئ ناعم مريح للعين مع صبغة خضراء خفيفة متناسقة
+            softdark: {
+              bg: "#121514",            // أسود فاتح مريح
+              surface: "#171c1a",       // هيدر وفوتر
+              card: "#1b221f",          // بطاقات المحتوى
+              cardBorder: "#27332e",    // حدود البطاقات
+              sidebar: "#0d1815",       // قائمة الدارك مود بلون غابي متميز
+              sidebarBorder: "#1c2b25", // حد القائمة الداكن
+              sidebarActive: "#1a382d", // العنصر النشط بالدارك
+              text: "#e1ebe6",          // نصوص واضحة وعالية التباين
+              muted: "#8fa39b"          // نصوص ثانوية
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'Inter', 'sans-serif'],
+            serif: ['Newsreader', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+      transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
+                  color 0.25s ease, 
+                  transform 0.2s ease,
+                  box-shadow 0.2s ease;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(30, 62, 52, 0.25);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(52, 211, 153, 0.6);
+    }
+    /* Modal Animation */
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .pill-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .pill-scroll {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body id="body-app" class="min-h-screen flex text-right antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300">
+
+  <!-- ================= 1. القائمة الجانبية (SIDEBAR) ================= -->
+  <aside id="sidebar" class="w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 border-l border-[#1f3f35] select-none shadow-xl transition-all duration-300">
+    <!-- Top Section -->
+    <div class="p-5 flex flex-col gap-6">
+      <!-- Logo Header -->
+      <a href="index.html" id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer">
+        <div id="sidebar-logo-icon" class="w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300 group-hover:bg-[#2c5f4e] transition-colors">
+          <span class="material-symbols-outlined text-2xl">school</span>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span id="txt-brand-name" class="font-bold text-base text-white tracking-wide">النظام الأكاديمي</span>
+            <span id="txt-brand-badge" class="text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight">المنصة</span>
+          </div>
+          <span id="txt-brand-sub" class="text-xs text-emerald-100/60 mt-0.5">بوابة هيئة التدريس</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-col gap-1.5" id="sidebar-nav">
+        <!-- Item 1 - الرئيسية (Links back to index.html) -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">dashboard</span>
+            <span class="nav-label text-sm" id="nav-lbl-dashboard">لوحة التحكم الأكاديمية</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 2 - الفيديوهات التعليمية (Active on this page) -->
+        <a href="videos.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-300">smart_display</span>
+            <span class="nav-label text-sm" id="nav-lbl-videos">الفيديوهات التعليمية</span>
+          </div>
+          <span class="nav-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        </a>
+
+        <!-- Item 3 - المقررات والكتب الدراسية (Link to books.html) -->
+        <a href="books.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">menu_book</span>
+            <span class="nav-label text-sm" id="nav-lbl-courses">المكتبة والكتب الدراسية</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 4 - تقارير الطلاب -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">bar_chart</span>
+            <span class="nav-label text-sm" id="nav-lbl-reports">سجل الدرجات والتقييم</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 5 - الحرم الجامعي -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">domain</span>
+            <span class="nav-label text-sm" id="nav-lbl-campus">الحرم والمختبرات</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom Profile Box in Green -->
+    <div id="sidebar-footer-box" class="p-4 border-t border-[#224439] bg-[#0f211b]">
+      <button onclick="openModal('user')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#1b382e] transition-colors cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <div id="user-avatar-box" class="w-8 h-8 rounded-lg bg-[#244d3f] text-emerald-200 flex items-center justify-center text-sm font-bold border border-[#356655]/50">
+            <span class="material-symbols-outlined text-lg">person</span>
+          </div>
+          <div class="text-start">
+            <div id="txt-user-name" class="text-xs font-bold text-white group-hover:text-emerald-200 transition-colors">د. أحمد عبد الرحمن</div>
+            <div id="txt-user-role" class="text-[11px] text-emerald-100/50">أستاذ المادة • منسق المحاضرات</div>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-emerald-100/50 text-[18px]">more_vert</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= 2. منطقة المحتوى الرئيسي (MAIN CONTENT) ================= -->
+  <div class="flex-1 flex flex-col min-w-0">
+    
+    <!-- Top Bar with Buttons -->
+    <header id="main-header" class="bg-white border-b border-gray-100 sticky top-0 z-20 px-8 py-3.5 shadow-xs transition-colors duration-300">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        
+        <!-- Title & Badge -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]" id="header-icon-box">
+            <span class="material-symbols-outlined text-xl">play_lesson</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 id="txt-page-title" class="text-xl font-bold tracking-tight text-gray-900">الفيديوهات التعليمية</h1>
+              <span id="txt-page-badge" class="text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]">مكتبة الدروس</span>
+            </div>
+            <p id="txt-page-desc" class="text-xs text-gray-500 font-medium mt-0.5">استعراض وتصفية المحاضرات المرئية المرفوعة لكافة المواد الدراسية</p>
+          </div>
+        </div>
+
+        <!-- Action & Toggle Buttons -->
+        <div class="flex items-center flex-wrap gap-2.5 text-xs">
+          
+          <!-- زر رفع فيديو جديد (Upload Video Button) -->
+          <button onclick="openUploadModal()" id="btn-upload-video" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">upload_file</span>
+            <span id="txt-upload-btn">رفع فيديو جديد</span>
+          </button>
+
+          <!-- زر تقويم (Calendar) -->
+          <button onclick="openModal('calendar')" id="btn-calendar" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-calendar">calendar_today</span>
+            <span id="txt-calendar-btn">التقويم</span>
+          </button>
+
+          <!-- زر إشعارات (Notifications) -->
+          <button onclick="openModal('notifications')" id="btn-notifications" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer relative">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-notifications">notifications</span>
+            <span id="txt-notifications-btn">الإشعارات</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 end-1.5 ring-2 ring-white"></span>
+          </button>
+
+          <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
+          <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
+            <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
+            <span id="txt-theme-toggle">الوضع الداكن</span>
+          </button>
+
+          <!-- زر تبديل اللغة (LANGUAGE TOGGLE: AR / EN) -->
+          <button onclick="toggleLanguage()" id="btn-lang-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200" title="تبديل اللغة (العربية / English)">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-lang">translate</span>
+            <span id="txt-lang-toggle">English</span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Information Banner (Green Border matching design) -->
+    <div class="px-8 pt-6">
+      <div id="info-banner" class="bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium transition-all duration-300">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]" id="info-icon-wrapper">
+            <span class="material-symbols-outlined text-[20px]" id="info-icon">video_library</span>
+          </div>
+          <div>
+            <span id="txt-banner-title" class="font-bold text-gray-900">منصة الشروحات والمحاضرات المصورة الأكاديمية</span>
+            <span class="hidden sm:inline text-gray-400 mx-1.5">•</span>
+            <span id="txt-banner-sub" class="text-xs text-gray-600 font-normal">تمكين أعضاء التدريس والطلاب من متابعة الدروس مع تتبع نسب الإنجاز والاختبارات المرفقة.</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <span id="txt-banner-stat" class="text-xs font-bold text-[#1e3e34] bg-[#e9f2ee] px-2.5 py-1 rounded-md border border-[#d1ded9]">
+            <span id="total-videos-count">8</span> محاضرات مسجلة
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 3. شريط اختيار المادة والبحث والتصفية (SUBJECT SELECTION LIST & FILTERS) ================= -->
+    <section class="px-8 pt-6">
+      <div id="filter-container" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300">
+        
+        <!-- Header row of filters -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100" id="filter-header-row">
+          
+          <!-- Subject Dropdown List (ليست باختيار المادة) -->
+          <div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
+            <div class="flex items-center gap-2 shrink-0">
+              <span class="material-symbols-outlined text-[20px] text-[#1e3e34]" id="filter-subject-icon">category</span>
+              <label for="subject-select" id="lbl-subject-select" class="text-xs sm:text-sm font-bold text-gray-800">
+                اختيار المادة الدراسية:
+              </label>
+            </div>
+            
+            <div class="relative flex-1 max-w-md">
+              <select id="subject-select" onchange="handleSubjectDropdown(this.value)" class="w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs">
+                <option value="all">📚 جميع المواد الدراسية (عرض الكل)</option>
+                <option value="physics">⚡ الفيزياء (Physics)</option>
+                <option value="math">📐 الرياضيات وحساب التفاضل (Mathematics)</option>
+                <option value="chemistry">🧪 الكيمياء وحركية التفاعلات (Chemistry)</option>
+                <option value="cs">💻 الحاسب والبرمجة والخوارزميات (Computer Science)</option>
+                <option value="biology">🧬 الأحياء والعلوم الطبية (Biology)</option>
+                <option value="arabic">📖 اللغة العربية والبلاغة (Arabic)</option>
+                <option value="english">✍️ اللغة الإنجليزية الأكاديمية (English)</option>
+                <option value="history">🏛️ التاريخ والحضارة العالمية (History)</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-3 text-gray-500">
+                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search & Sorting Controls -->
+          <div class="flex items-center flex-wrap gap-3">
+            <!-- Search Input -->
+            <div class="relative flex-1 sm:w-64">
+              <span class="absolute inset-y-0 start-0 flex items-center ps-3 text-gray-400 pointer-events-none">
+                <span class="material-symbols-outlined text-[18px]">search</span>
+              </span>
+              <input 
+                type="text" 
+                id="search-input" 
+                oninput="handleSearch(this.value)" 
+                placeholder="ابحث عن درس أو محاضر..." 
+                class="w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent shadow-xs transition-all"
+              />
+            </div>
+
+            <!-- Sort By Select -->
+            <div class="relative">
+              <select id="sort-select" onchange="handleSort(this.value)" class="text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] shadow-xs cursor-pointer">
+                <option value="latest">الأحدث رفعاً</option>
+                <option value="popular">الأكثر مشاهدة</option>
+                <option value="duration">المدة الأطول</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-2 text-gray-500">
+                <span class="material-symbols-outlined text-[16px]">sort</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Subject Quick Filter Pills (Pill Buttons for quick switching) -->
+        <div class="pt-4">
+          <div class="flex items-center gap-2 overflow-x-auto pill-scroll pb-1 text-xs" id="subject-pills">
+            <button onclick="filterBySubject('all')" data-subject="all" class="sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e3e34] text-white flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer">
+              <span class="material-symbols-outlined text-[16px]">grid_view</span>
+              <span class="sub-pill-name">الكل</span>
+              <span class="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full" id="count-all">8</span>
+            </button>
+
+            <button onclick="filterBySubject('physics')" data-subject="physics" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-amber-600">bolt</span>
+              <span class="sub-pill-name">الفيزياء</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-physics">1</span>
+            </button>
+
+            <button onclick="filterBySubject('math')" data-subject="math" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-emerald-600">functions</span>
+              <span class="sub-pill-name">الرياضيات</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-math">1</span>
+            </button>
+
+            <button onclick="filterBySubject('chemistry')" data-subject="chemistry" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-blue-600">science</span>
+              <span class="sub-pill-name">الكيمياء</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-chemistry">1</span>
+            </button>
+
+            <button onclick="filterBySubject('cs')" data-subject="cs" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-indigo-600">code</span>
+              <span class="sub-pill-name">الحاسب والبرمجة</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-cs">1</span>
+            </button>
+
+            <button onclick="filterBySubject('biology')" data-subject="biology" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-teal-600">biotech</span>
+              <span class="sub-pill-name">الأحياء</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-biology">1</span>
+            </button>
+
+            <button onclick="filterBySubject('arabic')" data-subject="arabic" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-rose-600">auto_stories</span>
+              <span class="sub-pill-name">اللغة العربية</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-arabic">1</span>
+            </button>
+
+            <button onclick="filterBySubject('english')" data-subject="english" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-sky-600">history_edu</span>
+              <span class="sub-pill-name">اللغة الإنجليزية</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-english">1</span>
+            </button>
+
+            <button onclick="filterBySubject('history')" data-subject="history" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
+              <span class="material-symbols-outlined text-[16px] text-amber-700">museum</span>
+              <span class="sub-pill-name">التاريخ</span>
+              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-history">1</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= 4. شبكة كروت الفيديوهات التعليمية (VIDEOS CARDS GRID) ================= -->
+    <main class="p-8 flex-1">
+      
+      <!-- Video Status / Counter bar -->
+      <div class="flex items-center justify-between mb-5 text-xs text-gray-500 font-medium">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="grid-status-icon">check_circle</span>
+          <span id="txt-results-count">المعروض حالياً: <strong class="text-gray-900" id="visible-count">8</strong> محاضرات تعليمية</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span id="txt-filter-active-label">المادة: جميع المواد</span>
+        </div>
+      </div>
+
+      <!-- Cards Grid (matches exact 4-columns layout from index.html) -->
+      <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Dynamic Cards rendered via JavaScript -->
+      </div>
+
+      <!-- Empty State (When no results found) -->
+      <div id="empty-state" class="hidden flex-col items-center justify-center p-12 text-center bg-gray-50 rounded-2xl border border-dashed border-gray-300">
+        <div class="w-16 h-16 rounded-full bg-emerald-100 text-[#1e3e34] flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined text-3xl">smart_display</span>
+        </div>
+        <h3 class="text-base font-bold text-gray-800 mb-1" id="empty-title">لا توجد محاضرات في هذه المادة حالياً</h3>
+        <p class="text-xs text-gray-500 max-w-sm mb-4" id="empty-desc">يمكنك رفع فيديو جديد للمادة المحددة الآن أو إعادة ضبط خيارات التصفية.</p>
+        <button onclick="openUploadModal()" class="px-4 py-2 bg-[#1e3e34] hover:bg-[#162e27] text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow-xs cursor-pointer">
+          <span class="material-symbols-outlined text-base">upload_file</span>
+          <span>رفع فيديو لهذه المادة</span>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span id="txt-footer-left-1" class="font-bold text-gray-800">بوابة النظام الأكاديمي</span>
+          <span>•</span>
+          <span id="txt-footer-left-2">مكتبة الفيديوهات والمحاضرات الرقمية</span>
+        </div>
+        <div>
+          <span id="txt-footer-right">جميع الحقوق محفوظة © 2026</span>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ================= 5. نَافِذَة مُشَاهَدَة الْفِيدْيُو التَّفَاعُلِيَّة (VIDEO PLAYER MODAL) ================= -->
+  <div id="video-player-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="video-modal-container" class="bg-white text-gray-900 rounded-2xl max-w-4xl w-full border border-gray-200 shadow-2xl animate-modal relative overflow-hidden flex flex-col max-h-[92vh]">
+      
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-gray-200 flex items-center justify-between bg-gray-50/50" id="video-modal-header">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 text-[#1e3e34] flex items-center justify-center font-bold">
+            <span class="material-symbols-outlined text-xl">play_circle</span>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900" id="vmodal-title">عنوان المحاضرة</h3>
+            <p class="text-xs text-gray-500" id="vmodal-subtitle">المادة • الأستاذ • المدة</p>
+          </div>
+        </div>
+        <button onclick="closeVideoModal()" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer" id="vmodal-close-btn">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body: Video Player & Tabs -->
+      <div class="overflow-y-auto p-6 flex-1 flex flex-col gap-5">
+        
+        <!-- Video Screen Container -->
+        <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-lg border border-gray-800 flex items-center justify-center group" id="vmodal-screen">
+          <img id="vmodal-poster" src="" alt="Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-70 transition"/>
+          
+          <!-- Overlay Big Play Button -->
+          <button onclick="simulatePlayVideo()" id="vmodal-play-btn" class="absolute w-16 h-16 rounded-full bg-[#1e3e34]/90 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer border-2 border-emerald-400">
+            <span class="material-symbols-outlined text-3xl">play_arrow</span>
+          </button>
+
+          <!-- Top-bar inside player -->
+          <div class="absolute top-3 start-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md text-white text-xs font-semibold flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+            <span id="vmodal-badge-quality">Full HD 1080p</span>
+          </div>
+
+          <!-- Bottom Control Bar Simulation -->
+          <div class="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-between text-white text-xs">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px] cursor-pointer">volume_up</span>
+              <span id="vmodal-time-display">00:00 / 38:40</span>
+            </div>
+            <div class="flex-1 mx-4 h-1.5 bg-white/30 rounded-full overflow-hidden cursor-pointer">
+              <div class="w-1/3 h-full bg-[#34d399] rounded-full"></div>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-[18px] cursor-pointer">settings</span>
+              <span class="material-symbols-outlined text-[18px] cursor-pointer">fullscreen</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Details & Actions -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <!-- Col 1 & 2: Information & Summary -->
+          <div class="md:col-span-2 space-y-3">
+            <div class="flex items-center gap-2 flex-wrap">
+              <span id="vmodal-subject-tag" class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">الفيزياء</span>
+              <span id="vmodal-unit-tag" class="text-xs font-semibold px-2 py-0.5 rounded-md bg-gray-100 text-gray-700">الوحدة 2 • الدرس 4</span>
+              <span class="text-xs text-gray-400">•</span>
+              <span id="vmodal-views" class="text-xs text-gray-500">3,420 مشاهدة</span>
+            </div>
+            <h4 class="text-sm font-bold text-gray-900" id="vmodal-desc-heading">أهداف ومخرجات المحاضرة:</h4>
+            <p class="text-xs leading-relaxed text-gray-600" id="vmodal-description">
+              تتناول هذه المحاضرة الشرح التفصيلي مع التطبيقات المعملية، وحل المسائل التدريبية النموذجية مع التركيز على المفاهيم الأساسية لنواتج التعلم المستهدفة.
+            </p>
+          </div>
+
+          <!-- Col 3: Attachments & Actions -->
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3" id="vmodal-actions-box">
+            <h5 class="text-xs font-bold text-gray-800 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-base text-[#1e3e34]">attach_file</span>
+              <span id="txt-attachments-title">المرفقات والأنشطة</span>
+            </h5>
+            
+            <a href="javascript:void(0)" onclick="alert('جاري تحميل مذكرة المحاضرة بصيغة PDF')" class="w-full flex items-center justify-between p-2 rounded-lg bg-white border border-gray-200 hover:border-emerald-500 text-xs text-gray-700 hover:text-emerald-700 transition">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-red-500 text-base">picture_as_pdf</span>
+                <span>ملخص المحاضرة.pdf</span>
+              </div>
+              <span class="text-[11px] text-gray-400">2.4 MB</span>
+            </a>
+
+            <button onclick="handleMarkCompleted()" id="btn-mark-completed" class="w-full py-2 px-3 rounded-lg bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer">
+              <span class="material-symbols-outlined text-base">check_circle</span>
+              <span id="txt-mark-completed">تحديد كمكتمل</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-gray-200 bg-gray-50/50 flex justify-end gap-2" id="video-modal-footer">
+        <button onclick="closeVideoModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" id="btn-vmodal-close">
+          إغلاق
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= 6. نَافِذَة رَفْع فِيدْيُو جَدِيد (UPLOAD VIDEO MODAL) ================= -->
+  <div id="upload-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="upload-modal-container" class="bg-white text-gray-900 rounded-2xl max-w-xl w-full p-6 border border-gray-200 shadow-2xl animate-modal relative max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button onclick="closeUploadModal()" class="absolute top-4 end-4 w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+
+      <!-- Modal Title -->
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-10 h-10 rounded-xl bg-emerald-100 text-[#1e3e34] flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-2xl">cloud_upload</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-gray-900" id="upload-modal-title">رفع فيديو تعليمي جديد</h3>
+          <p class="text-xs text-gray-500" id="upload-modal-sub">إضافة ونشر محاضرة مصورة على المنصة الأكاديمية</p>
+        </div>
+      </div>
+
+      <!-- Form Inputs -->
+      <form id="upload-form" onsubmit="handleVideoUpload(event)" class="space-y-4 text-xs">
+        
+        <!-- Video Title -->
+        <div>
+          <label class="block font-bold text-gray-700 mb-1" id="lbl-up-title">عنوان الفيديو / المحاضرة *</label>
+          <input 
+            type="text" 
+            id="up-title" 
+            required 
+            placeholder="مثال: قوانين الحركة والجاذبية الأرضية" 
+            class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+          />
+        </div>
+
+        <!-- Subject & Unit (2 cols) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1" id="lbl-up-subject">المادة الدراسية *</label>
+            <select id="up-subject" required class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]">
+              <option value="physics">الفيزياء (Physics)</option>
+              <option value="math">الرياضيات (Mathematics)</option>
+              <option value="chemistry">الكيمياء (Chemistry)</option>
+              <option value="cs">الحاسب والبرمجة (Computer Science)</option>
+              <option value="biology">الأحياء (Biology)</option>
+              <option value="arabic">اللغة العربية (Arabic)</option>
+              <option value="english">اللغة الإنجليزية (English)</option>
+              <option value="history">التاريخ والجغرافيا (History)</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block font-bold text-gray-700 mb-1" id="lbl-up-unit">الوحدة والدرس *</label>
+            <input 
+              type="text" 
+              id="up-unit" 
+              required 
+              placeholder="مثال: الوحدة 3 • الدرس 2" 
+              class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+            />
+          </div>
+        </div>
+
+        <!-- Instructor & Duration (2 cols) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-gray-700 mb-1" id="lbl-up-instructor">اسم المحاضر / المعلم *</label>
+            <input 
+              type="text" 
+              id="up-instructor" 
+              required 
+              placeholder="د. أحمد منصور" 
+              class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+            />
+          </div>
+
+          <div>
+            <label class="block font-bold text-gray-700 mb-1" id="lbl-up-duration">مدة المحاضرة *</label>
+            <input 
+              type="text" 
+              id="up-duration" 
+              required 
+              placeholder="مثال: 32:45" 
+              class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+            />
+          </div>
+        </div>
+
+        <!-- Thumbnail Image Picker -->
+        <div>
+          <label class="block font-bold text-gray-700 mb-1" id="lbl-up-thumb">غلاف المحاضرة (اختر صورة نمطية أو افتراضية)</label>
+          <select id="up-thumbnail" class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]">
+            <option value="assets/images/physics.jpg">مدرج الفيزياء وتجارب الليزر (Physics Lecture)</option>
+            <option value="assets/images/math.jpg">قاعة الرياضيات والتفاضل والتكامل (Math Lecture)</option>
+            <option value="assets/images/chemistry.jpg">مختبر الكيمياء والتفاعلات الجزيئية (Chemistry Lab)</option>
+            <option value="assets/images/cs.jpg">قاعة البرمجة وهياكل البيانات (Computer Science Hall)</option>
+            <option value="assets/images/books.jpg">المكتبة ومراجع الكتب (Library Books)</option>
+            <option value="assets/images/desk.jpg">مكتب التحضير الأكاديمي (Study Desk)</option>
+            <option value="assets/images/campus.jpg">الحرم الجامعي والأنشطة (Campus)</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label class="block font-bold text-gray-700 mb-1" id="lbl-up-desc">وصف المحاضرة والملاحظات</label>
+          <textarea 
+            id="up-description" 
+            rows="3" 
+            placeholder="أدخل ملخصاً لمحتوى الدرس وأهم النقاط المشروحة..." 
+            class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]"
+          ></textarea>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end gap-2 pt-3 border-t border-gray-200">
+          <button type="button" onclick="closeUploadModal()" class="px-4 py-2.5 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" id="btn-up-cancel">
+            إلغاء
+          </button>
+          <button type="submit" class="px-5 py-2.5 text-xs font-bold rounded-lg bg-[#1e3e34] hover:bg-[#162e27] text-white shadow-xs transition cursor-pointer flex items-center gap-1.5" id="btn-up-submit">
+            <span class="material-symbols-outlined text-[18px]">publish</span>
+            <span id="txt-btn-up-submit">نشر المحاضرة على المنصة</span>
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= 7. النَّوَافِذ الْأُخْرَى (GENERIC MODALS: USER, CALENDAR, NOTIFICATIONS) ================= -->
+  <div id="interactive-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="modal-container" class="bg-white text-gray-900 rounded-2xl max-w-lg w-full p-6 border border-gray-200 shadow-2xl animate-modal relative">
+      <button onclick="closeModal()" class="modal-close-btn absolute top-4 end-4 w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div id="modal-icon-box" class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-2xl" id="modal-icon">verified</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold" id="modal-title">تفاصيل القسم</h3>
+          <p class="text-xs text-gray-500" id="modal-subtitle">المعلومات الأكاديمية والتشغيلية</p>
+        </div>
+      </div>
+
+      <div class="border-t border-b border-gray-100 py-4 my-2 text-sm leading-relaxed" id="modal-body">
+        محتوى تفاعلي متوافق مع نظام التصميم المعتمد.
+      </div>
+
+      <div class="flex justify-end gap-2 mt-5">
+        <button onclick="closeModal()" id="btn-modal-cancel" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer">
+          إغلاق
+        </button>
+        <button onclick="closeModal()" id="btn-modal-confirm" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#1e3e34] text-white hover:opacity-90 transition cursor-pointer">
+          تأكيد
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= 8. جافاسكريبت (JAVASCRIPT LOGIC & STATE) ================= -->
+  <script>
+    // State: Theme ('light' | 'dark') and Language ('ar' | 'en')
+    let currentTheme = localStorage.getItem('site_theme') || 'light';
+    let currentLang = localStorage.getItem('site_lang') || 'ar';
+    let currentSubjectFilter = 'all';
+    let currentSearchTerm = '';
+    let currentSortOption = 'latest';
+
+    // Initial Educational Videos Data (with Arabic & English metadata)
+    const initialVideos = [
+      {
+        id: "vid-1",
+        subject: "physics",
+        subjectNameAr: "الفيزياء",
+        subjectNameEn: "Physics",
+        titleAr: "قوانين البصريات وانكسار الضوء وتطبيقات منشور سنيل",
+        titleEn: "Optical Physics: Snell's Law & Prism Light Dispersion",
+        unitAr: "الوحدة 2 • الدرس 4",
+        unitEn: "Unit 2 • Lesson 4",
+        instructorAr: "د. هدى عبد الرحمن",
+        instructorEn: "Dr. Huda Abdelrahman",
+        duration: "38:40",
+        views: 3420,
+        badgeAr: "موصى به",
+        badgeEn: "Featured",
+        badgeColor: "emerald",
+        thumbnail: "assets/images/physics.jpg",
+        date: "2026-09-28",
+        descriptionAr: "شرح تفصيلي لتجارب الانكسار والحيود الضوئي مع حساب زاوية السقوط وزاوية الانكسار باستخدام قانون سنيل، وتطبيقات عملية في الألياف الضوئية.",
+        descriptionEn: "Detailed study of light refraction and diffraction experiments, calculating incident and refraction angles using Snell's Law with fiber optic applications."
+      },
+      {
+        id: "vid-2",
+        subject: "math",
+        subjectNameAr: "الرياضيات",
+        subjectNameEn: "Mathematics",
+        titleAr: "التكاملات الثلاثية ونظرية ستوكس وتطبيقات السطوح ثلاثية الأبعاد",
+        titleEn: "Advanced Calculus: Triple Integrals & Stokes' Theorem",
+        unitAr: "الوحدة 4 • الدرس 1",
+        unitEn: "Unit 4 • Lesson 1",
+        instructorAr: "أ.د. طارق السعيد",
+        instructorEn: "Prof. Tarek El-Saeed",
+        duration: "45:15",
+        views: 5120,
+        badgeAr: "شائع",
+        badgeEn: "Popular",
+        badgeColor: "blue",
+        thumbnail: "assets/images/math.jpg",
+        date: "2026-09-25",
+        descriptionAr: "مفاهيم التكامل الحجمي ونظرية ستوكس وحساب تدفق المجالات المتجهة عبر السطوح ثلاثية الأبعاد مع أمثلة تطبيقية خطوة بخطوة.",
+        descriptionEn: "Volume integrals concepts, Stokes' theorem, calculating vector field flux through 3D surfaces with step-by-step practical examples."
+      },
+      {
+        id: "vid-3",
+        subject: "chemistry",
+        subjectNameAr: "الكيمياء",
+        subjectNameEn: "Chemistry",
+        titleAr: "حركية التفاعلات الكيميائية وميكانيكا الجزيئات والمعادلات الحركية",
+        titleEn: "Reaction Kinetics & Molecular Reaction Mechanisms",
+        unitAr: "الوحدة 3 • الدرس 6",
+        unitEn: "Unit 3 • Lesson 6",
+        instructorAr: "د. سامي رضوان",
+        instructorEn: "Dr. Sami Radwan",
+        duration: "52:10",
+        views: 2840,
+        badgeAr: "جديد",
+        badgeEn: "New",
+        badgeColor: "amber",
+        thumbnail: "assets/images/chemistry.jpg",
+        date: "2026-09-29",
+        descriptionAr: "دراسة طاقة التنشيط، معادلة أرهينيوس، والعوامل المؤثرة على سرعة التفاعل الكيميائي مع نماذج ثلاثية الأبعاد لتفاعل الجزيئات.",
+        descriptionEn: "Activation energy study, Arrhenius equation, and factors affecting chemical reaction rates with 3D molecular modeling."
+      },
+      {
+        id: "vid-4",
+        subject: "cs",
+        subjectNameAr: "الحاسب والبرمجة",
+        subjectNameEn: "Computer Science",
+        titleAr: "هياكل البيانات والخوارزميات: القوائم المترابطة وتحليل التعقيد O(n²)",
+        titleEn: "Data Structures & Algorithms: Linked Lists & Complexity Analysis",
+        unitAr: "الوحدة 1 • الدرس 8",
+        unitEn: "Unit 1 • Lesson 8",
+        instructorAr: "م. منى العطار",
+        instructorEn: "Eng. Mona El-Attar",
+        duration: "41:20",
+        views: 6240,
+        badgeAr: "مكتمل",
+        badgeEn: "Completed",
+        badgeColor: "purple",
+        thumbnail: "assets/images/cs.jpg",
+        date: "2026-09-20",
+        descriptionAr: "بناء القوائم المترابطة المزدوجة (Doubly Linked Lists)، وخوارزميات الترتيب Insertion Sort مع حساب التعقيد الزمني وتحسين الذاكرة.",
+        descriptionEn: "Building Doubly Linked Lists, insertion sort algorithms with computational time complexity calculations and memory optimization."
+      },
+      {
+        id: "vid-5",
+        subject: "biology",
+        subjectNameAr: "الأحياء",
+        subjectNameEn: "Biology",
+        titleAr: "تركيب الخلية وتخليق البروتينات وتضاعف الشفرة الوراثية DNA",
+        titleEn: "Cell Biology: DNA Replication & Protein Synthesis",
+        unitAr: "الوحدة 2 • الدرس 3",
+        unitEn: "Unit 2 • Lesson 3",
+        instructorAr: "د. نهى الشريف",
+        instructorEn: "Dr. Noha El-Sherif",
+        duration: "34:50",
+        views: 4180,
+        badgeAr: "موصى به",
+        badgeEn: "Featured",
+        badgeColor: "emerald",
+        thumbnail: "assets/images/books2.jpg",
+        date: "2026-09-22",
+        descriptionAr: "آليات النسخ والترجمة داخل الريبوسومات، وانقسام الخلية ونقل الشفرات الوراثية بدقة بالغة.",
+        descriptionEn: "Transcription and translation mechanisms in ribosomes, cellular division, and high-fidelity genetic code transmission."
+      },
+      {
+        id: "vid-6",
+        subject: "arabic",
+        subjectNameAr: "اللغة العربية",
+        subjectNameEn: "Arabic",
+        titleAr: "بلاغة النظم وفنون البديع ودراسة تحليلية في الأدب الكلاسيكي",
+        titleEn: "Arabic Rhetoric: Classical Metaphor & Literary Analysis",
+        unitAr: "الوحدة 5 • الدرس 2",
+        unitEn: "Unit 5 • Lesson 2",
+        instructorAr: "د. عبد الله فاروق",
+        instructorEn: "Dr. Abdullah Farouk",
+        duration: "29:30",
+        views: 1950,
+        badgeAr: "جديد",
+        badgeEn: "New",
+        badgeColor: "amber",
+        thumbnail: "assets/images/books.jpg",
+        date: "2026-09-27",
+        descriptionAr: "قراءة نقدية في أساليب البيان والبديع والمجاز المرسل وتطبيقاتها في القصائد والشواهد البلاغية القديمة.",
+        descriptionEn: "Critical reading of classical rhetoric devices, allegories, and figurative speech in classical poetic monuments."
+      },
+      {
+        id: "vid-7",
+        subject: "english",
+        subjectNameAr: "اللغة الإنجليزية",
+        subjectNameEn: "English",
+        titleAr: "مهارات الكتابة الأكاديمية وصياغة الأطروحات والتحليل النقدي",
+        titleEn: "Academic Writing: Thesis Formulation & Critical Evaluation",
+        unitAr: "الوحدة 3 • الدرس 5",
+        unitEn: "Unit 3 • Lesson 5",
+        instructorAr: "د. كاثرين ميلر",
+        instructorEn: "Dr. Katherine Miller",
+        duration: "36:15",
+        views: 3710,
+        badgeAr: "شائع",
+        badgeEn: "Popular",
+        badgeColor: "blue",
+        thumbnail: "assets/images/desk.jpg",
+        date: "2026-09-24",
+        descriptionAr: "طرق بناء الفقرات الأكاديمية والتوثيق المرجعي وفق نظام APA وتجنب الانتحال العلمي بأسلوب محترف.",
+        descriptionEn: "Structuring academic arguments, bibliographic citation methodologies following APA guidelines, and synthesis analysis."
+      },
+      {
+        id: "vid-8",
+        subject: "history",
+        subjectNameAr: "التاريخ والجغرافيا",
+        subjectNameEn: "History",
+        titleAr: "تاريخ الحضارات القديمة وطرق التجارة الكبرى عبر طريق الحرير",
+        titleEn: "Ancient Civilizations: The Silk Road & Cross-Continental Trade",
+        unitAr: "الوحدة 1 • الدرس 4",
+        unitEn: "Unit 1 • Lesson 4",
+        instructorAr: "أ.د. يوسف زهران",
+        instructorEn: "Prof. Youssef Zahran",
+        duration: "48:00",
+        views: 2340,
+        badgeAr: "مكتمل",
+        badgeEn: "Completed",
+        badgeColor: "purple",
+        thumbnail: "assets/images/campus.jpg",
+        date: "2026-09-18",
+        descriptionAr: "دراسة وثائقية جغرافية لأثر التبادل التجاري والثقافي عبر طريق الحرير وتطور المراكز الحضرية الكبرى.",
+        descriptionEn: "Historical and geographical documentary study of cultural and commercial exchange along the ancient Silk Road."
+      }
+    ];
+
+    // Load custom uploaded videos from localStorage if available
+    let allVideos = [];
+    try {
+      const stored = localStorage.getItem('platform_videos');
+      if (stored) {
+        allVideos = JSON.parse(stored);
+      } else {
+        allVideos = [...initialVideos];
+        localStorage.setItem('platform_videos', JSON.stringify(allVideos));
+      }
+    } catch (e) {
+      allVideos = [...initialVideos];
+    }
+
+    // Initialize Page
+    document.addEventListener('DOMContentLoaded', () => {
+      applyTheme(currentTheme);
+      applyLanguage(currentLang);
+      renderVideos();
+      updatePillCounts();
+    });
+
+    // ================= THEME TOGGLE =================
+    function toggleTheme() {
+      currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+      localStorage.setItem('site_theme', currentTheme);
+      applyTheme(currentTheme);
+      renderVideos(); // re-render to apply card theme colors
+    }
+
+    // ================= LANGUAGE TOGGLE =================
+    function toggleLanguage() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('site_lang', currentLang);
+      applyLanguage(currentLang);
+      renderVideos();
+    }
+
+    // Apply Theme Function
+    function applyTheme(theme) {
+      const root = document.getElementById('root-html');
+      const body = document.getElementById('body-app');
+      const sidebar = document.getElementById('sidebar');
+      const sidebarHeaderBox = document.getElementById('sidebar-header-box');
+      const sidebarLogoIcon = document.getElementById('sidebar-logo-icon');
+      const sidebarFooterBox = document.getElementById('sidebar-footer-box');
+      const userAvatarBox = document.getElementById('user-avatar-box');
+      const mainHeader = document.getElementById('main-header');
+      const mainFooter = document.getElementById('main-footer');
+      const infoBanner = document.getElementById('info-banner');
+      const infoIconWrapper = document.getElementById('info-icon-wrapper');
+      const infoIcon = document.getElementById('info-icon');
+      const filterContainer = document.getElementById('filter-container');
+      const filterSubjectIcon = document.getElementById('filter-subject-icon');
+      const subjectSelect = document.getElementById('subject-select');
+      const searchInput = document.getElementById('search-input');
+      const sortSelect = document.getElementById('sort-select');
+      const headerIconBox = document.getElementById('header-icon-box');
+
+      // Theme toggle button elements
+      const btnTheme = document.getElementById('btn-theme-toggle');
+      const iconTheme = document.getElementById('icon-theme');
+      const txtTheme = document.getElementById('txt-theme-toggle');
+
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        
+        // Background & Text
+        body.className = "min-h-screen flex antialiased bg-[#121514] text-[#e1ebe6] transition-colors duration-300";
+
+        // Sidebar
+        sidebar.className = "w-64 bg-[#0d1815] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 select-none shadow-2xl transition-all duration-300 " + (currentLang === 'ar' ? 'border-l border-[#1c2b25]' : 'border-r border-[#1c2b25]');
+        sidebarHeaderBox.className = "flex items-center gap-3 pb-5 border-b border-[#1c2b25] group cursor-pointer";
+        sidebarLogoIcon.className = "w-10 h-10 rounded-xl bg-[#14261f] border border-[#234235] flex items-center justify-center shrink-0 shadow-sm text-[#34d399]";
+        document.getElementById('txt-brand-name').className = "font-bold text-base text-white tracking-wide";
+        document.getElementById('txt-brand-badge').className = "text-[10px] bg-[#173328] text-[#57f1db] px-1.5 py-0.5 rounded border border-[#275340] font-semibold leading-tight";
+        document.getElementById('txt-brand-sub').className = "text-xs text-[#8fa39b] mt-0.5";
+
+        sidebarFooterBox.className = "p-4 border-t border-[#1c2b25] bg-[#08100e]";
+        userAvatarBox.className = "w-8 h-8 rounded-lg bg-[#14261f] text-[#34d399] flex items-center justify-center text-sm font-bold border border-[#234235]";
+        document.getElementById('txt-user-name').className = "text-xs font-bold text-white group-hover:text-[#34d399] transition-colors";
+        document.getElementById('txt-user-role').className = "text-[11px] text-[#8fa39b]";
+
+        // Header
+        mainHeader.className = "bg-[#171c1a] border-b border-[#25332d] sticky top-0 z-20 px-8 py-3.5 transition-colors duration-300";
+        headerIconBox.className = "w-9 h-9 rounded-xl bg-[#14261f] text-[#34d399] flex items-center justify-center border border-[#234235]";
+        document.getElementById('txt-page-title').className = "text-xl font-bold tracking-tight text-white";
+        document.getElementById('txt-page-badge').className = "text-xs bg-[#173328] text-[#57f1db] font-bold px-2.5 py-0.5 rounded-md border border-[#275340]";
+        document.getElementById('txt-page-desc').className = "text-xs text-[#8fa39b] font-medium mt-0.5";
+
+        // Header action buttons
+        document.querySelectorAll('.header-action-btn').forEach(btn => {
+          btn.className = "header-action-btn bg-[#1d2622] hover:bg-[#25312c] text-[#cbdad3] font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-[#2a3a33] transition-colors cursor-pointer shadow-xs";
+        });
+        document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#34d399]";
+        document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#34d399]";
+
+        // Theme Toggle Button
+        btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-[#34d399] border-[#2a3a33]";
+        iconTheme.className = "material-symbols-outlined text-[18px] text-[#34d399]";
+        iconTheme.innerText = "light_mode";
+        txtTheme.innerText = currentLang === 'ar' ? 'الوضع النهاري' : 'Light Mode';
+
+        // Lang Toggle Button
+        document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-white border-[#2a3a33]";
+        document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#34d399]";
+
+        // Info Banner
+        infoBanner.className = "bg-[#171c1a] border border-[#2dd4bf] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        infoIconWrapper.className = "w-8 h-8 rounded-lg bg-[#14261f] text-[#2dd4bf] flex items-center justify-center shrink-0 border border-[#234235]";
+        infoIcon.className = "material-symbols-outlined text-[#2dd4bf] text-[20px]";
+        document.getElementById('txt-banner-title').className = "font-bold text-white";
+        document.getElementById('txt-banner-sub').className = "text-xs text-[#8fa39b] font-normal";
+        document.getElementById('txt-banner-stat').className = "text-xs font-bold text-[#57f1db] bg-[#173328] px-2.5 py-1 rounded-md border border-[#275340]";
+
+        // Filter Container
+        filterContainer.className = "bg-[#1b221f] rounded-2xl border border-[#27332e] p-5 shadow-sm transition-all duration-300";
+        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#27332e]";
+        filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#34d399]";
+        document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-[#e1ebe6]";
+        
+        subjectSelect.className = "w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399] transition-all cursor-pointer shadow-xs";
+        searchInput.className = "w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] placeholder-[#8fa39b] focus:outline-none focus:ring-2 focus:ring-[#34d399] shadow-xs transition-all";
+        sortSelect.className = "text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399] shadow-xs cursor-pointer";
+
+        // Footer
+        mainFooter.className = "bg-[#171c1a] border-t border-[#25332d] py-4 px-8 text-xs text-[#8fa39b] mt-auto transition-colors duration-300";
+        document.getElementById('txt-footer-left-1').className = "font-bold text-white";
+
+        updatePillsTheme('dark');
+        updateNavStyles('dark');
+
+      } else {
+        // LIGHT THEME
+        root.classList.remove('dark');
+        body.className = "min-h-screen flex antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300";
+
+        // Sidebar
+        sidebar.className = "w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 select-none shadow-xl transition-all duration-300 " + (currentLang === 'ar' ? 'border-l border-[#1f3f35]' : 'border-r border-[#1f3f35]');
+        sidebarHeaderBox.className = "flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer";
+        sidebarLogoIcon.className = "w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300";
+        document.getElementById('txt-brand-name').className = "font-bold text-base text-white tracking-wide";
+        document.getElementById('txt-brand-badge').className = "text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight";
+        document.getElementById('txt-brand-sub').className = "text-xs text-emerald-100/60 mt-0.5";
+
+        sidebarFooterBox.className = "p-4 border-t border-[#224439] bg-[#0f211b]";
+        userAvatarBox.className = "w-8 h-8 rounded-lg bg-[#244d3f] text-emerald-200 flex items-center justify-center text-sm font-bold border border-[#356655]/50";
+        document.getElementById('txt-user-name').className = "text-xs font-bold text-white group-hover:text-emerald-200 transition-colors";
+        document.getElementById('txt-user-role').className = "text-[11px] text-emerald-100/50";
+
+        // Header
+        mainHeader.className = "bg-white border-b border-gray-100 sticky top-0 z-20 px-8 py-3.5 shadow-xs transition-colors duration-300";
+        headerIconBox.className = "w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]";
+        document.getElementById('txt-page-title').className = "text-xl font-bold tracking-tight text-gray-900";
+        document.getElementById('txt-page-badge').className = "text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]";
+        document.getElementById('txt-page-desc').className = "text-xs text-gray-500 font-medium mt-0.5";
+
+        // Header buttons
+        document.querySelectorAll('.header-action-btn').forEach(btn => {
+          btn.className = "header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer";
+        });
+        document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+        document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+
+        // Theme Toggle Button
+        btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200";
+        iconTheme.className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+        iconTheme.innerText = "dark_mode";
+        txtTheme.innerText = currentLang === 'ar' ? 'الوضع الداكن' : 'Dark Mode';
+
+        // Lang Toggle Button
+        document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200";
+        document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
+
+        // Info Banner
+        infoBanner.className = "bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        infoIconWrapper.className = "w-8 h-8 rounded-lg bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]";
+        infoIcon.className = "material-symbols-outlined text-[#1e3e34] text-[20px]";
+        document.getElementById('txt-banner-title').className = "font-bold text-gray-900";
+        document.getElementById('txt-banner-sub').className = "text-xs text-gray-600 font-normal";
+        document.getElementById('txt-banner-stat').className = "text-xs font-bold text-[#1e3e34] bg-[#e9f2ee] px-2.5 py-1 rounded-md border border-[#d1ded9]";
+
+        // Filter Container
+        filterContainer.className = "bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300";
+        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100";
+        filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#1e3e34]";
+        document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-gray-800";
+        
+        subjectSelect.className = "w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs";
+        searchInput.className = "w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent shadow-xs transition-all";
+        sortSelect.className = "text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] shadow-xs cursor-pointer";
+
+        // Footer
+        mainFooter.className = "bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300";
+        document.getElementById('txt-footer-left-1').className = "font-bold text-gray-800";
+
+        updatePillsTheme('light');
+        updateNavStyles('light');
+      }
+    }
+
+    // Apply Language Function
+    function applyLanguage(lang) {
+      const root = document.getElementById('root-html');
+      const body = document.getElementById('body-app');
+      const sidebar = document.getElementById('sidebar');
+      const btnLang = document.getElementById('btn-lang-toggle');
+      const txtTheme = document.getElementById('txt-theme-toggle');
+
+      if (lang === 'ar') {
+        root.setAttribute('dir', 'rtl');
+        root.setAttribute('lang', 'ar');
+        body.className = body.className.replace('text-left', 'text-right');
+        btnLang.querySelector('span:last-child').innerText = "English";
+        txtTheme.innerText = currentTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الداكن';
+
+        document.getElementById('txt-brand-name').innerText = "النظام الأكاديمي";
+        document.getElementById('txt-brand-badge').innerText = "المنصة";
+        document.getElementById('txt-brand-sub').innerText = "بوابة هيئة التدريس";
+        document.getElementById('txt-user-name').innerText = "د. أحمد عبد الرحمن";
+        document.getElementById('txt-user-role').innerText = "أستاذ المادة • منسق المحاضرات";
+        document.getElementById('txt-page-title').innerText = "الفيديوهات التعليمية";
+        document.getElementById('txt-page-badge').innerText = "مكتبة الدروس";
+        document.getElementById('txt-page-desc').innerText = "استعراض وتصفية المحاضرات المرئية المرفوعة لكافة المواد الدراسية";
+        
+        document.getElementById('txt-upload-btn').innerText = "رفع فيديو جديد";
+        document.getElementById('txt-calendar-btn').innerText = "التقويم";
+        document.getElementById('txt-notifications-btn').innerText = "الإشعارات";
+        document.getElementById('txt-banner-title').innerText = "منصة الشروحات والمحاضرات المصورة الأكاديمية";
+        document.getElementById('txt-banner-sub').innerText = "تمكين أعضاء التدريس والطلاب من متابعة الدروس مع تتبع نسب الإنجاز والاختبارات المرفقة.";
+        document.getElementById('lbl-subject-select').innerText = "اختيار المادة الدراسية:";
+        document.getElementById('search-input').placeholder = "ابحث عن درس أو محاضر...";
+
+        document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
+        document.getElementById('nav-lbl-videos').innerText = "الفيديوهات التعليمية";
+        document.getElementById('nav-lbl-courses').innerText = "المكتبة والكتب الدراسية";
+        document.getElementById('nav-lbl-reports').innerText = "سجل الدرجات والتقييم";
+        document.getElementById('nav-lbl-campus').innerText = "الحرم والمختبرات";
+
+        document.getElementById('txt-footer-left-1').innerText = "بوابة النظام الأكاديمي";
+        document.getElementById('txt-footer-left-2').innerText = "مكتبة الفيديوهات والمحاضرات الرقمية";
+        document.getElementById('txt-footer-right').innerText = "جميع الحقوق محفوظة © 2026";
+
+        document.querySelectorAll('.nav-chevron').forEach(icon => {
+          icon.innerText = "chevron_left";
+        });
+
+        sidebar.classList.remove('border-r');
+        sidebar.classList.add('border-l');
+
+      } else {
+        // ENGLISH
+        root.setAttribute('dir', 'ltr');
+        root.setAttribute('lang', 'en');
+        body.className = body.className.replace('text-right', 'text-left');
+        btnLang.querySelector('span:last-child').innerText = "العربية";
+        txtTheme.innerText = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
+
+        document.getElementById('txt-brand-name').innerText = "Academic System";
+        document.getElementById('txt-brand-badge').innerText = "Portal";
+        document.getElementById('txt-brand-sub').innerText = "Faculty Workspace";
+        document.getElementById('txt-user-name').innerText = "Dr. Ahmed Abdelrahman";
+        document.getElementById('txt-user-role').innerText = "Professor • Course Coordinator";
+        document.getElementById('txt-page-title').innerText = "Educational Videos";
+        document.getElementById('txt-page-badge').innerText = "Lecture Library";
+        document.getElementById('txt-page-desc').innerText = "Browse and filter recorded video lectures across all academic subjects";
+
+        document.getElementById('txt-upload-btn').innerText = "Upload Video";
+        document.getElementById('txt-calendar-btn').innerText = "Calendar";
+        document.getElementById('txt-notifications-btn').innerText = "Notifications";
+        document.getElementById('txt-banner-title').innerText = "Faculty Video & Lecture Repository";
+        document.getElementById('txt-banner-sub').innerText = "Facilitating video lectures and coursework tracking with attached rubrics.";
+        document.getElementById('lbl-subject-select').innerText = "Select Academic Subject:";
+        document.getElementById('search-input').placeholder = "Search lectures, professors...";
+
+        document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
+        document.getElementById('nav-lbl-videos').innerText = "Educational Videos";
+        document.getElementById('nav-lbl-courses').innerText = "Curriculum & Library";
+        document.getElementById('nav-lbl-reports').innerText = "Evaluation & Grades";
+        document.getElementById('nav-lbl-campus').innerText = "Campus & Labs";
+
+        document.getElementById('txt-footer-left-1').innerText = "Academic Faculty Portal";
+        document.getElementById('txt-footer-left-2').innerText = "Digital Video Library";
+        document.getElementById('txt-footer-right').innerText = "All rights reserved © 2026";
+
+        document.querySelectorAll('.nav-chevron').forEach(icon => {
+          icon.innerText = "chevron_right";
+        });
+
+        sidebar.classList.remove('border-l');
+        sidebar.classList.add('border-r');
+      }
+
+      updatePillTranslations(lang);
+      updateDropdownTranslations(lang);
+      updateNavStyles(currentTheme);
+    }
+
+    // Update Dropdown options for Language
+    function updateDropdownTranslations(lang) {
+      const select = document.getElementById('subject-select');
+      const isAr = lang === 'ar';
+      const map = {
+        'all': isAr ? '📚 جميع المواد الدراسية (عرض الكل)' : '📚 All Academic Subjects (Show All)',
+        'physics': isAr ? '⚡ الفيزياء (Physics)' : '⚡ Physics & Optics',
+        'math': isAr ? '📐 الرياضيات وحساب التفاضل (Mathematics)' : '📐 Mathematics & Calculus',
+        'chemistry': isAr ? '🧪 الكيمياء وحركية التفاعلات (Chemistry)' : '🧪 Chemistry & Kinetics',
+        'cs': isAr ? '💻 الحاسب والبرمجة والخوارزميات (Computer Science)' : '💻 Computer Science & Algorithms',
+        'biology': isAr ? '🧬 الأحياء والعلوم الطبية (Biology)' : '🧬 Biology & Genetics',
+        'arabic': isAr ? '📖 اللغة العربية والبلاغة (Arabic)' : '📖 Arabic Language & Literature',
+        'english': isAr ? '✍️ اللغة الإنجليزية الأكاديمية (English)' : '✍️ English Academic Writing',
+        'history': isAr ? '🏛️ التاريخ والحضارة العالمية (History)' : '🏛️ World History & Geography'
+      };
+      Array.from(select.options).forEach(opt => {
+        if (map[opt.value]) opt.text = map[opt.value];
+      });
+
+      const sortSelect = document.getElementById('sort-select');
+      sortSelect.options[0].text = isAr ? 'الأحدث رفعاً' : 'Latest Uploaded';
+      sortSelect.options[1].text = isAr ? 'الأكثر مشاهدة' : 'Most Viewed';
+      sortSelect.options[2].text = isAr ? 'المدة الأطول' : 'Longest Duration';
+    }
+
+    // Update Pill Labels for Language
+    function updatePillTranslations(lang) {
+      const isAr = lang === 'ar';
+      const pills = {
+        'all': isAr ? 'الكل' : 'All',
+        'physics': isAr ? 'الفيزياء' : 'Physics',
+        'math': isAr ? 'الرياضيات' : 'Mathematics',
+        'chemistry': isAr ? 'الكيمياء' : 'Chemistry',
+        'cs': isAr ? 'الحاسب والبرمجة' : 'Computer Science',
+        'biology': isAr ? 'الأحياء' : 'Biology',
+        'arabic': isAr ? 'اللغة العربية' : 'Arabic',
+        'english': isAr ? 'اللغة الإنجليزية' : 'English',
+        'history': isAr ? 'التاريخ' : 'History'
+      };
+      document.querySelectorAll('.sub-pill').forEach(btn => {
+        const sub = btn.dataset.subject;
+        const span = btn.querySelector('.sub-pill-name');
+        if (span && pills[sub]) span.innerText = pills[sub];
+      });
+    }
+
+    // Update Pill Buttons Theme Style
+    function updatePillsTheme(theme) {
+      const isDark = theme === 'dark';
+      document.querySelectorAll('.sub-pill').forEach(btn => {
+        const isActive = btn.dataset.subject === currentSubjectFilter;
+        if (isActive) {
+          btn.className = isDark ? 
+            "sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#173328] text-[#57f1db] border border-[#275340] flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer" :
+            "sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e3e34] text-white flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer";
+        } else {
+          btn.className = isDark ?
+            "sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-[#151c19] hover:bg-[#1f2925] text-[#cbdad3] border border-[#23312b] flex items-center gap-1.5 shrink-0 transition cursor-pointer" :
+            "sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer";
+        }
+      });
+    }
+
+    // Update Counts on Pills
+    function updatePillCounts() {
+      const counts = { all: allVideos.length };
+      allVideos.forEach(v => {
+        counts[v.subject] = (counts[v.subject] || 0) + 1;
+      });
+      document.getElementById('count-all').innerText = counts.all;
+      ['physics', 'math', 'chemistry', 'cs', 'biology', 'arabic', 'english', 'history'].forEach(s => {
+        const el = document.getElementById(`count-${s}`);
+        if (el) el.innerText = counts[s] || 0;
+      });
+      document.getElementById('total-videos-count').innerText = counts.all;
+    }
+
+    // ================= FILTERING & SORTING LOGIC =================
+    function handleSubjectDropdown(val) {
+      currentSubjectFilter = val;
+      updatePillsTheme(currentTheme);
+      renderVideos();
+    }
+
+    function filterBySubject(sub) {
+      currentSubjectFilter = sub;
+      document.getElementById('subject-select').value = sub;
+      updatePillsTheme(currentTheme);
+      renderVideos();
+    }
+
+    function handleSearch(query) {
+      currentSearchTerm = query.trim().toLowerCase();
+      renderVideos();
+    }
+
+    function handleSort(sortVal) {
+      currentSortOption = sortVal;
+      renderVideos();
+    }
+
+    // Filter and Sort Video List
+    function getFilteredVideos() {
+      let list = allVideos.filter(item => {
+        // Subject filter
+        if (currentSubjectFilter !== 'all' && item.subject !== currentSubjectFilter) {
+          return false;
+        }
+        // Search filter
+        if (currentSearchTerm) {
+          const matchTitle = (item.titleAr + " " + item.titleEn).toLowerCase().includes(currentSearchTerm);
+          const matchInst = (item.instructorAr + " " + item.instructorEn).toLowerCase().includes(currentSearchTerm);
+          const matchUnit = (item.unitAr + " " + item.unitEn).toLowerCase().includes(currentSearchTerm);
+          return matchTitle || matchInst || matchUnit;
+        }
+        return true;
+      });
+
+      // Sort
+      if (currentSortOption === 'latest') {
+        list.sort((a, b) => new Date(b.date || '2026-09-01') - new Date(a.date || '2026-09-01'));
+      } else if (currentSortOption === 'popular') {
+        list.sort((a, b) => b.views - a.views);
+      } else if (currentSortOption === 'duration') {
+        list.sort((a, b) => {
+          const toSec = str => {
+            const [m, s] = str.split(':').map(Number);
+            return (m || 0) * 60 + (s || 0);
+          };
+          return toSec(b.duration) - toSec(a.duration);
+        });
+      }
+      return list;
+    }
+
+    // ================= RENDER VIDEOS GRID =================
+    function renderVideos() {
+      const grid = document.getElementById('videos-grid');
+      const empty = document.getElementById('empty-state');
+      const filtered = getFilteredVideos();
+      const isAr = currentLang === 'ar';
+      const isDark = currentTheme === 'dark';
+
+      document.getElementById('visible-count').innerText = filtered.length;
+      const subName = currentSubjectFilter === 'all' ? 
+        (isAr ? 'جميع المواد' : 'All Subjects') : 
+        (isAr ? (allVideos.find(v => v.subject === currentSubjectFilter)?.subjectNameAr || currentSubjectFilter) : 
+                (allVideos.find(v => v.subject === currentSubjectFilter)?.subjectNameEn || currentSubjectFilter));
+      
+      document.getElementById('txt-filter-active-label').innerText = isAr ? `المادة: ${subName}` : `Subject: ${subName}`;
+      document.getElementById('txt-results-count').innerHTML = isAr ? 
+        `المعروض حالياً: <strong class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> محاضرات تعليمية` :
+        `Showing: <strong class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> recorded lectures`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        empty.classList.remove('hidden');
+        empty.classList.add('flex');
+        return;
+      }
+
+      empty.classList.add('hidden');
+      empty.classList.remove('flex');
+
+      grid.innerHTML = filtered.map(item => {
+        const title = isAr ? item.titleAr : item.titleEn;
+        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
+        const unit = isAr ? item.unitAr : item.unitEn;
+        const instructor = isAr ? item.instructorAr : item.instructorEn;
+        const badge = isAr ? item.badgeAr : item.badgeEn;
+        const viewsText = isAr ? `${item.views.toLocaleString()} مشاهدة` : `${item.views.toLocaleString()} views`;
+        const watchBtnText = isAr ? 'مشاهدة المحاضرة' : 'Watch Lecture';
+        const arrowIcon = isAr ? 'arrow_back' : 'arrow_forward';
+
+        // Dark vs Light styling matching index.html
+        const cardBgClass = isDark ? 
+          "bg-[#1b221f] border-[#27332e] hover:border-[#2dd4bf]/40" : 
+          "bg-white border-gray-200 hover:shadow-lg";
+        const titleClass = isDark ? 
+          "text-white group-hover:text-[#34d399]" : 
+          "text-gray-900 group-hover:text-emerald-700";
+        const subTagClass = isDark ? 
+          "bg-[#121514]/85 text-[#34d399] border-[#27332e]" : 
+          "bg-white/90 text-[#1e3e34] border-gray-200/60";
+        const btnClass = isDark ? 
+          "bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white border-[#2e5446]" : 
+          "bg-[#1e3e34] hover:bg-[#162e27] text-white";
+
+        // Badge styling
+        let badgeStyle = "bg-emerald-50 text-emerald-800 border-emerald-100";
+        if (isDark) {
+          if (item.badgeColor === 'blue') badgeStyle = "bg-[#172d3f] text-[#7bd0ff] border-[#204969]";
+          else if (item.badgeColor === 'amber') badgeStyle = "bg-[#362712] text-[#ffc66e] border-[#583f1d]";
+          else if (item.badgeColor === 'purple') badgeStyle = "bg-[#2e1d3d] text-[#c084fc] border-[#4c2d66]";
+          else badgeStyle = "bg-[#152e26] text-[#34d399] border-[#225042]";
+        } else {
+          if (item.badgeColor === 'blue') badgeStyle = "bg-blue-50 text-blue-800 border-blue-100";
+          else if (item.badgeColor === 'amber') badgeStyle = "bg-amber-50 text-amber-800 border-amber-100";
+          else if (item.badgeColor === 'purple') badgeStyle = "bg-purple-50 text-purple-800 border-purple-100";
+        }
+
+        return `
+          <div class="card-item ${cardBgClass} rounded-2xl border overflow-hidden shadow-xs transition-all duration-300 flex flex-col group" id="${item.id}">
+            
+            <!-- Video Thumbnail & Badges -->
+            <div class="h-44 sm:h-48 w-full overflow-hidden bg-gray-900 relative cursor-pointer" onclick="openVideoPlayer('${item.id}')">
+              <img 
+                alt="${title}" 
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
+                src="${item.thumbnail}" 
+                onerror="this.src='assets/images/desk2.jpg'"
+              />
+              
+              <!-- Subject Tag (top-start) -->
+              <div class="absolute top-3 start-3 backdrop-blur-xs text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border ${subTagClass}">
+                <span>${subject}</span>
+              </div>
+
+              <!-- Duration Pill (bottom-end) -->
+              <div class="absolute bottom-2.5 end-2.5 bg-black/75 backdrop-blur-md text-white text-[11px] font-mono px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
+                <span class="material-symbols-outlined text-[13px] text-emerald-400">schedule</span>
+                <span>${item.duration}</span>
+              </div>
+
+              <!-- Play Button Overlay Glow -->
+              <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-[#1e3e34]/85 group-hover:bg-[#1e3e34] text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-all border border-emerald-400/50">
+                  <span class="material-symbols-outlined text-2xl">play_arrow</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Content Body -->
+            <div class="p-5 flex-1 flex flex-col justify-between">
+              <div>
+                <!-- Unit & Status Badge -->
+                <div class="flex items-center justify-between gap-2 mb-2">
+                  <span class="text-[11px] font-semibold text-gray-500 ${isDark ? 'text-[#8fa39b]' : 'text-gray-500'}">${unit}</span>
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded border ${badgeStyle}">${badge}</span>
+                </div>
+
+                <!-- Video Title -->
+                <h3 class="card-title text-sm sm:text-base font-bold line-clamp-2 mb-3 leading-snug transition-colors ${titleClass}">
+                  ${title}
+                </h3>
+
+                <!-- Instructor & Views Meta -->
+                <div class="flex items-center justify-between text-xs pt-2 border-t ${isDark ? 'border-[#27332e] text-[#8fa39b]' : 'border-gray-100 text-gray-500'}">
+                  <div class="flex items-center gap-1.5 truncate">
+                    <span class="material-symbols-outlined text-[16px] text-emerald-600">person</span>
+                    <span class="truncate font-medium">${instructor}</span>
+                  </div>
+                  <span class="text-[11px] font-medium shrink-0">${viewsText}</span>
+                </div>
+              </div>
+
+              <!-- Card Action Button -->
+              <button onclick="openVideoPlayer('${item.id}')" class="card-action-btn mt-4 w-full py-2.5 px-4 ${btnClass} rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow border">
+                <span>${watchBtnText}</span>
+                <span class="material-symbols-outlined text-[16px] ${isAr ? 'group-hover:-translate-x-1' : 'group-hover:translate-x-1'} transition-transform">${arrowIcon}</span>
+              </button>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ================= VIDEO PLAYER MODAL =================
+    let currentActiveVideoId = null;
+
+    function openVideoPlayer(videoId) {
+      const vid = allVideos.find(v => v.id === videoId);
+      if (!vid) return;
+
+      currentActiveVideoId = videoId;
+      const isAr = currentLang === 'ar';
+      const isDark = currentTheme === 'dark';
+
+      const modal = document.getElementById('video-player-modal');
+      const container = document.getElementById('video-modal-container');
+      const title = document.getElementById('vmodal-title');
+      const subtitle = document.getElementById('vmodal-subtitle');
+      const poster = document.getElementById('vmodal-poster');
+      const subTag = document.getElementById('vmodal-subject-tag');
+      const unitTag = document.getElementById('vmodal-unit-tag');
+      const views = document.getElementById('vmodal-views');
+      const timeDisp = document.getElementById('vmodal-time-display');
+      const desc = document.getElementById('vmodal-description');
+      const descHeading = document.getElementById('vmodal-desc-heading');
+      const modalHeader = document.getElementById('video-modal-header');
+      const modalFooter = document.getElementById('video-modal-footer');
+      const actionsBox = document.getElementById('vmodal-actions-box');
+
+      // Dark / Light styles for modal
+      if (isDark) {
+        container.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-4xl w-full border border-[#27332e] shadow-2xl animate-modal relative overflow-hidden flex flex-col max-h-[92vh]";
+        modalHeader.className = "p-5 border-b border-[#27332e] flex items-center justify-between bg-[#171c1a]";
+        modalFooter.className = "p-4 border-t border-[#27332e] bg-[#171c1a] flex justify-end gap-2";
+        actionsBox.className = "bg-[#141a17] rounded-xl p-4 border border-[#27332e] space-y-3";
+        title.className = "text-base font-bold text-white";
+        subtitle.className = "text-xs text-[#8fa39b]";
+        desc.className = "text-xs leading-relaxed text-[#cbdad3]";
+        descHeading.className = "text-sm font-bold text-white";
+        document.getElementById('vmodal-close-btn').className = "w-8 h-8 rounded-lg bg-[#24332c] hover:bg-[#2e4038] flex items-center justify-center text-[#8fa39b] hover:text-white transition cursor-pointer";
+        document.getElementById('btn-vmodal-close').className = "px-4 py-2 text-xs font-semibold rounded-lg bg-[#24332c] hover:bg-[#2e4038] text-white transition cursor-pointer";
+      } else {
+        container.className = "bg-white text-gray-900 rounded-2xl max-w-4xl w-full border border-gray-200 shadow-2xl animate-modal relative overflow-hidden flex flex-col max-h-[92vh]";
+        modalHeader.className = "p-5 border-b border-gray-200 flex items-center justify-between bg-gray-50/50";
+        modalFooter.className = "p-4 border-t border-gray-200 bg-gray-50/50 flex justify-end gap-2";
+        actionsBox.className = "bg-gray-50 rounded-xl p-4 border border-gray-200 space-y-3";
+        title.className = "text-base font-bold text-gray-900";
+        subtitle.className = "text-xs text-gray-500";
+        desc.className = "text-xs leading-relaxed text-gray-600";
+        descHeading.className = "text-sm font-bold text-gray-900";
+        document.getElementById('vmodal-close-btn').className = "w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer";
+        document.getElementById('btn-vmodal-close').className = "px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer";
+      }
+
+      title.innerText = isAr ? vid.titleAr : vid.titleEn;
+      subtitle.innerText = isAr ? 
+        `${vid.subjectNameAr} • ${vid.instructorAr} • ${vid.duration} دقيقة` : 
+        `${vid.subjectNameEn} • ${vid.instructorEn} • ${vid.duration} mins`;
+      poster.src = vid.thumbnail;
+      subTag.innerText = isAr ? vid.subjectNameAr : vid.subjectNameEn;
+      unitTag.innerText = isAr ? vid.unitAr : vid.unitEn;
+      views.innerText = isAr ? `${vid.views.toLocaleString()} مشاهدة` : `${vid.views.toLocaleString()} views`;
+      timeDisp.innerText = `00:00 / ${vid.duration}`;
+      desc.innerText = isAr ? vid.descriptionAr : vid.descriptionEn;
+      descHeading.innerText = isAr ? "أهداف ومخرجات المحاضرة:" : "Lecture Objectives & Key Outcomes:";
+      document.getElementById('txt-attachments-title').innerText = isAr ? "المرفقات والأنشطة" : "Lecture Materials";
+      document.getElementById('txt-mark-completed').innerText = isAr ? "تحديد كمكتمل" : "Mark as Completed";
+      document.getElementById('btn-vmodal-close').innerText = isAr ? "إغلاق" : "Close";
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeVideoModal() {
+      document.getElementById('video-player-modal').classList.add('hidden');
+    }
+
+    function simulatePlayVideo() {
+      const btn = document.getElementById('vmodal-play-btn');
+      const isAr = currentLang === 'ar';
+      btn.innerHTML = `<span class="material-symbols-outlined text-3xl">pause</span>`;
+      setTimeout(() => {
+        alert(isAr ? "بدأ تشغيل المحاضرة التعليمية بنجاح بجودة عالية 1080p" : "Now streaming lecture in Full HD 1080p");
+      }, 100);
+    }
+
+    function handleMarkCompleted() {
+      const isAr = currentLang === 'ar';
+      alert(isAr ? "تم تسجيل حضورك للمحاضرة وتحديث تقدمك بنجاح!" : "Lecture attendance and progress verified successfully!");
+      closeVideoModal();
+    }
+
+    // ================= UPLOAD VIDEO MODAL =================
+    function openUploadModal() {
+      const modal = document.getElementById('upload-modal');
+      const container = document.getElementById('upload-modal-container');
+      const isDark = currentTheme === 'dark';
+      const isAr = currentLang === 'ar';
+
+      if (isDark) {
+        container.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-xl w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative max-h-[92vh] overflow-y-auto";
+        document.getElementById('upload-modal-title').className = "text-lg font-bold text-white";
+        document.getElementById('upload-modal-sub').className = "text-xs text-[#8fa39b]";
+        document.querySelectorAll('#upload-form input, #upload-form select, #upload-form textarea').forEach(el => {
+          el.className = "w-full p-2.5 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399]";
+        });
+        document.getElementById('btn-up-cancel').className = "px-4 py-2.5 text-xs font-semibold rounded-lg bg-[#24332c] hover:bg-[#2e4038] text-white transition cursor-pointer";
+      } else {
+        container.className = "bg-white text-gray-900 rounded-2xl max-w-xl w-full p-6 border border-gray-200 shadow-2xl animate-modal relative max-h-[92vh] overflow-y-auto";
+        document.getElementById('upload-modal-title').className = "text-lg font-bold text-gray-900";
+        document.getElementById('upload-modal-sub').className = "text-xs text-gray-500";
+        document.querySelectorAll('#upload-form input, #upload-form select, #upload-form textarea').forEach(el => {
+          el.className = "w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]";
+        });
+        document.getElementById('btn-up-cancel').className = "px-4 py-2.5 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer";
+      }
+
+      document.getElementById('upload-modal-title').innerText = isAr ? "رفع فيديو تعليمي جديد" : "Upload Educational Video";
+      document.getElementById('upload-modal-sub').innerText = isAr ? "إضافة ونشر محاضرة مصورة على المنصة الأكاديمية" : "Publish new video lecture to the faculty platform";
+      document.getElementById('lbl-up-title').innerText = isAr ? "عنوان الفيديو / المحاضرة *" : "Lecture Title *";
+      document.getElementById('lbl-up-subject').innerText = isAr ? "المادة الدراسية *" : "Academic Subject *";
+      document.getElementById('lbl-up-unit').innerText = isAr ? "الوحدة والدرس *" : "Unit & Lesson *";
+      document.getElementById('lbl-up-instructor').innerText = isAr ? "اسم المحاضر / المعلم *" : "Instructor Name *";
+      document.getElementById('lbl-up-duration').innerText = isAr ? "مدة المحاضرة *" : "Duration *";
+      document.getElementById('lbl-up-thumb').innerText = isAr ? "غلاف المحاضرة" : "Thumbnail Visual";
+      document.getElementById('lbl-up-desc').innerText = isAr ? "وصف المحاضرة والملاحظات" : "Lecture Overview";
+      document.getElementById('btn-up-cancel').innerText = isAr ? "إلغاء" : "Cancel";
+      document.getElementById('txt-btn-up-submit').innerText = isAr ? "نشر المحاضرة على المنصة" : "Publish Lecture";
+
+      // If a specific subject is filtered, set it in the upload form
+      if (currentSubjectFilter !== 'all') {
+        document.getElementById('up-subject').value = currentSubjectFilter;
+      }
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeUploadModal() {
+      document.getElementById('upload-modal').classList.add('hidden');
+      document.getElementById('upload-form').reset();
+    }
+
+    function handleVideoUpload(e) {
+      e.preventDefault();
+      const title = document.getElementById('up-title').value.trim();
+      const subject = document.getElementById('up-subject').value;
+      const unit = document.getElementById('up-unit').value.trim();
+      const instructor = document.getElementById('up-instructor').value.trim();
+      const duration = document.getElementById('up-duration').value.trim();
+      const thumb = document.getElementById('up-thumbnail').value;
+      const desc = document.getElementById('up-description').value.trim();
+
+      const subjectNames = {
+        physics: { ar: "الفيزياء", en: "Physics" },
+        math: { ar: "الرياضيات", en: "Mathematics" },
+        chemistry: { ar: "الكيمياء", en: "Chemistry" },
+        cs: { ar: "الحاسب والبرمجة", en: "Computer Science" },
+        biology: { ar: "الأحياء", en: "Biology" },
+        arabic: { ar: "اللغة العربية", en: "Arabic" },
+        english: { ar: "اللغة الإنجليزية", en: "English" },
+        history: { ar: "التاريخ والجغرافيا", en: "History" }
+      };
+
+      const newVideo = {
+        id: "vid-" + Date.now(),
+        subject: subject,
+        subjectNameAr: subjectNames[subject]?.ar || subject,
+        subjectNameEn: subjectNames[subject]?.en || subject,
+        titleAr: title,
+        titleEn: title,
+        unitAr: unit,
+        unitEn: unit,
+        instructorAr: instructor,
+        instructorEn: instructor,
+        duration: duration || "35:00",
+        views: 1,
+        badgeAr: "جديد",
+        badgeEn: "New",
+        badgeColor: "emerald",
+        thumbnail: thumb,
+        date: new Date().toISOString().split('T')[0],
+        descriptionAr: desc || "تم رفع المحاضرة بنجاح ضمن المحتوى المعتمد للفصل الدراسي الحالي.",
+        descriptionEn: desc || "Lecture successfully published for the current academic semester."
+      };
+
+      // Prepend to list
+      allVideos.unshift(newVideo);
+      try {
+        localStorage.setItem('platform_videos', JSON.stringify(allVideos));
+      } catch (err) {
+        console.error(err);
+      }
+
+      closeUploadModal();
+      updatePillCounts();
+      renderVideos();
+
+      alert(currentLang === 'ar' ? 
+        `🎉 تم رفع ونشر المحاضرة "${title}" بنجاح على المنصة الأكاديمية!` : 
+        `🎉 Lecture "${title}" successfully published to the platform!`);
+    }
+
+    // ================= GENERIC MODAL OPERATIONS =================
+    function openModal(type) {
+      const modal = document.getElementById('interactive-modal');
+      const mContainer = document.getElementById('modal-container');
+      const mTitle = document.getElementById('modal-title');
+      const mSub = document.getElementById('modal-subtitle');
+      const mBody = document.getElementById('modal-body');
+      const mIcon = document.getElementById('modal-icon');
+      const isAr = currentLang === 'ar';
+      const isDark = currentTheme === 'dark';
+
+      if (isDark) {
+        mContainer.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-lg w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative";
+      } else {
+        mContainer.className = "bg-white text-gray-900 rounded-2xl max-w-lg w-full p-6 border border-gray-200 shadow-2xl animate-modal relative";
+      }
+
+      if (type === 'calendar') {
+        mTitle.innerText = isAr ? "التقويم الأكاديمي وجدول البث" : "Academic Calendar & Broadcast Schedule";
+        mSub.innerText = isAr ? "مواعيد المحاضرات المباشرة وجلسات المراجعة" : "Live lecture slots and revision timings";
+        mIcon.innerText = "calendar_month";
+        mBody.innerHTML = isAr ? 
+          `<p>المحاضرة المباشرة القادمة في <strong>الفيزياء</strong> ستكون غداً الساعة 10:00 صباحاً.</p>` :
+          `<p>Upcoming live lecture in <strong>Physics</strong> is scheduled tomorrow at 10:00 AM.</p>`;
+      } else if (type === 'notifications') {
+        mTitle.innerText = isAr ? "مركز إشعارات الفيديوهات" : "Lecture Notifications";
+        mSub.innerText = isAr ? "تنبيهات المحاضرات والأسئلة" : "Recent lecture alerts";
+        mIcon.innerText = "notifications_active";
+        mBody.innerHTML = isAr ? 
+          `<p>تم تسجيل <strong>42 سؤالاً جديداً</strong> من الطلاب على محاضرة قوانين البصريات.</p>` :
+          `<p><strong>42 new student inquiries</strong> submitted on the Optics lecture.</p>`;
+      } else {
+        mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Profile";
+        mSub.innerText = isAr ? "د. أحمد عبد الرحمن" : "Dr. Ahmed Abdelrahman";
+        mIcon.innerText = "person";
+        mBody.innerHTML = isAr ? 
+          `<p>أستاذ مشارك ومسؤول نشر المحاضرات المرئية بقسم العلوم والرياضيات.</p>` :
+          `<p>Associate Professor & Video Lecture Coordinator for Sciences & Mathematics.</p>`;
+      }
+
+      document.getElementById('btn-modal-cancel').innerText = isAr ? "إغلاق" : "Close";
+      document.getElementById('btn-modal-confirm').innerText = isAr ? "تأكيد" : "Confirm";
+
+      modal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('interactive-modal').classList.add('hidden');
+    }
+
+    // Close on ESC or backdrop
+    window.addEventListener('click', (e) => {
+      const vmodal = document.getElementById('video-player-modal');
+      const upmodal = document.getElementById('upload-modal');
+      const gmodal = document.getElementById('interactive-modal');
+      if (e.target === vmodal) closeVideoModal();
+      if (e.target === upmodal) closeUploadModal();
+      if (e.target === gmodal) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeVideoModal();
+        closeUploadModal();
+        closeModal();
+      }
+    });
+
+    function updateNavStyles(theme) {
+      // Keep active styles intact
+    }
+  </script>
+</body>
+</html>

@@ -125,23 +125,23 @@
           <span class="nav-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
         </button>
 
-        <!-- Item 2 -->
-        <button onclick="handleNavClick(this)" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+        <!-- Item 2 - الفيديوهات التعليمية (Link to videos.html) -->
+        <a href="videos.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">smart_display</span>
+            <span class="nav-label text-sm" id="nav-lbl-videos-index">الفيديوهات التعليمية</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 3 - الكتب والمناهج (Link to books.html) -->
+        <a href="books.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">menu_book</span>
-            <span class="nav-label text-sm">مثال</span>
+            <span class="nav-label text-sm" id="nav-lbl-books-index">المكتبة والكتب الدراسية</span>
           </div>
           <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
-        </button>
-
-        <!-- Item 3 -->
-        <button onclick="handleNavClick(this)" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
-          <div class="flex items-center gap-3">
-            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">bar_chart</span>
-            <span class="nav-label text-sm">مثال</span>
-          </div>
-          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
-        </button>
+        </a>
 
         <!-- Item 4 -->
         <button onclick="handleNavClick(this)" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
@@ -632,7 +632,11 @@
         document.getElementById('txt-banner-title').innerText = "مثال";
         document.getElementById('txt-banner-sub').innerText = "مثال";
 
-        document.querySelectorAll('.nav-label').forEach(el => el.innerText = "مثال");
+        document.querySelectorAll('.nav-label:not(#nav-lbl-videos-index):not(#nav-lbl-books-index)').forEach(el => el.innerText = "مثال");
+        const navVidAr = document.getElementById('nav-lbl-videos-index');
+        if (navVidAr) navVidAr.innerText = "الفيديوهات التعليمية";
+        const navBooksAr = document.getElementById('nav-lbl-books-index');
+        if (navBooksAr) navBooksAr.innerText = "المكتبة والكتب الدراسية";
         document.querySelectorAll('.card-title').forEach(el => el.innerText = "مثال");
         document.querySelectorAll('.txt-tag').forEach(el => el.innerText = "مثال");
         document.querySelectorAll('.btn-card-text').forEach(el => el.innerText = "مثال");
@@ -676,7 +680,11 @@
         document.getElementById('txt-banner-title').innerText = "Example";
         document.getElementById('txt-banner-sub').innerText = "Example";
 
-        document.querySelectorAll('.nav-label').forEach(el => el.innerText = "Example");
+        document.querySelectorAll('.nav-label:not(#nav-lbl-videos-index):not(#nav-lbl-books-index)').forEach(el => el.innerText = "Example");
+        const navVidEn = document.getElementById('nav-lbl-videos-index');
+        if (navVidEn) navVidEn.innerText = "Educational Videos";
+        const navBooksEn = document.getElementById('nav-lbl-books-index');
+        if (navBooksEn) navBooksEn.innerText = "Library & Textbooks";
         document.querySelectorAll('.card-title').forEach(el => el.innerText = "Example");
         document.querySelectorAll('.txt-tag').forEach(el => el.innerText = "Example");
         document.querySelectorAll('.btn-card-text').forEach(el => el.innerText = "Example");
