@@ -33,9 +33,6 @@ function applyTheme(theme) {
   const userAvatarBox = document.getElementById('user-avatar-box');
   const mainHeader = document.getElementById('main-header');
   const mainFooter = document.getElementById('main-footer');
-  const infoBanner = document.getElementById('info-banner');
-  const infoIconWrapper = document.getElementById('info-icon-wrapper');
-  const infoIcon = document.getElementById('info-icon');
   const headerIconBox = document.getElementById('header-icon-box');
 
   const btnTheme = document.getElementById('btn-theme-toggle');
@@ -69,25 +66,9 @@ function applyTheme(theme) {
     const btnQuickVid = document.getElementById('btn-quick-videos');
     if (btnQuickVid) btnQuickVid.className = "bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 border border-[#2e5446] shadow-xs transition-all cursor-pointer";
 
-    // Info Banner
-    infoBanner.className = "bg-[#171c1a] border border-[#2dd4bf] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
-    if (infoIconWrapper) infoIconWrapper.className = "w-8 h-8 rounded-lg bg-[#14261f] text-[#34d399] flex items-center justify-center shrink-0 border border-[#234235]";
-    infoIcon.className = "material-symbols-outlined text-[#2dd4bf] text-[20px]";
-    document.getElementById('txt-banner-title').className = "font-bold text-white";
-    document.getElementById('txt-banner-sub').className = "text-xs text-[#8fa39b] font-normal";
-    const bStat = document.getElementById('txt-banner-stat');
-    if (bStat) bStat.className = "text-xs font-bold text-[#57f1db] bg-[#173328] px-2.5 py-1 rounded-md border border-[#275340]";
-
     // Footer
     mainFooter.className = "bg-[#171c1a] border-t border-[#25332d] py-4 px-8 text-xs text-[#8fa39b] mt-auto transition-colors duration-300";
     document.getElementById('txt-footer-left-1').className = "font-bold text-white";
-
-    // Header action buttons
-    document.querySelectorAll('.header-action-btn').forEach(btn => {
-      btn.className = "header-action-btn bg-[#1d2622] hover:bg-[#25312c] text-[#cbdad3] font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-[#2a3a33] transition-colors cursor-pointer shadow-xs";
-    });
-    document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#34d399]";
-    document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#34d399]";
 
     // Theme Toggle Button
     btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-[#34d399] border-[#2a3a33]";
@@ -151,25 +132,9 @@ function applyTheme(theme) {
     const btnQuickVid = document.getElementById('btn-quick-videos');
     if (btnQuickVid) btnQuickVid.className = "bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer";
 
-    // Info Banner
-    infoBanner.className = "bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
-    if (infoIconWrapper) infoIconWrapper.className = "w-8 h-8 rounded-lg bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]";
-    infoIcon.className = "material-symbols-outlined text-[#1e3e34] text-[20px]";
-    document.getElementById('txt-banner-title').className = "font-bold text-gray-900";
-    document.getElementById('txt-banner-sub').className = "text-xs text-gray-600 font-normal";
-    const bStat = document.getElementById('txt-banner-stat');
-    if (bStat) bStat.className = "text-xs font-bold text-[#1e3e34] bg-[#e9f2ee] px-2.5 py-1 rounded-md border border-[#d1ded9]";
-
     // Footer
     mainFooter.className = "bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300";
     document.getElementById('txt-footer-left-1').className = "font-bold text-gray-800";
-
-    // Header buttons
-    document.querySelectorAll('.header-action-btn').forEach(btn => {
-      btn.className = "header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer";
-    });
-    document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
-    document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
 
     // Theme Toggle Button
     btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200";
@@ -239,13 +204,6 @@ function applyLanguage(lang) {
     document.getElementById('txt-page-badge').innerText = "الفصل الدراسي الحالي 2026";
     document.getElementById('txt-page-desc').innerText = "البوابة الموحدة لإدارة وتوصيف المقررات والمناهج والأنشطة الجامعية";
     document.getElementById('txt-quick-videos').innerText = "الفيديوهات التعليمية";
-    document.getElementById('txt-calendar-btn').innerText = "التقويم الأكاديمي";
-    document.getElementById('txt-notifications-btn').innerText = "الإشعارات";
-
-    // Banner
-    document.getElementById('txt-banner-title').innerText = "منظومة التعليم الأكاديمي وإدارة المقررات والمناهج";
-    document.getElementById('txt-banner-sub').innerText = "متابعة المناهج الدراسية، المحاضرات المرئية، والمراجع العلمية المعتمدة.";
-    document.getElementById('txt-banner-stat').innerText = "الفصل الدراسي 2 • معتمد";
 
     // Card 1
     document.getElementById('txt-tag-1').innerText = "الخطة والمناهج";
@@ -302,13 +260,6 @@ function applyLanguage(lang) {
     document.getElementById('txt-page-badge').innerText = "Current Term 2026";
     document.getElementById('txt-page-desc').innerText = "Unified portal for coursework planning, syllabi, and academic activities";
     document.getElementById('txt-quick-videos').innerText = "Educational Videos";
-    document.getElementById('txt-calendar-btn').innerText = "Calendar";
-    document.getElementById('txt-notifications-btn').innerText = "Notifications";
-
-    // Banner
-    document.getElementById('txt-banner-title').innerText = "Academic System & Curriculum Management Infrastructure";
-    document.getElementById('txt-banner-sub').innerText = "Facilitating coursework tracking, video lectures, and approved textbooks.";
-    document.getElementById('txt-banner-stat').innerText = "Term 2 • Verified";
 
     // Card 1
     document.getElementById('txt-tag-1').innerText = "Curriculum Plan";
@@ -410,50 +361,7 @@ function openModal(type) {
           <div class="flex justify-between"><span>Item Bank Update:</span><span class="font-bold">Week 6</span></div>
         </div>
       </div>`;
-  } else if (type === 'calendar') {
-    mTitle.innerText = isAr ? "التقويم الأكاديمي" : "Academic Calendar";
-    mSub.innerText = isAr ? "جدول الاختبارات والمحاضرات وساعات الإرشاد" : "Coursework and Office Hours Schedule";
-    mIcon.innerText = "calendar_month";
-    mBody.innerHTML = isAr ? 
-      `<div class="space-y-3">
-        <p>الأسبوع الجاري يشمل مراجعات منتصف الفصل الدراسي وتسليم المشاريع البحثية.</p>
-        <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
-          <div class="flex justify-between"><span>بداية الاختبارات النصفية:</span><span class="font-bold">الأحد القادم</span></div>
-          <div class="flex justify-between"><span>آخر موعد لتعديل الخطط:</span><span class="font-bold text-amber-500">الخميس 15 أكتوبر</span></div>
-        </div>
-      </div>` :
-      `<div class="space-y-3">
-        <p>Current calendar week is scheduled for midterm academic reviews and project milestones.</p>
-        <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
-          <div class="flex justify-between"><span>Midterm Exam Window:</span><span class="font-bold">Next Sunday</span></div>
-          <div class="flex justify-between"><span>Syllabus Revision Deadline:</span><span class="font-bold text-amber-500">Oct 15</span></div>
-        </div>
-      </div>`;
-  } else if (type === 'notifications') {
-    mTitle.innerText = isAr ? "مركز الإشعارات الأكاديمية" : "Notifications Center";
-    mSub.innerText = isAr ? "التنبيهات الإدارية النشطة" : "Active System Alerts";
-    mIcon.innerText = "notifications_active";
-    mBody.innerHTML = isAr ? 
-      `<div class="space-y-2 text-xs">
-        <div class="p-2.5 bg-emerald-50 dark:bg-[#152e26] border border-emerald-200 dark:border-[#225042] rounded-lg">
-          <strong class="text-emerald-800 dark:text-[#34d399] block mb-0.5">اعتماد الخطة الأكاديمية:</strong>
-          <span>تم توثيق كافة المناهج ومراجعتها بنجاح من عمادة الكلية.</span>
-        </div>
-        <div class="p-2.5 bg-blue-50 dark:bg-[#172d3f] border border-blue-200 dark:border-[#204969] rounded-lg">
-          <strong class="text-blue-800 dark:text-[#7bd0ff] block mb-0.5">محاضرات مصورة جديدة:</strong>
-          <span>تمت إضافة 8 فيديوهات تعليمية جديدة لكافة المواد.</span>
-        </div>
-      </div>` :
-      `<div class="space-y-2 text-xs">
-        <div class="p-2.5 bg-emerald-50 dark:bg-[#152e26] border border-emerald-200 dark:border-[#225042] rounded-lg">
-          <strong class="text-emerald-800 dark:text-[#34d399] block mb-0.5">Curriculum Approval:</strong>
-          <span>All module rubrics verified and approved by dean of faculty.</span>
-        </div>
-        <div class="p-2.5 bg-blue-50 dark:bg-[#172d3f] border border-blue-200 dark:border-[#204969] rounded-lg">
-          <strong class="text-blue-800 dark:text-[#7bd0ff] block mb-0.5">New Video Lectures:</strong>
-          <span>8 newly recorded lectures are now accessible in the video library.</span>
-        </div>
-      </div>`;
+
   } else {
     mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Staff Profile";
     mSub.innerText = isAr ? "عضو هيئة التدريس ومنسق المواد" : "Academic Faculty Member";

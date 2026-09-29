@@ -185,19 +185,6 @@
             <span id="txt-quick-videos">الفيديوهات التعليمية</span>
           </a>
 
-          <!-- زر تقويم (Calendar) -->
-          <button onclick="openModal('calendar')" id="btn-calendar" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
-            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-calendar">calendar_today</span>
-            <span id="txt-calendar-btn">التقويم الأكاديمي</span>
-          </button>
-
-          <!-- زر إشعارات (Notifications) -->
-          <button onclick="openModal('notifications')" id="btn-notifications" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer relative">
-            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-notifications">notifications</span>
-            <span id="txt-notifications-btn">الإشعارات</span>
-            <span class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 end-1.5 ring-2 ring-white"></span>
-          </button>
-
           <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
           <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
             <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
@@ -213,27 +200,6 @@
         </div>
       </div>
     </header>
-
-    <!-- Information Banner (Green Border matching design) -->
-    <div class="px-8 pt-6">
-      <div id="info-banner" class="bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium transition-all duration-300">
-        <div class="flex items-center gap-3">
-          <div class="w-8 h-8 rounded-lg bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]" id="info-icon-wrapper">
-            <span class="material-symbols-outlined text-[20px]" id="info-icon">verified_user</span>
-          </div>
-          <div>
-            <span id="txt-banner-title" class="font-bold text-gray-900">منظومة التعليم الأكاديمي وإدارة المقررات والمناهج</span>
-            <span class="hidden sm:inline text-gray-400 mx-1.5">•</span>
-            <span id="txt-banner-sub" class="text-xs text-gray-600 font-normal">متابعة المناهج الدراسية، المحاضرات المرئية، والمراجع العلمية المعتمدة.</span>
-          </div>
-        </div>
-        <div class="flex items-center gap-2 shrink-0">
-          <span class="text-xs font-bold text-[#1e3e34] bg-[#e9f2ee] px-2.5 py-1 rounded-md border border-[#d1ded9]" id="txt-banner-stat">
-            الفصل الدراسي 2 • معتمد
-          </span>
-        </div>
-      </div>
-    </div>
 
     <!-- Cards Grid -->
     <main class="p-8 flex-1">

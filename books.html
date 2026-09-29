@@ -218,19 +218,6 @@
             <span class="text-[10px] bg-rose-50 text-rose-700 font-bold px-1.5 py-0.2 rounded-full border border-rose-200" id="fav-count-badge">0</span>
           </button>
 
-          <!-- زر تقويم (Calendar) -->
-          <button onclick="openModal('calendar')" id="btn-calendar" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
-            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-calendar">calendar_today</span>
-            <span id="txt-calendar-btn">التقويم</span>
-          </button>
-
-          <!-- زر إشعارات (Notifications) -->
-          <button onclick="openModal('notifications')" id="btn-notifications" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer relative">
-            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-notifications">notifications</span>
-            <span id="txt-notifications-btn">الإشعارات</span>
-            <span class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 end-1.5 ring-2 ring-white"></span>
-          </button>
-
           <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
           <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
             <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
@@ -247,48 +234,12 @@
       </div>
     </header>
 
-    <!-- Information & Stats Banner (Green Border matching design) -->
-    <div class="px-8 pt-6">
-      <div id="info-banner" class="bg-white border border-[#1e3e34] p-4 rounded-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300">
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]" id="info-icon-wrapper">
-            <span class="material-symbols-outlined text-[24px]" id="info-icon">library_books</span>
-          </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span id="txt-banner-title" class="font-bold text-gray-900 text-sm sm:text-base">المستودع الرقمي للكتب والمناهج الأكاديمية</span>
-              <span class="text-[10px] bg-emerald-100 text-emerald-800 font-semibold px-2 py-0.5 rounded-full border border-emerald-200">نسخ أصلية 100%</span>
-            </div>
-            <p id="txt-banner-sub" class="text-xs text-gray-600 font-normal mt-0.5">توفير الكتب الدراسية بصيغ إلكترونية عالية الدقة (PDF / ePub) مع ميزات القراءة المباشرة وتدوين الملاحظات التفاعلية.</p>
-          </div>
-        </div>
-
-        <!-- Metric Badges Row -->
-        <div class="flex items-center flex-wrap gap-2.5 shrink-0 text-xs font-semibold">
-          <div id="stat-box-1" class="flex items-center gap-1.5 bg-[#e9f2ee] text-[#1e3e34] px-3 py-1.5 rounded-lg border border-[#d1ded9]">
-            <span class="material-symbols-outlined text-[16px]">menu_book</span>
-            <span id="total-books-count">12</span>
-            <span id="txt-stat-books-lbl">كتاب معتمد</span>
-          </div>
-          <div id="stat-box-2" class="flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">
-            <span class="material-symbols-outlined text-[16px] text-emerald-600">download</span>
-            <span id="total-downloads-count">42,560</span>
-            <span id="txt-stat-dl-lbl">تحميل</span>
-          </div>
-          <div id="stat-box-3" class="flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200">
-            <span class="material-symbols-outlined text-[16px] text-amber-500">verified</span>
-            <span id="txt-stat-year-lbl">طبعات 2026</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- ================= 3. شريط اختيار المادة والبحث والتصفية (SUBJECT SELECTION LIST & FILTERS) ================= -->
     <section class="px-8 pt-6">
       <div id="filter-container" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300">
         
         <!-- Header row of filters -->
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100" id="filter-header-row">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4" id="filter-header-row">
           
           <!-- Subject Dropdown List -->
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
@@ -361,64 +312,6 @@
 
         </div>
 
-        <!-- Subject Quick Filter Pills -->
-        <div class="pt-4">
-          <div class="flex items-center gap-2 overflow-x-auto pill-scroll pb-1 text-xs" id="subject-pills">
-            <button onclick="filterBySubject('all')" data-subject="all" class="sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e3e34] text-white flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer">
-              <span class="material-symbols-outlined text-[16px]">library_books</span>
-              <span class="sub-pill-name">الكل</span>
-              <span class="text-[10px] bg-white/20 px-1.5 py-0.2 rounded-full" id="count-all">12</span>
-            </button>
-
-            <button onclick="filterBySubject('physics')" data-subject="physics" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-amber-600">bolt</span>
-              <span class="sub-pill-name">الفيزياء</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-physics">2</span>
-            </button>
-
-            <button onclick="filterBySubject('math')" data-subject="math" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-emerald-600">functions</span>
-              <span class="sub-pill-name">الرياضيات</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-math">2</span>
-            </button>
-
-            <button onclick="filterBySubject('chemistry')" data-subject="chemistry" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-blue-600">science</span>
-              <span class="sub-pill-name">الكيمياء</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-chemistry">2</span>
-            </button>
-
-            <button onclick="filterBySubject('cs')" data-subject="cs" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-indigo-600">code</span>
-              <span class="sub-pill-name">الحاسب والبرمجة</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-cs">2</span>
-            </button>
-
-            <button onclick="filterBySubject('biology')" data-subject="biology" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-teal-600">biotech</span>
-              <span class="sub-pill-name">الأحياء</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-biology">1</span>
-            </button>
-
-            <button onclick="filterBySubject('arabic')" data-subject="arabic" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-rose-600">auto_stories</span>
-              <span class="sub-pill-name">اللغة العربية</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-arabic">1</span>
-            </button>
-
-            <button onclick="filterBySubject('english')" data-subject="english" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-sky-600">history_edu</span>
-              <span class="sub-pill-name">اللغة الإنجليزية</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-english">1</span>
-            </button>
-
-            <button onclick="filterBySubject('history')" data-subject="history" class="sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer">
-              <span class="material-symbols-outlined text-[16px] text-amber-700">museum</span>
-              <span class="sub-pill-name">التاريخ والحضارة</span>
-              <span class="text-[10px] bg-gray-200 text-gray-700 px-1.5 py-0.2 rounded-full" id="count-history">1</span>
-            </button>
-          </div>
-        </div>
 
       </div>
     </section>
@@ -1440,9 +1333,6 @@
       const userAvatarBox = document.getElementById('user-avatar-box');
       const mainHeader = document.getElementById('main-header');
       const mainFooter = document.getElementById('main-footer');
-      const infoBanner = document.getElementById('info-banner');
-      const infoIconWrapper = document.getElementById('info-icon-wrapper');
-      const infoIcon = document.getElementById('info-icon');
       const filterContainer = document.getElementById('filter-container');
       const filterSubjectIcon = document.getElementById('filter-subject-icon');
       const subjectSelect = document.getElementById('subject-select');
@@ -1480,37 +1370,9 @@
         document.getElementById('txt-page-badge').className = "text-xs bg-[#173328] text-[#57f1db] font-bold px-2.5 py-0.5 rounded-md border border-[#275340]";
         document.getElementById('txt-page-desc').className = "text-xs text-[#8fa39b] font-medium mt-0.5";
 
-        // Header action buttons
-        document.querySelectorAll('.header-action-btn').forEach(btn => {
-          btn.className = "header-action-btn bg-[#1d2622] hover:bg-[#25312c] text-[#cbdad3] font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-[#2a3a33] transition-colors cursor-pointer shadow-xs";
-        });
-        document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#34d399]";
-        document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#34d399]";
-
-        // Theme Toggle Button
-        btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-[#34d399] border-[#2a3a33]";
-        iconTheme.className = "material-symbols-outlined text-[18px] text-[#34d399]";
-        iconTheme.innerText = "light_mode";
-        txtTheme.innerText = currentLang === 'ar' ? 'الوضع النهاري' : 'Light Mode';
-
-        // Lang Toggle Button
-        document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-white border-[#2a3a33]";
-        document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#34d399]";
-
-        // Info Banner
-        infoBanner.className = "bg-[#171c1a] border border-[#2dd4bf] p-4 rounded-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
-        infoIconWrapper.className = "w-10 h-10 rounded-xl bg-[#14261f] text-[#2dd4bf] flex items-center justify-center shrink-0 border border-[#234235]";
-        infoIcon.className = "material-symbols-outlined text-[#2dd4bf] text-[24px]";
-        document.getElementById('txt-banner-title').className = "font-bold text-white text-sm sm:text-base";
-        document.getElementById('txt-banner-sub').className = "text-xs text-[#8fa39b] font-normal mt-0.5";
-        
-        document.getElementById('stat-box-1').className = "flex items-center gap-1.5 bg-[#173328] text-[#57f1db] px-3 py-1.5 rounded-lg border border-[#275340]";
-        document.getElementById('stat-box-2').className = "flex items-center gap-1.5 bg-[#1d2622] text-[#cbdad3] px-3 py-1.5 rounded-lg border border-[#2a3a33]";
-        document.getElementById('stat-box-3').className = "flex items-center gap-1.5 bg-[#1d2622] text-[#cbdad3] px-3 py-1.5 rounded-lg border border-[#2a3a33]";
-
         // Filter Container
         filterContainer.className = "bg-[#1b221f] rounded-2xl border border-[#27332e] p-5 shadow-sm transition-all duration-300";
-        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-[#27332e]";
+        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4";
         filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#34d399]";
         document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-[#e1ebe6]";
         
@@ -1530,8 +1392,6 @@
         // Footer
         mainFooter.className = "bg-[#171c1a] border-t border-[#25332d] py-4 px-8 text-xs text-[#8fa39b] mt-auto transition-colors duration-300";
         document.getElementById('txt-footer-left-1').className = "font-bold text-white";
-
-        updatePillsTheme('dark');
 
       } else {
         // LIGHT THEME
@@ -1558,37 +1418,9 @@
         document.getElementById('txt-page-badge').className = "text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]";
         document.getElementById('txt-page-desc').className = "text-xs text-gray-500 font-medium mt-0.5";
 
-        // Header buttons
-        document.querySelectorAll('.header-action-btn').forEach(btn => {
-          btn.className = "header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer";
-        });
-        document.getElementById('icon-calendar').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
-        document.getElementById('icon-notifications').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
-
-        // Theme Toggle Button
-        btnTheme.className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200";
-        iconTheme.className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
-        iconTheme.innerText = "dark_mode";
-        txtTheme.innerText = currentLang === 'ar' ? 'الوضع الداكن' : 'Dark Mode';
-
-        // Lang Toggle Button
-        document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200";
-        document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#1e3e34]";
-
-        // Info Banner
-        infoBanner.className = "bg-white border border-[#1e3e34] p-4 rounded-xl flex flex-col lg:flex-row lg:items-center justify-between gap-4 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
-        infoIconWrapper.className = "w-10 h-10 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]";
-        infoIcon.className = "material-symbols-outlined text-[#1e3e34] text-[24px]";
-        document.getElementById('txt-banner-title').className = "font-bold text-gray-900 text-sm sm:text-base";
-        document.getElementById('txt-banner-sub').className = "text-xs text-gray-600 font-normal mt-0.5";
-        
-        document.getElementById('stat-box-1').className = "flex items-center gap-1.5 bg-[#e9f2ee] text-[#1e3e34] px-3 py-1.5 rounded-lg border border-[#d1ded9]";
-        document.getElementById('stat-box-2').className = "flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200";
-        document.getElementById('stat-box-3').className = "flex items-center gap-1.5 bg-gray-50 text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200";
-
         // Filter Container
         filterContainer.className = "bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300";
-        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100";
+        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4";
         filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#1e3e34]";
         document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-gray-800";
         
@@ -1608,8 +1440,6 @@
         // Footer
         mainFooter.className = "bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300";
         document.getElementById('txt-footer-left-1').className = "font-bold text-gray-800";
-
-        updatePillsTheme('light');
       }
     }
 
@@ -1640,15 +1470,6 @@
         
         document.getElementById('txt-upload-btn').innerText = "إضافة كتاب جديد";
         document.getElementById('txt-fav-filter').innerText = "المحفوظات";
-        document.getElementById('txt-calendar-btn').innerText = "التقويم";
-        document.getElementById('txt-notifications-btn').innerText = "الإشعارات";
-        
-        document.getElementById('txt-banner-title').innerText = "المستودع الرقمي للكتب والمناهج الأكاديمية";
-        document.getElementById('txt-banner-sub').innerText = "توفير الكتب الدراسية بصيغ إلكترونية عالية الدقة (PDF / ePub) مع ميزات القراءة المباشرة وتدوين الملاحظات التفاعلية.";
-        document.getElementById('txt-stat-books-lbl').innerText = "كتاب معتمد";
-        document.getElementById('txt-stat-dl-lbl').innerText = "تحميل";
-        document.getElementById('txt-stat-year-lbl').innerText = "طبعات 2026";
-
         document.getElementById('lbl-subject-select').innerText = "اختيار التخصص الأكاديمي:";
         document.getElementById('search-input').placeholder = "ابحث باسم الكتاب، المؤلف، أو الكلمات المفتاحية...";
 
@@ -1687,15 +1508,6 @@
 
         document.getElementById('txt-upload-btn').innerText = "Add New Book";
         document.getElementById('txt-fav-filter').innerText = "Bookmarks";
-        document.getElementById('txt-calendar-btn').innerText = "Calendar";
-        document.getElementById('txt-notifications-btn').innerText = "Notifications";
-
-        document.getElementById('txt-banner-title').innerText = "Digital Academic Repository & Textbooks";
-        document.getElementById('txt-banner-sub').innerText = "High-definition textbook library (PDF / ePub) with real-time in-browser reading and citation tools.";
-        document.getElementById('txt-stat-books-lbl').innerText = "Certified Books";
-        document.getElementById('txt-stat-dl-lbl').innerText = "Downloads";
-        document.getElementById('txt-stat-year-lbl').innerText = "2026 Editions";
-
         document.getElementById('lbl-subject-select').innerText = "Select Academic Department:";
         document.getElementById('search-input').placeholder = "Search by book title, author, or keywords...";
 
@@ -1716,26 +1528,7 @@
       }
     }
 
-    // Update Pills Theme
-    function updatePillsTheme(theme) {
-      const pills = document.querySelectorAll('.sub-pill');
-      pills.forEach(pill => {
-        const isSelected = pill.getAttribute('data-subject') === currentSubjectFilter;
-        if (theme === 'dark') {
-          if (isSelected) {
-            pill.className = "sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e382e] text-[#57f1db] border border-[#2e5446] flex items-center gap-1.5 shrink-0 transition shadow-sm cursor-pointer";
-          } else {
-            pill.className = "sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-[#17211d] hover:bg-[#1f2d27] text-[#cbdad3] border border-[#27332e] flex items-center gap-1.5 shrink-0 transition cursor-pointer";
-          }
-        } else {
-          if (isSelected) {
-            pill.className = "sub-pill active px-3.5 py-1.5 rounded-lg font-bold bg-[#1e3e34] text-white flex items-center gap-1.5 shrink-0 transition shadow-xs cursor-pointer";
-          } else {
-            pill.className = "sub-pill px-3.5 py-1.5 rounded-lg font-semibold bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center gap-1.5 shrink-0 transition cursor-pointer";
-          }
-        }
-      });
-    }
+    function updatePillsTheme(theme) {}
 
     // Update View Buttons Style
     function updateViewButtonsStyle(theme) {
@@ -2528,28 +2321,12 @@
         mContainer.className = "bg-white text-gray-900 rounded-2xl max-w-lg w-full p-6 border border-gray-200 shadow-2xl animate-modal relative";
       }
 
-      if (type === 'calendar') {
-        mTitle.innerText = isAr ? "التقويم الأكاديمي ومواعيد تسليم المقررات" : "Academic Calendar & Syllabus Deadlines";
-        mSub.innerText = isAr ? "مواعيد الاختبارات وتحديثات المناهج الدراسية" : "Midterm dates and textbook revision milestones";
-        mIcon.innerText = "calendar_month";
-        mBody.innerHTML = isAr ? 
-          `<p>موعد تحديث مقررات <strong>الفيزياء والرياضيات</strong> للفصل القادم يبدأ يوم 15 أكتوبر القادم.</p>` :
-          `<p>Syllabus updates for <strong>Physics and Mathematics</strong> will commence on October 15th.</p>`;
-      } else if (type === 'notifications') {
-        mTitle.innerText = isAr ? "مركز إشعارات المكتبة والمراجع" : "Library & Textbooks Notifications";
-        mSub.innerText = isAr ? "تنبيهات الكتب الجديدة والاستعارة" : "New acquisitions and syllabus alerts";
-        mIcon.innerText = "notifications_active";
-        mBody.innerHTML = isAr ? 
-          `<p>تم اعتماد الطبعة الجديدة لكتاب <strong>الذكاء الاصطناعي وهياكل البيانات</strong> وإضافتها للطلاب.</p>` :
-          `<p>The new 2026 edition for <strong>Artificial Intelligence & Data Structures</strong> is now accessible.</p>`;
-      } else {
-        mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Profile";
-        mSub.innerText = isAr ? "د. أحمد عبد الرحمن" : "Dr. Ahmed Abdelrahman";
-        mIcon.innerText = "person";
-        mBody.innerHTML = isAr ? 
-          `<p>أستاذ مشارك ومسؤول المستودع الرقمي للمراجع والكتب المقررة بقسم العلوم والرياضيات.</p>` :
-          `<p>Associate Professor & Digital Textbook Coordinator for Science & Mathematics.</p>`;
-      }
+      mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Profile";
+      mSub.innerText = isAr ? "د. أحمد عبد الرحمن" : "Dr. Ahmed Abdelrahman";
+      mIcon.innerText = "person";
+      mBody.innerHTML = isAr ? 
+        `<p>أستاذ مشارك ومسؤول المستودع الرقمي للمراجع والكتب المقررة بقسم العلوم والرياضيات.</p>` :
+        `<p>Associate Professor & Digital Textbook Coordinator for Science & Mathematics.</p>`;
 
       document.getElementById('btn-modal-cancel').innerText = isAr ? "إغلاق" : "Close";
       document.getElementById('btn-modal-confirm').innerText = isAr ? "تأكيد" : "Confirm";
