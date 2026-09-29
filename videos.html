@@ -18,29 +18,28 @@
       theme: {
         extend: {
           colors: {
-            // الهوية اللونية الخضراء المشتركة والمتناسقة (Unified Academic Forest & Mint)
+            // الهوية اللونية الأردوازية الهادئة (Slate & Mist)
             forest: {
-              sidebar: "#132821",       // القائمة في اللايت مود (أخضر صنوبري أكاديمي)
-              sidebarHover: "#1b382e",  // هوفر القائمة
-              sidebarActive: "#244d3f", // العنصر النشط في اللايت
-              primary: "#1e3e34",       // الأخضر الرئيسي للأزرار
-              primaryHover: "#162e27",  // الأخضر عند التمرير
-              accent: "#34d399",        // الأخضر الزمردي المتناسق
-              mint: "#57f1db",          // المينت المضيء
-              border: "#d1ded9",        // الحدود الفاتحة
-              light: "#e9f2ee"          // خلفية الشارات
+              sidebar: "#414141",
+              sidebarHover: "#555555",
+              sidebarActive: "#4d4d4d",
+              primary: "#4d4d4d",
+              primaryHover: "#3d3d3d",
+              accent: "#5b5b5b",
+              mint: "#999999",
+              border: "#c8c8c8",
+              light: "#e5e5e5"
             },
-            // الدارك مود: أسود هادئ ناعم مريح للعين مع صبغة خضراء خفيفة متناسقة
             softdark: {
-              bg: "#121514",            // أسود فاتح مريح
-              surface: "#171c1a",       // هيدر وفوتر
-              card: "#1b221f",          // بطاقات المحتوى
-              cardBorder: "#27332e",    // حدود البطاقات
-              sidebar: "#0d1815",       // قائمة الدارك مود بلون غابي متميز
-              sidebarBorder: "#1c2b25", // حد القائمة الداكن
-              sidebarActive: "#1a382d", // العنصر النشط بالدارك
-              text: "#e1ebe6",          // نصوص واضحة وعالية التباين
-              muted: "#8fa39b"          // نصوص ثانوية
+              bg: "#1c1c1c",
+              surface: "#252525",
+              card: "#2d2d2d",
+              cardBorder: "#494949",
+              sidebar: "#242424",
+              sidebarBorder: "#494949",
+              sidebarActive: "#353535",
+              text: "#e8e8e8",
+              muted: "#b7b7b7"
             }
           },
           fontFamily: {
@@ -54,11 +53,6 @@
   <style>
     * {
       box-sizing: border-box;
-      transition: background-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                  border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), 
-                  color 0.25s ease, 
-                  transform 0.2s ease,
-                  box-shadow 0.2s ease;
     }
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -322,6 +316,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="theme.css"/>
 </head>
 <body id="body-app" class="min-h-screen flex text-right antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300">
 
@@ -1056,7 +1051,6 @@
       currentTheme = currentTheme === 'light' ? 'dark' : 'light';
       localStorage.setItem('site_theme', currentTheme);
       applyTheme(currentTheme);
-      renderVideos(); // re-render to apply card theme colors
     }
 
     // ================= LANGUAGE TOGGLE =================

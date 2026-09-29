@@ -1,53 +1,53 @@
 ---
-name: Academic Utility & Editorial Archive
+name: Soft Gray Academic
 colors:
-  surface: '#f9f9ff'
-  surface-dim: '#cfdaf2'
-  surface-bright: '#f9f9ff'
-  surface-container-lowest: '#ffffff'
-  surface-container-low: '#f0f3ff'
-  surface-container: '#e7eeff'
-  surface-container-high: '#dee8ff'
-  surface-container-highest: '#d8e3fb'
-  on-surface: '#111c2d'
-  on-surface-variant: '#414845'
-  inverse-surface: '#263143'
-  inverse-on-surface: '#ecf1ff'
-  outline: '#717975'
-  outline-variant: '#c1c8c4'
-  surface-tint: '#45655a'
-  primary: '#06281f'
-  on-primary: '#ffffff'
-  primary-container: '#1e3e34'
-  on-primary-container: '#87a99c'
-  inverse-primary: '#abcec0'
-  secondary: '#9b4500'
-  on-secondary: '#ffffff'
-  secondary-container: '#fd8a42'
-  on-secondary-container: '#682c00'
-  tertiary: '#451000'
-  on-tertiary: '#ffffff'
-  tertiary-container: '#6a1d00'
-  on-tertiary-container: '#ff7a4c'
-  error: '#ba1a1a'
-  on-error: '#ffffff'
-  error-container: '#ffdad6'
-  on-error-container: '#93000a'
-  primary-fixed: '#c7eadc'
-  primary-fixed-dim: '#abcec0'
-  on-primary-fixed: '#002118'
-  on-primary-fixed-variant: '#2d4d42'
-  secondary-fixed: '#ffdbca'
-  secondary-fixed-dim: '#ffb68e'
-  on-secondary-fixed: '#331200'
-  on-secondary-fixed-variant: '#763300'
-  tertiary-fixed: '#ffdbd0'
-  tertiary-fixed-dim: '#ffb59d'
-  on-tertiary-fixed: '#390c00'
-  on-tertiary-fixed-variant: '#832600'
-  background: '#f9f9ff'
-  on-background: '#111c2d'
-  surface-variant: '#d8e3fb'
+  surface: '#f1f3f3'
+  surface-dim: '#dedede'
+  surface-bright: '#f8f9f8'
+  surface-container-lowest: '#f8f9f8'
+  surface-container-low: '#f1f3f3'
+  surface-container: '#e8e8e8'
+  surface-container-high: '#dedede'
+  surface-container-highest: '#d4d4d4'
+  on-surface: '#2c2c2c'
+  on-surface-variant: '#5d5d5d'
+  inverse-surface: '#2b2b2b'
+  inverse-on-surface: '#f0f0f0'
+  outline: '#6d6d6d'
+  outline-variant: '#c8c8c8'
+  surface-tint: '#5b5b5b'
+  primary: '#4d4d4d'
+  on-primary: '#f8f8f8'
+  primary-container: '#e5e5e5'
+  on-primary-container: '#333333'
+  inverse-primary: '#bcbcbc'
+  secondary: '#666666'
+  on-secondary: '#f8f8f8'
+  secondary-container: '#e5e5e5'
+  on-secondary-container: '#333333'
+  tertiary: '#5b5b5b'
+  on-tertiary: '#f8f8f8'
+  tertiary-container: '#e3e3e3'
+  on-tertiary-container: '#333333'
+  error: '#666666'
+  on-error: '#f8f8f8'
+  error-container: '#e3e3e3'
+  on-error-container: '#333333'
+  primary-fixed: '#e5e5e5'
+  primary-fixed-dim: '#c0c0c0'
+  on-primary-fixed: '#202020'
+  on-primary-fixed-variant: '#444444'
+  secondary-fixed: '#e3e3e3'
+  secondary-fixed-dim: '#c8c8c8'
+  on-secondary-fixed: '#202020'
+  on-secondary-fixed-variant: '#454545'
+  tertiary-fixed: '#ededed'
+  tertiary-fixed-dim: '#c8c8c8'
+  on-tertiary-fixed: '#222222'
+  on-tertiary-fixed-variant: '#4b4b4b'
+  background: '#f1f3f3'
+  on-background: '#263238'
+  surface-variant: '#d4d4d4'
 typography:
   display-lg:
     fontFamily: Newsreader
@@ -158,19 +158,17 @@ Key design attributes include:
 
 ## Colors
 
-The palette draws directly from heritage collegiate architecture, letterpress inks, and natural bookbinding materials.
+The palette uses quiet paper-gray surfaces, softened white work areas, and charcoal text.
 
 ### Palette Architecture
-- **Primary — Academic Forest (`#1E3E34` / Deep Variant `#162E27`):** Represents institutional authority, stability, and completion. Used for primary interactive actions, high-level headers, and positive verification states (such as finalized grades and submitted syllabi).
-- **Secondary — Parchment Amber (`#B45309` / Highlight `#D97706`):** Evokes aged library paper and brass desk lamps. Reserved for temporal awareness: pending approvals, approaching assignment deadlines, and observational warnings.
-- **Tertiary — Archival Terracotta (`#C2410C` / Deep `#9A3412`):** A warm, bookish brick tone used for actionable urgency: missing student submissions, overdue administrative tasks, grade discrepancies, and attendance flags.
-- **Neutral Primary Ink (`#1E293B`):** A balanced slate navy serving as primary body copy and dense tabular text, softer and more legible than pure carbon black.
+- **Primary (`#4D4D4D`):** Used for primary interactive actions and active navigation.
+- **Secondary (`#666666`):** Used for supporting actions and selected states.
+- **Neutral Primary Ink (`#2C2C2C`):** Used for body copy and dense text instead of pure black.
 - **Canvas & Surface System:**
-  - Base Alabaster (`#FBFBF9`): The foundational canvas mimicking unbleached cotton archival stock.
-  - Ledger White (`#FFFFFF`): Applied strictly to focused workspaces, data sheets, and inputs to provide crisp contrast.
-  - Muted Parchment (`#F4F4F0`): Structural sidebar containers, table headers, and read-only field regions.
-  - Ruled Border Slate (`#E4E5E0`): Crisp, low-contrast micro-rules for dividing data rows, cards, and column headers.
-  - Border Subdued (`#D3D5CE`): Delimits active input fields and pinned matrix headers.
+  - Soft Gray Canvas (`#F2F2F2`): The foundational page background.
+  - Soft White Surface (`#F8F8F8`): Cards, inputs, and focused work areas.
+  - Raised Gray Surface (`#E8E8E8`): Secondary panels and read-only regions.
+  - Neutral Borders (`#C8C8C8`): Dividers and input outlines.
 
 ## Typography
 
@@ -220,25 +218,25 @@ The design uses a **Soft (Level 1)** shape language. High corner roundness is in
 ## Components
 
 ### Buttons
-- **Primary:** Background in Academic Forest (`#1E3E34`), text in `#FFFFFF`, with a 1px matching border. Hover shifts to `#162E27`. Focused state introduces a 2px offset outline in `#1E3E34`.
-- **Secondary / Outline:** Background in `#FFFFFF`, text in `#1E293B`, 1px border in `#D3D5CE`. Hover shifts background to `#F4F4F0`.
-- **Destructive:** Background in `#FFFFFF`, text and border in Archival Terracotta (`#C2410C`). Hover fills with `#C2410C` and shifts text to `#FFFFFF`.
-- **Ghost Utility:** Borderless, text in `#1E293B` with hover color change to `#1E3E34` over `#F4F4F0`.
+- **Primary:** A short grayscale gradient from `#4D4D4D` to `#333333`, with soft white text.
+- **Secondary / Outline:** Background `#F8F8F8`, text `#2C2C2C`, and border `#C8C8C8`. Hover shifts to `#E8E8E8`.
+- **Destructive:** Use the same neutral surfaces; distinguish the action with its label and confirmation state.
+- **Ghost Utility:** Borderless gray text with a `#E8E8E8` hover surface.
 
 ### Chips & Badges
 - **Status Chips:** Low-saturation backgrounds with high-contrast text:
-  - *Submitted/Complete:* `#E8EFEA` background, `#162E27` text, `#C3D5C8` border.
-  - *Pending/Action Required:* `#FEF3C7` background, `#92400E` text, `#FDE68A` border.
-  - *Overdue/Missing:* `#FFEDD5` background, `#9A3412` text, `#FDBA74` border.
-  - *Neutral/Archived:* `#F4F4F0` background, `#475569` text, `#E4E5E0` border.
+  - *Submitted/Complete:* `#E5E5E5` background, `#333333` text, `#C8C8C8` border.
+  - *Pending/Action Required:* `#DEDEDE` background, `#454545` text, `#B7B7B7` border.
+  - *Overdue/Missing:* `#D4D4D4` background, `#333333` text, `#A8A8A8` border.
+  - *Neutral/Archived:* `#E8E8E8` background, `#5D5D5D` text, `#C8C8C8` border.
 - All chips maintain uppercase tracking (`label-sm`) with a 1px border.
 
 ### Form Inputs & Selectors
-- **Text Inputs:** Ledger white (`#FFFFFF`) background, 1px `#E4E5E0` border, `0.25rem` radius. Text set in Inter `body-md`. Focus state uses a 1px `#1E3E34` stroke with a companion 2px muted forest glow (`rgba(30, 62, 52, 0.12)`).
-- **Inline Editing (Grades):** Flush background that adopts a white fill and `#1E3E34` border only on hover or active focus, matching traditional spreadsheet behavior.
+- **Text Inputs:** Soft white (`#F8F8F8`) background, 1px `#C8C8C8` border, and `0.25rem` radius. Focus uses a brighter gray stroke.
+- **Inline Editing (Grades):** Use raised gray surfaces and a clear neutral focus border.
 
 ### Checkboxes & Radio Controls
-- Square (`0.125rem` radius) for checkboxes, circular for radios. Inactive state: 1px border in `#CBD5E1` on `#FFFFFF`. Active state: filled with `#1E3E34` with an ivory `#FBFBF9` checkmark icon.
+- Square (`0.125rem` radius) for checkboxes, circular for radios. Inactive state: 1px border in `#C8C8C8` on `#F8F8F8`. Active state: filled with `#4D4D4D` with a soft white checkmark.
 
 ### Data Tables & Ledgers (Core Component)
 - **Header:** Background in `#F4F4F0`, border-bottom in 1px `#D3D5CE`. Labels in Inter `label-sm` with letter spacing.

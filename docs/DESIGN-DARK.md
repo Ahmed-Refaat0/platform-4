@@ -1,53 +1,53 @@
 ---
-name: Obsidian Faculty
+name: Neutral Charcoal
 colors:
-  surface: '#0c1512'
-  surface-dim: '#0c1512'
-  surface-bright: '#323b38'
-  surface-container-lowest: '#07100d'
-  surface-container-low: '#141d1a'
-  surface-container: '#18211e'
-  surface-container-high: '#232c29'
-  surface-container-highest: '#2d3733'
-  on-surface: '#dbe5df'
-  on-surface-variant: '#bacac5'
-  inverse-surface: '#dbe5df'
-  inverse-on-surface: '#29322f'
-  outline: '#859490'
-  outline-variant: '#3c4a46'
-  surface-tint: '#3cddc7'
-  primary: '#57f1db'
-  on-primary: '#003731'
-  primary-container: '#2dd4bf'
-  on-primary-container: '#00574d'
-  inverse-primary: '#006b5f'
-  secondary: '#45dfa4'
-  on-secondary: '#003825'
-  secondary-container: '#00bd85'
-  on-secondary-container: '#00452e'
-  tertiary: '#afe0ff'
-  on-tertiary: '#00354a'
-  tertiary-container: '#5ec9ff'
-  on-tertiary-container: '#005371'
-  error: '#ffb4ab'
-  on-error: '#690005'
-  error-container: '#93000a'
-  on-error-container: '#ffdad6'
-  primary-fixed: '#62fae3'
-  primary-fixed-dim: '#3cddc7'
-  on-primary-fixed: '#00201c'
-  on-primary-fixed-variant: '#005047'
-  secondary-fixed: '#68fcbf'
-  secondary-fixed-dim: '#45dfa4'
-  on-secondary-fixed: '#002114'
-  on-secondary-fixed-variant: '#005137'
-  tertiary-fixed: '#c4e7ff'
-  tertiary-fixed-dim: '#7bd0ff'
-  on-tertiary-fixed: '#001e2c'
-  on-tertiary-fixed-variant: '#004c69'
-  background: '#0c1512'
-  on-background: '#dbe5df'
-  surface-variant: '#2d3733'
+  surface: '#1c1c1c'
+  surface-dim: '#1c1c1c'
+  surface-bright: '#454545'
+  surface-container-lowest: '#202020'
+  surface-container-low: '#252525'
+  surface-container: '#2d2d2d'
+  surface-container-high: '#353535'
+  surface-container-highest: '#3e3e3e'
+  on-surface: '#e8e8e8'
+  on-surface-variant: '#b9b9b9'
+  inverse-surface: '#e8e8e8'
+  inverse-on-surface: '#303030'
+  outline: '#a0a0a0'
+  outline-variant: '#494949'
+  surface-tint: '#999999'
+  primary: '#c0c0c0'
+  on-primary: '#202020'
+  primary-container: '#5b5b5b'
+  on-primary-container: '#f4f4f4'
+  inverse-primary: '#4d4d4d'
+  secondary: '#a8a8a8'
+  on-secondary: '#242424'
+  secondary-container: '#454545'
+  on-secondary-container: '#e8e8e8'
+  tertiary: '#d0d0d0'
+  on-tertiary: '#242424'
+  tertiary-container: '#505050'
+  on-tertiary-container: '#ededed'
+  error: '#c0c0c0'
+  on-error: '#202020'
+  error-container: '#505050'
+  on-error-container: '#ededed'
+  primary-fixed: '#e0e0e0'
+  primary-fixed-dim: '#c0c0c0'
+  on-primary-fixed: '#202020'
+  on-primary-fixed-variant: '#444444'
+  secondary-fixed: '#dedede'
+  secondary-fixed-dim: '#b7b7b7'
+  on-secondary-fixed: '#202020'
+  on-secondary-fixed-variant: '#454545'
+  tertiary-fixed: '#ededed'
+  tertiary-fixed-dim: '#c8c8c8'
+  on-tertiary-fixed: '#222222'
+  on-tertiary-fixed-variant: '#4b4b4b'
+  background: '#1c1c1c'
+  on-background: '#e8e8e8'
+  surface-variant: '#3e3e3e'
 typography:
   display:
     fontFamily: Newsreader
@@ -160,29 +160,29 @@ spacing:
 This design system is tailored for an advanced teacher and faculty portal operating in focused, high-density workspaces. It balances academic rigor, deep focus, and contemporary operational utility. 
 
 The aesthetic marries **Academic Editorial** with **Technical Minimalism**:
-- **Atmosphere**: Quiet, archival, and restorative. Deep forest-tinted obsidian surfaces reduce eye fatigue during long sessions of grading, lesson orchestration, and student evaluation.
+- **Atmosphere**: Quiet, archival, and restorative. Neutral charcoal surfaces reduce eye fatigue during long sessions of study and planning.
 - **Tone**: Scholarly, precise, authoritative, yet effortlessly swift.
 - **Visual Stance**: Subtle structural borders, disciplined information density, and refined editorial typography that elevates routine administrative tasks into an immersive scholarly studio.
 
 ## Colors
 
-The palette relies on a nocturnal academic environment with deep forest and obsidian undertones, anchored by high-legibility slate typography and focused mint/teal highlights.
+The palette uses layered charcoal and grayscale surfaces, anchored by high-legibility neutral typography and restrained gray highlights.
 
 ### Surface System
-- **Canvas Base**: `#111a17` (Deep Obsidian Forest) provides the grounding backdrop.
-- **Surface Container**: `#182420` (Subtle muted spruce) serves as the primary canvas for cards, assignment trays, and data tables.
-- **Surface Elevated**: `#1f2f2a` provides lifted contrast for popovers, flyouts, and active input panels.
-- **Structural Outlines & Rules**: `#23352e` forms crisp, low-glare partitions across panels and dividers.
+- **Canvas Base**: `#1c1c1c` provides the grounding backdrop.
+- **Surface Container**: `#262626` serves as the primary surface for cards and data tables.
+- **Surface Elevated**: `#303030` lifts popovers, flyouts, and active input panels.
+- **Structural Outlines & Rules**: `#494949` separates panels and dividers without introducing color.
 
 ### Typography & Content
-- **Text Primary**: `#e2e8f0` (Crisp Slate White) delivers high-contrast legibility for scholarly text and evaluation remarks.
-- **Text Muted**: `#94a3b8` provides secondary hierarchy for metadata, timestamps, and rubrics.
-- **Text Subtle**: `#64748b` marks placeholders, disabled states, and footnote stamps.
+- **Text Primary**: `#e8e8e8` delivers high-contrast legibility.
+- **Text Muted**: `#b7b7b7` provides secondary hierarchy for metadata and timestamps.
+- **Text Subtle**: `#8a8a8a` marks placeholders and disabled states.
 
 ### Accents & Semantic Signals
-- **Primary Accent (`#2dd4bf`)**: Vibrant scholarly teal for primary actions, focus rings, and high-priority state indicators.
-- **Secondary Accent (`#34d399`)**: Emerald mint for grading completeness, published statuses, and successful imports.
-- **Attention & Alerts**: Amber `#f59e0b` for pending submissions; Crimson `#f87171` for overdue assignments or critical student flags.
+- **Primary Accent (`#bcbcbc`)**: Light gray for primary actions and focus rings.
+- **Secondary Accent (`#8f8f8f`)**: Mid gray for selected and successful states.
+- **Attention & Alerts**: Keep statuses distinct with gray surface and text contrast rather than adding color.
 
 ## Typography
 
@@ -210,15 +210,15 @@ The portal deploys a structured, high-density layout model engineered for inform
 This system avoids floating, brightly blurred shadows in favor of architectural **tonal layering** and **low-contrast structural outlines**.
 
 ### Tonal Hierarchy
-- **Base Canvas (`#111a17`)**: The foundational canvas backdrop.
-- **Level 1 (`#182420` + border `1px solid #23352e`)**: Gradebook tables, course cards, module panels, and syllabus blocks.
-- **Level 2 (`#1f2f2a` + border `1px solid #2a3f37`)**: Hovered entries, active grade input cells, flyout drawers, and nested rubric sections.
-- **Level 3 (`#263933` + border `1px solid #34d399/30`)**: Command palettes, modal confirmation dialogs, and popover menus.
+- **Base Canvas (`#1c1c1c`)**: The foundational canvas backdrop.
+- **Level 1 (`#262626` + border `1px solid #494949`)**: Tables, cards, and module panels.
+- **Level 2 (`#303030` + border `1px solid #555555`)**: Hovered entries, active fields, and nested sections.
+- **Level 3 (`#3a3a3a` + border `1px solid #666666`)**: Dialogs, menus, and popovers.
 
 ### Ambient Depth
-When dialogs or contextual tooltips lift off the surface, use an obsidian-tinted ambient shadow:
-- `box-shadow: 0 12px 32px -4px rgba(4, 9, 8, 0.65), 0 4px 12px -2px rgba(4, 9, 8, 0.45);`
-- Dropdowns and tooltips feature a 1px perimeter outline tinted in `#23352e` to maintain legibility against identically shaded dark backgrounds.
+When dialogs or contextual tooltips lift off the surface, use a neutral charcoal shadow:
+- `box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.45), 0 4px 12px -2px rgba(0, 0, 0, 0.28);`
+- Dropdowns and tooltips feature a 1px perimeter outline in `#494949`.
 
 ## Shapes
 
@@ -232,20 +232,20 @@ The interface embraces a disciplined **Soft (`1`)** shape language that evokes b
 ## Components
 
 ### Buttons
-- **Primary**: Background `#2dd4bf`, text `#0f1715`, font weight 600. On hover, background shifts to `#34d399`. Active states compress by 1px.
-- **Secondary / Surface**: Background `#182420`, text `#e2e8f0`, border `1px solid #23352e`. On hover, background transitions to `#1f2f2a` with border `#2dd4bf/40`.
-- **Ghost / Text**: Transparent background, text `#94a3b8`. On hover, text shifts to `#e2e8f0` with background `#182420`.
+- **Primary**: Background gradient from `#5b5b5b` to `#454545`, text `#f4f4f4`, font weight 600.
+- **Secondary / Surface**: Background `#262626`, text `#e8e8e8`, border `1px solid #494949`. On hover, background transitions to `#303030`.
+- **Ghost / Text**: Transparent background, text `#b7b7b7`. On hover, text shifts to `#e8e8e8` with background `#303030`.
 
 ### Text Inputs & Score Fields
-- Default state: Background `#111a17`, border `1px solid #23352e`, text `#e2e8f0`, placeholder `#64748b`, corner radius 4px.
-- Focus state: Border color transitions to `#2dd4bf`, with a subtle ring `box-shadow: 0 0 0 1px #2dd4bf`.
+- Default state: Background `#262626`, border `1px solid #494949`, text `#e8e8e8`, placeholder `#8a8a8a`, corner radius 4px.
+- Focus state: Border color transitions to `#bcbcbc`, with a subtle gray focus ring.
 - Tabular Grade Input: Compact cell, right-aligned, monospaced numeric styling (`font-feature-settings: "tnum"`).
 
 ### Chips & Badges
 - Status Badges: Height 22px, border radius 4px, font size `label-sm`.
-- **Submitted / Passing**: Background `#162a22`, text `#34d399`, border `1px solid #34d399/30`.
-- **Incomplete / Due**: Background `#272115`, text `#fbbf24`, border `1px solid #fbbf24/30`.
-- **Draft / Archived**: Background `#182420`, text `#94a3b8`, border `1px solid #23352e`.
+- **Submitted / Passing**: Background `#353535`, text `#d0d0d0`, border `1px solid #555555`.
+- **Incomplete / Due**: Background `#303030`, text `#c0c0c0`, border `1px solid #555555`.
+- **Draft / Archived**: Background `#262626`, text `#b7b7b7`, border `1px solid #494949`.
 
 ### Gradebook Tables & Rosters
 - Header: Background `#141e1b`, border bottom `1px solid #23352e`, typography `label-md` uppercase with `letterSpacing: 0.04em`.
@@ -258,4 +258,4 @@ The interface embraces a disciplined **Soft (`1`)** shape language that evokes b
 
 ### Checkboxes & Radios
 - Size 16x16px, background `#111a17`, border `1.5px solid #23352e`, radius 3px (checkbox) or circular (radio).
-- Checked state: Fill `#2dd4bf` with icon/dot in `#0f1715`.
+- Checked state: Fill `#bcbcbc` with icon/dot in `#202020`.
