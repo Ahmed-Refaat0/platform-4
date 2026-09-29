@@ -89,6 +89,12 @@
     .animate-modal {
       animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    #txt-brand-badge,
+    #txt-page-badge,
+    #fav-count-badge,
+    #fav-filter-indicator {
+      visibility: hidden !important;
+    }
     .pill-scroll::-webkit-scrollbar {
       display: none;
     }
@@ -413,8 +419,8 @@
             <span class="material-symbols-outlined text-xl">menu_book</span>
           </div>
           <div class="min-w-0">
-            <h2 id="bmodal-title" class="text-base sm:text-lg font-bold text-gray-900 truncate">عنوان الكتاب الأكاديمي</h2>
-            <p id="bmodal-subtitle" class="text-xs text-gray-500 truncate mt-0.5">المؤلف • التخصص • الطبعة</p>
+            <h2 id="bmodal-title" class="text-base sm:text-lg font-bold text-gray-900 truncate min-h-6"></h2>
+            <p id="bmodal-subtitle" class="text-xs text-gray-500 truncate mt-0.5 min-h-4"></p>
           </div>
         </div>
 
@@ -442,16 +448,16 @@
           <div class="flex gap-4 p-4 rounded-xl border border-gray-200 bg-gray-50/50" id="bmodal-info-card">
             <!-- 3D Book Cover -->
             <div class="w-28 sm:w-32 h-40 sm:h-44 rounded-lg overflow-hidden shrink-0 book-cover-3d relative bg-gray-900 border border-gray-300">
-              <img id="bmodal-cover-img" src="assets/images/physics.jpg" alt="غلاف الكتاب" class="w-full h-full object-cover"/>
+              <div id="bmodal-cover-img" class="w-full h-full bg-gray-900" aria-hidden="true"></div>
               <div class="absolute inset-y-0 start-0 w-2.5 bg-black/40 book-cover-spine"></div>
             </div>
 
             <!-- Quick Specs -->
             <div class="flex-1 flex flex-col justify-between text-xs">
               <div>
-                <span id="bmodal-subject-tag" class="inline-block text-[11px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 mb-2 border border-emerald-200">الفيزياء</span>
-                <div class="font-bold text-gray-800" id="bmodal-edition">الطبعة الخامسة 2026</div>
-                <div class="text-gray-500 mt-0.5" id="bmodal-authors">أ.د. هدى عبد الرحمن</div>
+                <div class="mb-2 h-5"></div>
+                <div class="font-bold text-gray-800 min-h-4" id="bmodal-edition"></div>
+                <div class="text-gray-500 mt-0.5 min-h-4" id="bmodal-authors"></div>
               </div>
               
               <div class="space-y-1.5 pt-2 border-t border-gray-200 text-[11px] text-gray-600" id="bmodal-specs-list">
@@ -469,10 +475,7 @@
                 </div>
                 <div class="flex items-center justify-between">
                   <span id="txt-bmodal-rating-lbl">التقييم الأكاديمي:</span>
-                  <span class="font-bold text-amber-600 flex items-center gap-0.5" id="bmodal-rating">
-                    <span class="material-symbols-outlined text-[14px]">star</span>
-                    <span>4.9 (420 تقييم)</span>
-                  </span>
+                  <span class="inline-block h-4 w-16" id="bmodal-rating"></span>
                 </div>
               </div>
             </div>
@@ -712,14 +715,7 @@
         <div>
           <label id="lbl-up-cover" class="block font-bold text-gray-800 mb-1.5">صورة الغلاف الأكاديمي</label>
           <select id="up-cover" class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] cursor-pointer">
-            <option value="assets/images/books.jpg">📚 مكتبة ومراجع كلاسيكية (books.jpg)</option>
-            <option value="assets/images/books2.jpg">📖 مجلدات ومراجع أكاديمية (books2.jpg)</option>
-            <option value="assets/images/physics.jpg">⚡ مرجع الفيزياء المتقدمة (physics.jpg)</option>
-            <option value="assets/images/math.jpg">📐 مرجع الرياضيات والتفاضل (math.jpg)</option>
-            <option value="assets/images/chemistry.jpg">🧪 مرجع الكيمياء والمعامل (chemistry.jpg)</option>
-            <option value="assets/images/cs.jpg">💻 مرجع البرمجة والخوارزميات (cs.jpg)</option>
-            <option value="assets/images/desk.jpg">✍️ طاولة دراسة وأبحاث (desk.jpg)</option>
-            <option value="assets/images/campus.jpg">🏛️ الحرم الجامعي والمكتبة المركزية (campus.jpg)</option>
+            <option value="">بدون غلاف حالياً</option>
           </select>
         </div>
 
@@ -833,7 +829,7 @@
         badgeAr: "مقرر أساسي 2026",
         badgeEn: "Core Syllabus 2026",
         badgeColor: "emerald",
-        thumbnail: "assets/images/physics.jpg",
+        thumbnail: "",
         date: "2026-09-28",
         descriptionAr: "المرجع الرسمي المعتمد لطلاب كليات العلوم والهندسة، يغطي الميكانيكا الكلاسيكية، قوانين نيوتن، الديناميكا الحرارية، مع أكثر من 300 مسألة محلولة ونماذج اختبارات.",
         descriptionEn: "The official academic standard textbook for Science & Engineering majors covering Newtonian mechanics, thermodynamics, and over 300 solved practical problems.",
@@ -872,7 +868,7 @@
         badgeAr: "الأكثر تحميلاً",
         badgeEn: "Most Downloaded",
         badgeColor: "blue",
-        thumbnail: "assets/images/math.jpg",
+        thumbnail: "",
         date: "2026-09-25",
         descriptionAr: "دراسة معمقة في الدوال المتعددة المتغيرات، التكاملات الثنائية والثلاثية، نظرية جرين وستوكس، ومصفوفات الجبر الخطي وتطبيقاتها الهندسية.",
         descriptionEn: "Comprehensive study in multivariable functions, double and triple integrals, Green & Stokes theorems, matrix linear algebra, and computational applications.",
@@ -911,7 +907,7 @@
         badgeAr: "طبعة ملونة",
         badgeEn: "Full-Color",
         badgeColor: "amber",
-        thumbnail: "assets/images/chemistry.jpg",
+        thumbnail: "",
         date: "2026-09-29",
         descriptionAr: "الدليل الشامل في الكيمياء العضوية وتصنيف المركبات الهيدروكربونية، ميكانيكية التفاعلات الاستبدالية والإضافية، وأطلس ثلاثي الأبعاد للمركبات الجزيئية.",
         descriptionEn: "Complete manual in organic nomenclature, stereochemistry, substitution/addition reaction mechanisms, and 3D molecular structure visualization.",
@@ -950,7 +946,7 @@
         badgeAr: "الأعلى تقييماً ★",
         badgeEn: "Top Rated ★",
         badgeColor: "purple",
-        thumbnail: "assets/images/cs.jpg",
+        thumbnail: "",
         date: "2026-09-20",
         descriptionAr: "يشرح الأشجار الثنائية، الرسوم البيانية (Graphs)، خوارزميات المسار الأقصر، وتحليل الأداء O(n) بلغات C++ وPython مع مشاريع برمجية واقعية.",
         descriptionEn: "In-depth guide to binary search trees, graph algorithms, dynamic programming, Dijkstra's algorithm, and asymptotic complexity analysis in C++ and Python.",
@@ -989,7 +985,7 @@
         badgeAr: "رسومات مجهرية",
         badgeEn: "Microscopic Atlas",
         badgeColor: "emerald",
-        thumbnail: "assets/images/books2.jpg",
+        thumbnail: "",
         date: "2026-09-22",
         descriptionAr: "تفصيل دقيق لآليات انقسام الخلية الميتوزي والميوزي، الشفرة الوراثية وتطبيقات الهندسة الجينية الحديثة وتقنية CRISPR في الطب الحيوي.",
         descriptionEn: "Comprehensive cell anatomy, protein synthesis, cellular mitosis, Mendelian and molecular genetics, alongside modern CRISPR technology.",
@@ -1028,7 +1024,7 @@
         badgeAr: "إصدار محقق",
         badgeEn: "Annotated",
         badgeColor: "rose",
-        thumbnail: "assets/images/books.jpg",
+        thumbnail: "",
         date: "2026-09-27",
         descriptionAr: "مباحث علم البيان والمعاني والبديع، وتحليل شواهد كبار الشعراء والكتاب، ودراسة إعجاز القرآن اللغوي والبلاغي.",
         descriptionEn: "Comprehensive exploration of Arabic rhetorical sciences (Bayan, Ma'ani, Badi'), critical analysis of monumental classical poetry, and stylistic structures.",
@@ -1067,7 +1063,7 @@
         badgeAr: "دليل الباحثين",
         badgeEn: "Researchers Guide",
         badgeColor: "blue",
-        thumbnail: "assets/images/desk.jpg",
+        thumbnail: "",
         date: "2026-09-24",
         descriptionAr: "دليل متكامل لكتابة الأبحاث الأكاديمية ونشرها في المجلات المحكمة، صياغة الفرضيات، التوثيق بنظام APA وIEEE، وتفادي الاقتباس غير المقبول.",
         descriptionEn: "The essential guide for writing publishable scientific papers, thesis formulation, literature reviews, citations via APA 7th & IEEE, and research ethics.",
@@ -1106,7 +1102,7 @@
         badgeAr: "أطلس خرائط",
         badgeEn: "Historical Atlas",
         badgeColor: "amber",
-        thumbnail: "assets/images/campus.jpg",
+        thumbnail: "",
         date: "2026-09-18",
         descriptionAr: "دراسة تاريخية وجغرافية موثقة لحضارات حوض البحر المتوسط وطريق الحرير والتأثيرات المتبادلة في العلوم والفلسفة والعمارة.",
         descriptionEn: "Documented historical and geopolitical survey of Mediterranean civilizations and trans-continental Silk Road trade networks and cultural diffusion.",
@@ -1145,7 +1141,7 @@
         badgeAr: "طبعة 2026",
         badgeEn: "2026 Edition",
         badgeColor: "emerald",
-        thumbnail: "assets/images/desk2.jpg",
+        thumbnail: "",
         date: "2026-09-29",
         descriptionAr: "نظريات النسبية الخاصة، معادلات ماكسويل، إشعاع الجسم الأسود، والتطبيقات الحديثة في أشباه الموصلات والحوسبة الكمية.",
         descriptionEn: "Special relativity, Maxwell's electromagnetic equations, quantum wave functions, blackbody radiation, and modern semiconductor physics.",
@@ -1184,7 +1180,7 @@
         badgeAr: "الأعلى طلباً",
         badgeEn: "Trending",
         badgeColor: "purple",
-        thumbnail: "assets/images/report2.jpg",
+        thumbnail: "",
         date: "2026-09-29",
         descriptionAr: "المفاهيم الرياضية لتعلم الآلة والشبكات العصبية العميقة، معالجة اللغات الطبيعية (NLP)، ورؤية الحاسب مع مشاريع عملية كاملة بلغة Python.",
         descriptionEn: "Mathematical fundamentals of Machine Learning, Deep Neural Networks, Natural Language Processing, Computer Vision with hands-on PyTorch & TensorFlow projects.",
@@ -1223,7 +1219,7 @@
         badgeAr: "تطبيقات طبية",
         badgeEn: "Applied Science",
         badgeColor: "emerald",
-        thumbnail: "assets/images/report.jpg",
+        thumbnail: "",
         date: "2026-09-23",
         descriptionAr: "التوزيعات الاحتمالية، اختبارات الفروض الإحصائية (T-Test, ANOVA, Chi-Square)، وتحليل الانحدار الخطي وتطبيقاته في العلوم الطبية والبيولوجية.",
         descriptionEn: "Probability distributions, statistical hypothesis testing (T-Test, ANOVA, Chi-Square), regression models, and clinical research data analysis.",
@@ -1262,7 +1258,7 @@
         badgeAr: "دليل معملي",
         badgeEn: "Lab Manual",
         badgeColor: "amber",
-        thumbnail: "assets/images/chemistry.jpg",
+        thumbnail: "",
         date: "2026-09-26",
         descriptionAr: "طرق التحليل الوزني والحجمي والكروماتوغرافيا (HPLC, GC)، والتحليل الطيفي بالأشعة فوق البنفسجية ومطياف الكتلة.",
         descriptionEn: "Gravimetric and volumetric analyses, chromatographic separations (HPLC, GC), UV-Vis spectroscopy, and mass spectrometry instrumental methods.",
@@ -1559,16 +1555,19 @@
       allBooks.forEach(b => {
         counts[b.subject] = (counts[b.subject] || 0) + 1;
       });
-      document.getElementById('count-all').innerText = counts.all;
+      const allCount = document.getElementById('count-all');
+      if (allCount) allCount.innerText = counts.all;
       ['physics', 'math', 'chemistry', 'cs', 'biology', 'arabic', 'english', 'history'].forEach(s => {
         const el = document.getElementById(`count-${s}`);
         if (el) el.innerText = counts[s] || 0;
       });
-      document.getElementById('total-books-count').innerText = counts.all;
+      const totalBooksCount = document.getElementById('total-books-count');
+      if (totalBooksCount) totalBooksCount.innerText = counts.all;
 
       // Calculate total downloads
       const totalDownloads = allBooks.reduce((sum, b) => sum + (b.downloads || 0), 0);
-      document.getElementById('total-downloads-count').innerText = totalDownloads.toLocaleString();
+      const totalDownloadsCount = document.getElementById('total-downloads-count');
+      if (totalDownloadsCount) totalDownloadsCount.innerText = totalDownloads.toLocaleString();
     }
 
     // ================= FILTERING & SORTING =================
@@ -1688,8 +1687,8 @@
       
       document.getElementById('txt-filter-active-label').innerText = isAr ? `المادة: ${subName}` : `Subject: ${subName}`;
       document.getElementById('txt-results-count').innerHTML = isAr ? 
-        `المعروض حالياً: <strong class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> كتب ومراجع معتمدة` :
-        `Showing: <strong class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> accredited textbooks`;
+        `المعروض حالياً: <strong id="visible-count" class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> كتب ومراجع معتمدة` :
+        `Showing: <strong id="visible-count" class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> accredited textbooks`;
 
       if (filtered.length === 0) {
         grid.innerHTML = '';
@@ -1719,11 +1718,9 @@
       const grid = document.getElementById('books-grid');
       
       grid.innerHTML = filtered.map(item => {
-        const title = isAr ? item.titleAr : item.titleEn;
-        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
-        const authors = isAr ? item.authorsAr : item.authorsEn;
+        const title = '';
+        const authors = '';
         const edition = isAr ? item.editionAr : item.editionEn;
-        const badge = isAr ? item.badgeAr : item.badgeEn;
         const isBookmarked = bookmarkedBookIds.includes(item.id);
         const readBtnText = isAr ? 'قراءة الكتاب' : 'Read Book';
         const dlBtnText = isAr ? 'تحميل PDF' : 'Download';
@@ -1734,27 +1731,9 @@
         const titleClass = isDark ? 
           "text-white group-hover:text-[#34d399]" : 
           "text-gray-900 group-hover:text-emerald-700";
-        const subTagClass = isDark ? 
-          "bg-[#121514]/90 text-[#34d399] border-[#27332e]" : 
-          "bg-white/95 text-[#1e3e34] border-gray-200/60";
         const btnClass = isDark ? 
           "bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white border-[#2e5446]" : 
           "bg-[#1e3e34] hover:bg-[#162e27] text-white";
-
-        // Badge styling
-        let badgeStyle = "bg-emerald-50 text-emerald-800 border-emerald-100";
-        if (isDark) {
-          if (item.badgeColor === 'blue') badgeStyle = "bg-[#172d3f] text-[#7bd0ff] border-[#204969]";
-          else if (item.badgeColor === 'amber') badgeStyle = "bg-[#362712] text-[#ffc66e] border-[#583f1d]";
-          else if (item.badgeColor === 'purple') badgeStyle = "bg-[#2e1d3d] text-[#c084fc] border-[#4c2d66]";
-          else if (item.badgeColor === 'rose') badgeStyle = "bg-[#38181e] text-[#fda4af] border-[#592631]";
-          else badgeStyle = "bg-[#152e26] text-[#34d399] border-[#225042]";
-        } else {
-          if (item.badgeColor === 'blue') badgeStyle = "bg-blue-50 text-blue-800 border-blue-100";
-          else if (item.badgeColor === 'amber') badgeStyle = "bg-amber-50 text-amber-800 border-amber-100";
-          else if (item.badgeColor === 'purple') badgeStyle = "bg-purple-50 text-purple-800 border-purple-100";
-          else if (item.badgeColor === 'rose') badgeStyle = "bg-rose-50 text-rose-800 border-rose-100";
-        }
 
         return `
           <div class="card-item ${cardBgClass} rounded-2xl border overflow-hidden shadow-xs transition-all duration-300 flex flex-col group justify-between" id="${item.id}">
@@ -1762,20 +1741,10 @@
             <!-- Book Visual Area (3D Spine & Cover) -->
             <div class="p-4 pb-0 bg-gradient-to-b ${isDark ? 'from-[#141b18] to-transparent' : 'from-gray-50/70 to-transparent'}">
               <div class="h-52 w-full overflow-hidden rounded-xl bg-gray-900 relative cursor-pointer flex items-center justify-center" onclick="openBookModal('${item.id}')">
-                <img 
-                  alt="${title}" 
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
-                  src="${item.thumbnail}" 
-                  onerror="this.src='assets/images/desk.jpg'"
-                />
+                <div class="w-full h-full ${isDark ? 'bg-[#151c19]' : 'bg-gray-100'}" aria-hidden="true"></div>
                 
                 <!-- Book Spine shadow gradient -->
                 <div class="absolute inset-y-0 start-0 w-3 bg-black/40 book-cover-spine pointer-events-none"></div>
-
-                <!-- Subject Tag (top-start) -->
-                <div class="absolute top-3 start-3 backdrop-blur-xs text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border ${subTagClass}">
-                  <span>${subject}</span>
-                </div>
 
                 <!-- Bookmark Button (top-end) -->
                 <button 
@@ -1785,14 +1754,6 @@
                 >
                   <span class="material-symbols-outlined text-[18px]">${isBookmarked ? 'bookmark' : 'bookmark_border'}</span>
                 </button>
-
-                <!-- Pages & Size Badge (bottom-end) -->
-                <div class="absolute bottom-2.5 end-2.5 bg-black/75 backdrop-blur-md text-white text-[10px] font-mono px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
-                  <span class="material-symbols-outlined text-[13px] text-emerald-400">auto_stories</span>
-                  <span>${item.pages} ${isAr ? 'صفحة' : 'pages'}</span>
-                  <span>•</span>
-                  <span>${item.fileSize}</span>
-                </div>
 
                 <!-- Hover Open Overlay Glow -->
                 <div class="absolute inset-0 flex items-center justify-center bg-black/25 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -1811,10 +1772,7 @@
                   <span class="font-semibold text-gray-500 truncate ${isDark ? 'text-[#8fa39b]' : 'text-gray-500'}">
                     ${edition}
                   </span>
-                  <div class="flex items-center gap-1 font-bold text-amber-500 shrink-0">
-                    <span class="material-symbols-outlined text-[14px]">star</span>
-                    <span>${item.rating}</span>
-                  </div>
+                  <div class="h-4 w-14 shrink-0"></div>
                 </div>
 
                 <!-- Title -->
@@ -1822,22 +1780,16 @@
                   onclick="openBookModal('${item.id}')" 
                   class="font-bold text-sm leading-snug line-clamp-2 ${titleClass} cursor-pointer transition-colors mb-2" 
                   title="${title}"
-                >
-                  ${title}
-                </h3>
+                  style="min-height: 2.5rem"
+                ></h3>
 
                 <!-- Authors -->
                 <div class="flex items-center gap-1.5 text-xs ${isDark ? 'text-[#8fa39b]' : 'text-gray-600'} mb-3">
                   <span class="material-symbols-outlined text-[16px] text-emerald-600 shrink-0">person</span>
-                  <span class="line-clamp-1">${authors}</span>
+                  <span class="line-clamp-1" style="min-height: 1rem"></span>
                 </div>
 
-                <!-- Badge Pill -->
-                <div class="mb-4">
-                  <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-md border ${badgeStyle}">
-                    ${badge}
-                  </span>
-                </div>
+                <div class="mb-4" style="min-height: 1.25rem"></div>
               </div>
 
               <!-- Action Buttons Bottom Row -->
@@ -1870,9 +1822,8 @@
       const tbody = document.getElementById('books-table-body');
       
       tbody.innerHTML = filtered.map(item => {
-        const title = isAr ? item.titleAr : item.titleEn;
-        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
-        const authors = isAr ? item.authorsAr : item.authorsEn;
+        const title = '';
+        const authors = '';
         const edition = isAr ? item.editionAr : item.editionEn;
         const isBookmarked = bookmarkedBookIds.includes(item.id);
         const rowBg = isDark ? 
@@ -1885,7 +1836,7 @@
             <td class="px-5 py-3">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-14 rounded-md overflow-hidden bg-gray-900 shrink-0 border border-gray-300 relative shadow-2xs">
-                  <img src="${item.thumbnail}" alt="${title}" class="w-full h-full object-cover" onerror="this.src='assets/images/desk.jpg'"/>
+                  <div class="w-full h-full bg-gray-100" aria-hidden="true"></div>
                 </div>
                 <div class="min-w-0 max-w-xs">
                   <div class="font-bold text-xs line-clamp-1 hover:text-emerald-600 transition-colors">${title}</div>
@@ -1901,9 +1852,7 @@
 
             <!-- Subject -->
             <td class="px-4 py-3">
-              <span class="inline-block text-[11px] font-bold px-2 py-0.5 rounded-md ${isDark ? 'bg-[#152e26] text-[#34d399]' : 'bg-emerald-50 text-emerald-800'}">
-                ${subject}
-              </span>
+              <div class="h-5"></div>
             </td>
 
             <!-- Edition -->
@@ -1919,10 +1868,7 @@
 
             <!-- Rating & Downloads -->
             <td class="px-4 py-3 text-xs">
-              <div class="flex items-center gap-1 font-bold text-amber-500">
-                <span class="material-symbols-outlined text-[14px]">star</span>
-                <span>${item.rating}</span>
-              </div>
+              <div class="h-4"></div>
               <div class="text-[10px] text-gray-400 mt-0.5">${item.downloads.toLocaleString()} ${isAr ? 'تحميل' : 'dl'}</div>
             </td>
 
@@ -2035,21 +1981,14 @@
       }
 
       // Populate Data
-      document.getElementById('bmodal-title').innerText = isAr ? book.titleAr : book.titleEn;
-      document.getElementById('bmodal-subtitle').innerText = isAr ? 
-        `${book.authorsAr} • ${book.subjectNameAr} • ${book.editionAr}` : 
-        `${book.authorsEn} • ${book.subjectNameEn} • ${book.editionEn}`;
-      document.getElementById('bmodal-cover-img').src = book.thumbnail;
-      document.getElementById('bmodal-subject-tag').innerText = isAr ? book.subjectNameAr : book.subjectNameEn;
-      document.getElementById('bmodal-edition').innerText = isAr ? book.editionAr : book.editionEn;
-      document.getElementById('bmodal-authors').innerText = isAr ? book.authorsAr : book.authorsEn;
+      document.getElementById('bmodal-title').innerText = '';
+      document.getElementById('bmodal-subtitle').innerText = '';
+      document.getElementById('bmodal-edition').innerText = '';
+      document.getElementById('bmodal-authors').innerText = '';
       document.getElementById('bmodal-format').innerText = book.format;
       document.getElementById('bmodal-pages').innerText = `${book.pages} ${isAr ? 'صفحة' : 'pages'}`;
       document.getElementById('bmodal-size').innerText = book.fileSize;
-      document.getElementById('bmodal-rating').innerHTML = `
-        <span class="material-symbols-outlined text-[14px]">star</span>
-        <span>${book.rating} (${book.reviewsCount} ${isAr ? 'تقييم' : 'reviews'})</span>
-      `;
+      document.getElementById('bmodal-rating').innerHTML = '';
       document.getElementById('bmodal-description').innerText = isAr ? book.descriptionAr : book.descriptionEn;
 
       // Render TOC

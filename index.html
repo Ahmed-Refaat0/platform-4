@@ -85,6 +85,64 @@
     .animate-modal {
       animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    #txt-brand-badge,
+    #txt-page-badge,
+    #fav-count-badge,
+    #fav-filter-indicator {
+      visibility: hidden !important;
+    }
+    @media (max-width: 767px) {
+      #sidebar {
+        width: 4rem !important;
+        flex: 0 0 4rem;
+      }
+      #sidebar > div:first-child {
+        gap: 1rem;
+        padding: 0.75rem 0.5rem;
+      }
+      #sidebar-header-box {
+        justify-content: center;
+        padding-bottom: 0.75rem;
+      }
+      #sidebar-header-box > div:last-child,
+      #sidebar-nav .nav-label,
+      #sidebar-nav .nav-chevron,
+      #sidebar-nav .nav-dot,
+      #sidebar-footer-box button > div > div:last-child,
+      #sidebar-footer-box button > span {
+        display: none;
+      }
+      #sidebar-nav .nav-item {
+        justify-content: center;
+        padding: 0.75rem 0.25rem;
+      }
+      #sidebar-nav .nav-item > div {
+        justify-content: center;
+      }
+      #sidebar-footer-box {
+        padding: 0.5rem;
+      }
+      #sidebar-footer-box button {
+        justify-content: center;
+        padding: 0.5rem;
+      }
+      body > div.flex-1.flex.flex-col {
+        min-width: 0;
+      }
+      #main-header {
+        padding-inline: 1rem;
+      }
+      #main-header #txt-page-desc,
+      #main-header #txt-page-badge {
+        display: none;
+      }
+      #cards-main {
+        padding: 1rem;
+      }
+      #main-footer {
+        padding-inline: 1rem;
+      }
+    }
   </style>
 </head>
 <body id="body-app" class="min-h-screen flex text-right antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300">
@@ -202,62 +260,58 @@
     </header>
 
     <!-- Cards Grid -->
-    <main class="p-8 flex-1">
+    <main id="cards-main" class="p-8 flex-1">
       <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-
-        <!-- Card 1: Study Desk with Lamp (Curriculum / Syllabus) -->
-        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-desk">
-          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 relative">
-            <img 
-              alt="Coursework & Syllabus" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-              src="assets/images/desk2.jpg" 
-              onerror="this.src='assets/images/desk.jpg'"
-            />
-            <div id="tag-card-1" class="absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60">
-              <span class="txt-tag" id="txt-tag-1">الخطة والمناهج</span>
-            </div>
-          </div>
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-ratings">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
           <div class="p-6 flex-1 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" id="txt-card-title-1">مكتب إعداد المناهج والخطط</h3>
-                <span id="badge-card-1" class="text-xs bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-0.5 rounded border border-emerald-100">معتمد 96%</span>
-              </div>
-              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" id="txt-card-desc-1">توصيف المقررات الأكاديمية والخطط الأسبوعية وتوزيع درجات أعمال السنة والتقويم الدراسي.</p>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
             </div>
-            <button onclick="openModal('desk')" id="btn-card-1" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
-              <span class="btn-card-text" id="txt-btn-1">استعراض الخطط الدراسية</span>
+            <button type="button" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
               <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
             </button>
           </div>
         </div>
-
-        <!-- Card 2: Stack of Books (Library & Textbooks) -->
         <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-books">
-          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 relative">
-            <img 
-              alt="Library & Textbooks" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-              src="assets/images/books2.jpg" 
-              onerror="this.src='assets/images/books.jpg'"
-            />
-            <div id="tag-card-2" class="absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60">
-              <span class="txt-tag" id="txt-tag-2">المكتبة الرقمية</span>
-            </div>
-          </div>
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
           <div class="p-6 flex-1 flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
-                <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" id="txt-card-title-2">المكتبة والمراجع والكتب</h3>
-                <span id="badge-card-2" class="text-xs bg-blue-50 text-blue-800 font-semibold px-2.5 py-0.5 rounded border border-blue-100">14 كتاباً متاحاً</span>
-              </div>
-              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" id="txt-card-desc-2">فهرس المراجع والكتب المقررة مع إمكانية القراءة والتحميل المباشر لكافة التخصصات الدراسية.</p>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
             </div>
-            <a href="books.html" id="btn-card-2" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
-              <span class="btn-card-text" id="txt-btn-2">تصفح مكتبة الكتب</span>
+            <a href="books.html" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
               <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
             </a>
+          </div>
+        </div>
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-videos">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
+            </div>
+            <a href="videos.html" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
+              <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            </a>
+          </div>
+        </div>
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-pdf">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
+            </div>
+            <button type="button" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
+              <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            </button>
           </div>
         </div>
 

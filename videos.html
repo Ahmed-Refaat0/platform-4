@@ -89,12 +89,96 @@
     .animate-modal {
       animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    #txt-brand-badge,
+    #txt-page-badge,
+    #fav-count-badge,
+    #fav-filter-indicator {
+      visibility: hidden !important;
+    }
     .pill-scroll::-webkit-scrollbar {
       display: none;
     }
     .pill-scroll {
       -ms-overflow-style: none;
       scrollbar-width: none;
+    }
+    @media (max-width: 767px) {
+      #sidebar {
+        width: 4rem !important;
+        flex: 0 0 4rem;
+      }
+      #sidebar > div:first-child {
+        gap: 1rem;
+        padding: 0.75rem 0.5rem;
+      }
+      #sidebar-header-box {
+        justify-content: center;
+        padding-bottom: 0.75rem;
+      }
+      #sidebar-header-box > div:last-child,
+      #sidebar-nav .nav-label,
+      #sidebar-nav .nav-chevron,
+      #sidebar-nav .nav-dot,
+      #sidebar-footer-box button > div > div:last-child,
+      #sidebar-footer-box button > span {
+        display: none;
+      }
+      #sidebar-nav .nav-item {
+        justify-content: center;
+        padding: 0.75rem 0.25rem;
+      }
+      #sidebar-nav .nav-item > div {
+        justify-content: center;
+      }
+      #sidebar-footer-box {
+        padding: 0.5rem;
+      }
+      #sidebar-footer-box button {
+        justify-content: center;
+        padding: 0.5rem;
+      }
+      #main-header {
+        padding-inline: 1rem;
+      }
+      #main-header #txt-page-desc,
+      #main-header #txt-page-badge {
+        display: none;
+      }
+      #video-filter-section {
+        padding: 1rem 1rem 0;
+      }
+      #filter-container {
+        padding: 1rem;
+      }
+      #filter-header-row > div:first-child,
+      #filter-header-row > div:last-child {
+        width: 100%;
+        max-width: none;
+      }
+      #videos-main {
+        padding: 1rem;
+      }
+      #videos-main > div:first-child {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      #videos-main > div:first-child > div:last-child {
+        margin-inline-start: auto;
+      }
+      #main-footer {
+        padding-inline: 1rem;
+      }
+      #video-player-modal {
+        padding: 0.5rem;
+      }
+      #video-modal-header,
+      #video-modal-container > .overflow-y-auto {
+        padding: 1rem;
+      }
+      #video-modal-footer {
+        padding: 0.75rem 1rem;
+      }
     }
   </style>
 </head>
@@ -213,7 +297,7 @@
     </header>
 
     <!-- ================= 3. شريط اختيار المادة والبحث والتصفية (SUBJECT SELECTION & FILTERS) ================= -->
-    <section class="px-8 pt-6">
+    <section id="video-filter-section" class="px-8 pt-6">
       <div id="filter-container" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300">
         
         <!-- Controls Row -->
@@ -277,11 +361,8 @@
       </div>
     </section>
 
-      </div>
-    </section>
-
     <!-- ================= 4. شبكة كروت الفيديوهات التعليمية (VIDEOS CARDS GRID) ================= -->
-    <main class="p-8 flex-1">
+    <main id="videos-main" class="p-8 flex-1">
       
       <!-- Video Status / Counter bar -->
       <div class="flex items-center justify-between mb-5 text-xs text-gray-500 font-medium">
@@ -296,7 +377,7 @@
       </div>
 
       <!-- Cards Grid (matches exact 4-columns layout from index.html) -->
-      <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
         <!-- Dynamic Cards rendered via JavaScript -->
       </div>
 
@@ -342,8 +423,8 @@
             <span class="material-symbols-outlined text-xl">play_circle</span>
           </div>
           <div>
-            <h3 class="text-base font-bold text-gray-900" id="vmodal-title">عنوان المحاضرة</h3>
-            <p class="text-xs text-gray-500" id="vmodal-subtitle">المادة • الأستاذ • المدة</p>
+            <h3 class="text-base font-bold text-gray-900 min-h-6" id="vmodal-title"></h3>
+            <p class="text-xs text-gray-500 min-h-4" id="vmodal-subtitle"></p>
           </div>
         </div>
         <button onclick="closeVideoModal()" class="w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer" id="vmodal-close-btn">
@@ -356,18 +437,12 @@
         
         <!-- Video Screen Container -->
         <div class="relative w-full aspect-video rounded-xl overflow-hidden bg-black shadow-lg border border-gray-800 flex items-center justify-center group" id="vmodal-screen">
-          <img id="vmodal-poster" src="" alt="Thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-70 transition"/>
+          <div id="vmodal-poster" class="absolute inset-0 bg-gray-900" aria-hidden="true"></div>
           
           <!-- Overlay Big Play Button -->
           <button onclick="simulatePlayVideo()" id="vmodal-play-btn" class="absolute w-16 h-16 rounded-full bg-[#1e3e34]/90 text-white flex items-center justify-center shadow-2xl hover:scale-110 transition-transform cursor-pointer border-2 border-emerald-400">
             <span class="material-symbols-outlined text-3xl">play_arrow</span>
           </button>
-
-          <!-- Top-bar inside player -->
-          <div class="absolute top-3 start-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md text-white text-xs font-semibold flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-            <span id="vmodal-badge-quality">Full HD 1080p</span>
-          </div>
 
           <!-- Bottom Control Bar Simulation -->
           <div class="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/90 via-black/50 to-transparent flex items-center justify-between text-white text-xs">
@@ -389,12 +464,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           <!-- Col 1 & 2: Information & Summary -->
           <div class="md:col-span-2 space-y-3">
-            <div class="flex items-center gap-2 flex-wrap">
-              <span id="vmodal-subject-tag" class="text-xs font-bold px-2.5 py-0.5 rounded-md bg-emerald-50 text-emerald-800 border border-emerald-200">الفيزياء</span>
-              <span id="vmodal-unit-tag" class="text-xs font-semibold px-2 py-0.5 rounded-md bg-gray-100 text-gray-700">الوحدة 2 • الدرس 4</span>
-              <span class="text-xs text-gray-400">•</span>
-              <span id="vmodal-views" class="text-xs text-gray-500">3,420 مشاهدة</span>
-            </div>
+            <div class="h-5" aria-hidden="true"></div>
             <h4 class="text-sm font-bold text-gray-900" id="vmodal-desc-heading">أهداف ومخرجات المحاضرة:</h4>
             <p class="text-xs leading-relaxed text-gray-600" id="vmodal-description">
               تتناول هذه المحاضرة الشرح التفصيلي مع التطبيقات المعملية، وحل المسائل التدريبية النموذجية مع التركيز على المفاهيم الأساسية لنواتج التعلم المستهدفة.
@@ -527,13 +597,7 @@
         <div>
           <label class="block font-bold text-gray-700 mb-1" id="lbl-up-thumb">غلاف المحاضرة (اختر صورة نمطية أو افتراضية)</label>
           <select id="up-thumbnail" class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34]">
-            <option value="assets/images/physics.jpg">مدرج الفيزياء وتجارب الليزر (Physics Lecture)</option>
-            <option value="assets/images/math.jpg">قاعة الرياضيات والتفاضل والتكامل (Math Lecture)</option>
-            <option value="assets/images/chemistry.jpg">مختبر الكيمياء والتفاعلات الجزيئية (Chemistry Lab)</option>
-            <option value="assets/images/cs.jpg">قاعة البرمجة وهياكل البيانات (Computer Science Hall)</option>
-            <option value="assets/images/books.jpg">المكتبة ومراجع الكتب (Library Books)</option>
-            <option value="assets/images/desk.jpg">مكتب التحضير الأكاديمي (Study Desk)</option>
-            <option value="assets/images/campus.jpg">الحرم الجامعي والأنشطة (Campus)</option>
+            <option value="">بدون غلاف حالياً</option>
           </select>
         </div>
 
@@ -622,7 +686,7 @@
         badgeAr: "موصى به",
         badgeEn: "Featured",
         badgeColor: "emerald",
-        thumbnail: "assets/images/physics.jpg",
+        thumbnail: "",
         date: "2026-09-28",
         descriptionAr: "شرح تفصيلي لتجارب الانكسار والحيود الضوئي مع حساب زاوية السقوط وزاوية الانكسار باستخدام قانون سنيل، وتطبيقات عملية في الألياف الضوئية.",
         descriptionEn: "Detailed study of light refraction and diffraction experiments, calculating incident and refraction angles using Snell's Law with fiber optic applications."
@@ -643,7 +707,7 @@
         badgeAr: "شائع",
         badgeEn: "Popular",
         badgeColor: "blue",
-        thumbnail: "assets/images/math.jpg",
+        thumbnail: "",
         date: "2026-09-25",
         descriptionAr: "مفاهيم التكامل الحجمي ونظرية ستوكس وحساب تدفق المجالات المتجهة عبر السطوح ثلاثية الأبعاد مع أمثلة تطبيقية خطوة بخطوة.",
         descriptionEn: "Volume integrals concepts, Stokes' theorem, calculating vector field flux through 3D surfaces with step-by-step practical examples."
@@ -664,7 +728,7 @@
         badgeAr: "جديد",
         badgeEn: "New",
         badgeColor: "amber",
-        thumbnail: "assets/images/chemistry.jpg",
+        thumbnail: "",
         date: "2026-09-29",
         descriptionAr: "دراسة طاقة التنشيط، معادلة أرهينيوس، والعوامل المؤثرة على سرعة التفاعل الكيميائي مع نماذج ثلاثية الأبعاد لتفاعل الجزيئات.",
         descriptionEn: "Activation energy study, Arrhenius equation, and factors affecting chemical reaction rates with 3D molecular modeling."
@@ -685,7 +749,7 @@
         badgeAr: "مكتمل",
         badgeEn: "Completed",
         badgeColor: "purple",
-        thumbnail: "assets/images/cs.jpg",
+        thumbnail: "",
         date: "2026-09-20",
         descriptionAr: "بناء القوائم المترابطة المزدوجة (Doubly Linked Lists)، وخوارزميات الترتيب Insertion Sort مع حساب التعقيد الزمني وتحسين الذاكرة.",
         descriptionEn: "Building Doubly Linked Lists, insertion sort algorithms with computational time complexity calculations and memory optimization."
@@ -706,7 +770,7 @@
         badgeAr: "موصى به",
         badgeEn: "Featured",
         badgeColor: "emerald",
-        thumbnail: "assets/images/books2.jpg",
+        thumbnail: "",
         date: "2026-09-22",
         descriptionAr: "آليات النسخ والترجمة داخل الريبوسومات، وانقسام الخلية ونقل الشفرات الوراثية بدقة بالغة.",
         descriptionEn: "Transcription and translation mechanisms in ribosomes, cellular division, and high-fidelity genetic code transmission."
@@ -727,7 +791,7 @@
         badgeAr: "جديد",
         badgeEn: "New",
         badgeColor: "amber",
-        thumbnail: "assets/images/books.jpg",
+        thumbnail: "",
         date: "2026-09-27",
         descriptionAr: "قراءة نقدية في أساليب البيان والبديع والمجاز المرسل وتطبيقاتها في القصائد والشواهد البلاغية القديمة.",
         descriptionEn: "Critical reading of classical rhetoric devices, allegories, and figurative speech in classical poetic monuments."
@@ -748,7 +812,7 @@
         badgeAr: "شائع",
         badgeEn: "Popular",
         badgeColor: "blue",
-        thumbnail: "assets/images/desk.jpg",
+        thumbnail: "",
         date: "2026-09-24",
         descriptionAr: "طرق بناء الفقرات الأكاديمية والتوثيق المرجعي وفق نظام APA وتجنب الانتحال العلمي بأسلوب محترف.",
         descriptionEn: "Structuring academic arguments, bibliographic citation methodologies following APA guidelines, and synthesis analysis."
@@ -769,7 +833,7 @@
         badgeAr: "مكتمل",
         badgeEn: "Completed",
         badgeColor: "purple",
-        thumbnail: "assets/images/campus.jpg",
+        thumbnail: "",
         date: "2026-09-18",
         descriptionAr: "دراسة وثائقية جغرافية لأثر التبادل التجاري والثقافي عبر طريق الحرير وتطور المراكز الحضرية الكبرى.",
         descriptionEn: "Historical and geographical documentary study of cultural and commercial exchange along the ancient Silk Road."
@@ -1122,12 +1186,6 @@
       empty.classList.remove('flex');
 
       grid.innerHTML = filtered.map(item => {
-        const title = isAr ? item.titleAr : item.titleEn;
-        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
-        const unit = isAr ? item.unitAr : item.unitEn;
-        const instructor = isAr ? item.instructorAr : item.instructorEn;
-        const badge = isAr ? item.badgeAr : item.badgeEn;
-        const viewsText = isAr ? `${item.views.toLocaleString()} مشاهدة` : `${item.views.toLocaleString()} views`;
         const watchBtnText = isAr ? 'مشاهدة المحاضرة' : 'Watch Lecture';
         const arrowIcon = isAr ? 'arrow_back' : 'arrow_forward';
 
@@ -1138,48 +1196,15 @@
         const titleClass = isDark ? 
           "text-white group-hover:text-[#34d399]" : 
           "text-gray-900 group-hover:text-emerald-700";
-        const subTagClass = isDark ? 
-          "bg-[#121514]/85 text-[#34d399] border-[#27332e]" : 
-          "bg-white/90 text-[#1e3e34] border-gray-200/60";
         const btnClass = isDark ? 
           "bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white border-[#2e5446]" : 
           "bg-[#1e3e34] hover:bg-[#162e27] text-white";
-
-        // Badge styling
-        let badgeStyle = "bg-emerald-50 text-emerald-800 border-emerald-100";
-        if (isDark) {
-          if (item.badgeColor === 'blue') badgeStyle = "bg-[#172d3f] text-[#7bd0ff] border-[#204969]";
-          else if (item.badgeColor === 'amber') badgeStyle = "bg-[#362712] text-[#ffc66e] border-[#583f1d]";
-          else if (item.badgeColor === 'purple') badgeStyle = "bg-[#2e1d3d] text-[#c084fc] border-[#4c2d66]";
-          else badgeStyle = "bg-[#152e26] text-[#34d399] border-[#225042]";
-        } else {
-          if (item.badgeColor === 'blue') badgeStyle = "bg-blue-50 text-blue-800 border-blue-100";
-          else if (item.badgeColor === 'amber') badgeStyle = "bg-amber-50 text-amber-800 border-amber-100";
-          else if (item.badgeColor === 'purple') badgeStyle = "bg-purple-50 text-purple-800 border-purple-100";
-        }
 
         return `
           <div class="card-item ${cardBgClass} rounded-2xl border overflow-hidden shadow-xs transition-all duration-300 flex flex-col group" id="${item.id}">
             
             <!-- Video Thumbnail & Badges -->
-            <div class="h-44 sm:h-48 w-full overflow-hidden bg-gray-900 relative cursor-pointer" onclick="openVideoPlayer('${item.id}')">
-              <img 
-                alt="${title}" 
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90 group-hover:opacity-100" 
-                src="${item.thumbnail}" 
-                onerror="this.src='assets/images/desk2.jpg'"
-              />
-              
-              <!-- Subject Tag (top-start) -->
-              <div class="absolute top-3 start-3 backdrop-blur-xs text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border ${subTagClass}">
-                <span>${subject}</span>
-              </div>
-
-              <!-- Duration Pill (bottom-end) -->
-              <div class="absolute bottom-2.5 end-2.5 bg-black/75 backdrop-blur-md text-white text-[11px] font-mono px-2 py-0.5 rounded-md flex items-center gap-1 shadow-sm">
-                <span class="material-symbols-outlined text-[13px] text-emerald-400">schedule</span>
-                <span>${item.duration}</span>
-              </div>
+            <div class="aspect-video w-full overflow-hidden bg-gray-900 relative cursor-pointer" onclick="openVideoPlayer('${item.id}')">
 
               <!-- Play Button Overlay Glow -->
               <div class="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
@@ -1193,23 +1218,18 @@
             <div class="p-5 flex-1 flex flex-col justify-between">
               <div>
                 <!-- Unit & Status Badge -->
-                <div class="flex items-center justify-between gap-2 mb-2">
-                  <span class="text-[11px] font-semibold text-gray-500 ${isDark ? 'text-[#8fa39b]' : 'text-gray-500'}">${unit}</span>
-                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded border ${badgeStyle}">${badge}</span>
-                </div>
+                <div class="mb-2" style="min-height: 1rem"></div>
 
                 <!-- Video Title -->
-                <h3 class="card-title text-sm sm:text-base font-bold line-clamp-2 mb-3 leading-snug transition-colors ${titleClass}">
-                  ${title}
-                </h3>
+                <h3 class="card-title text-sm sm:text-base font-bold line-clamp-2 mb-3 leading-snug transition-colors ${titleClass}" style="min-height: 2.75rem"></h3>
 
                 <!-- Instructor & Views Meta -->
                 <div class="flex items-center justify-between text-xs pt-2 border-t ${isDark ? 'border-[#27332e] text-[#8fa39b]' : 'border-gray-100 text-gray-500'}">
                   <div class="flex items-center gap-1.5 truncate">
                     <span class="material-symbols-outlined text-[16px] text-emerald-600">person</span>
-                    <span class="truncate font-medium">${instructor}</span>
+                    <span class="truncate font-medium" style="min-height: 1rem"></span>
                   </div>
-                  <span class="text-[11px] font-medium shrink-0">${viewsText}</span>
+                  <span class="text-[11px] font-medium shrink-0" style="min-width: 3rem"></span>
                 </div>
               </div>
 
@@ -1240,10 +1260,6 @@
       const container = document.getElementById('video-modal-container');
       const title = document.getElementById('vmodal-title');
       const subtitle = document.getElementById('vmodal-subtitle');
-      const poster = document.getElementById('vmodal-poster');
-      const subTag = document.getElementById('vmodal-subject-tag');
-      const unitTag = document.getElementById('vmodal-unit-tag');
-      const views = document.getElementById('vmodal-views');
       const timeDisp = document.getElementById('vmodal-time-display');
       const desc = document.getElementById('vmodal-description');
       const descHeading = document.getElementById('vmodal-desc-heading');
@@ -1276,14 +1292,8 @@
         document.getElementById('btn-vmodal-close').className = "px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer";
       }
 
-      title.innerText = isAr ? vid.titleAr : vid.titleEn;
-      subtitle.innerText = isAr ? 
-        `${vid.subjectNameAr} • ${vid.instructorAr} • ${vid.duration} دقيقة` : 
-        `${vid.subjectNameEn} • ${vid.instructorEn} • ${vid.duration} mins`;
-      poster.src = vid.thumbnail;
-      subTag.innerText = isAr ? vid.subjectNameAr : vid.subjectNameEn;
-      unitTag.innerText = isAr ? vid.unitAr : vid.unitEn;
-      views.innerText = isAr ? `${vid.views.toLocaleString()} مشاهدة` : `${vid.views.toLocaleString()} views`;
+      title.innerText = '';
+      subtitle.innerText = '';
       timeDisp.innerText = `00:00 / ${vid.duration}`;
       desc.innerText = isAr ? vid.descriptionAr : vid.descriptionEn;
       descHeading.innerText = isAr ? "أهداف ومخرجات المحاضرة:" : "Lecture Objectives & Key Outcomes:";

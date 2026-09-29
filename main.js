@@ -91,16 +91,9 @@ function applyTheme(theme) {
       btn.className = "card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-[#2e5446]";
     });
 
-    // Tags inside images in dark theme
-    document.querySelectorAll('[id^="tag-card-"]').forEach(tag => {
-      tag.className = "absolute top-3 start-3 bg-[#121514]/85 backdrop-blur-md text-[#34d399] text-[11px] font-semibold px-2.5 py-0.5 rounded-md border border-[#27332e]";
+    document.querySelectorAll('.category-icon').forEach(icon => {
+      icon.className = "category-icon material-symbols-outlined w-12 h-12 rounded-xl bg-[#14261f] text-[#34d399] border border-[#234235] flex items-center justify-center text-2xl shrink-0";
     });
-
-    // Badges in dark theme
-    const b1 = document.getElementById('badge-card-1');
-    if (b1) b1.className = "text-xs bg-[#152e26] text-[#34d399] font-medium px-2 py-0.5 rounded border border-[#225042]";
-    const b2 = document.getElementById('badge-card-2');
-    if (b2) b2.className = "text-xs bg-[#172d3f] text-[#7bd0ff] font-medium px-2 py-0.5 rounded border border-[#204969]";
 
     updateNavStyles('dark');
 
@@ -157,16 +150,9 @@ function applyTheme(theme) {
       btn.className = "card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow";
     });
 
-    // Tags inside images
-    document.querySelectorAll('[id^="tag-card-"]').forEach(tag => {
-      tag.className = "absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60";
+    document.querySelectorAll('.category-icon').forEach(icon => {
+      icon.className = "category-icon material-symbols-outlined w-12 h-12 rounded-xl bg-[#e9f2ee] text-[#1e3e34] border border-[#d1ded9] flex items-center justify-center text-2xl shrink-0";
     });
-
-    // Badges in light theme
-    const b1 = document.getElementById('badge-card-1');
-    if (b1) b1.className = "text-xs bg-emerald-50 text-emerald-800 font-semibold px-2 py-0.5 rounded border border-emerald-100";
-    const b2 = document.getElementById('badge-card-2');
-    if (b2) b2.className = "text-xs bg-blue-50 text-blue-800 font-semibold px-2 py-0.5 rounded border border-blue-100";
 
     updateNavStyles('light');
   }
@@ -205,20 +191,6 @@ function applyLanguage(lang) {
     document.getElementById('txt-page-desc').innerText = "البوابة الموحدة لإدارة وتوصيف المقررات والمناهج والأنشطة الجامعية";
     document.getElementById('txt-quick-videos').innerText = "الفيديوهات التعليمية";
 
-    // Card 1
-    document.getElementById('txt-tag-1').innerText = "الخطة والمناهج";
-    document.getElementById('txt-card-title-1').innerText = "مكتب إعداد المناهج والخطط";
-    document.getElementById('badge-card-1').innerText = "معتمد 96%";
-    document.getElementById('txt-card-desc-1').innerText = "توصيف المقررات الأكاديمية والخطط الأسبوعية وتوزيع درجات أعمال السنة.";
-    document.getElementById('txt-btn-1').innerText = "استعراض الخطط الدراسية";
-
-    // Card 2
-    document.getElementById('txt-tag-2').innerText = "المكتبة الرقمية";
-    document.getElementById('txt-card-title-2').innerText = "المكتبة والمراجع والكتب";
-    document.getElementById('badge-card-2').innerText = "14 كتاباً متاحاً";
-    document.getElementById('txt-card-desc-2').innerText = "فهرس المراجع والكتب المقررة مع إمكانية القراءة والتحميل لكافة التخصصات.";
-    document.getElementById('txt-btn-2').innerText = "تصفح مكتبة الكتب";
-
     // Footer
     document.getElementById('txt-footer-left-1').innerText = "بوابة النظام الأكاديمي الموحد";
     document.getElementById('txt-footer-left-2').innerText = "الإدارة العامة للمناهج ونظم المعلومات";
@@ -227,11 +199,6 @@ function applyLanguage(lang) {
     document.querySelectorAll('.nav-chevron').forEach(icon => {
       icon.innerText = "chevron_left";
     });
-    document.querySelectorAll('.btn-card-icon').forEach(icon => {
-      icon.innerText = "arrow_back";
-      icon.className = "material-symbols-outlined text-[16px] btn-card-icon group-hover:-translate-x-1 transition-transform";
-    });
-
     sidebar.classList.remove('border-r');
     sidebar.classList.add('border-l');
 
@@ -261,20 +228,6 @@ function applyLanguage(lang) {
     document.getElementById('txt-page-desc').innerText = "Unified portal for coursework planning, syllabi, and academic activities";
     document.getElementById('txt-quick-videos').innerText = "Educational Videos";
 
-    // Card 1
-    document.getElementById('txt-tag-1').innerText = "Curriculum Plan";
-    document.getElementById('txt-card-title-1').innerText = "Coursework & Syllabus Desk";
-    document.getElementById('badge-card-1').innerText = "96% Approved";
-    document.getElementById('txt-card-desc-1').innerText = "Syllabi rubrics, weekly lesson modules, and grading criteria verification.";
-    document.getElementById('txt-btn-1').innerText = "Review Syllabi";
-
-    // Card 2
-    document.getElementById('txt-tag-2').innerText = "Digital Library";
-    document.getElementById('txt-card-title-2').innerText = "Textbooks & Reference Works";
-    document.getElementById('badge-card-2').innerText = "14 Books Available";
-    document.getElementById('txt-card-desc-2').innerText = "Comprehensive repository of approved textbooks with instant reading and downloads.";
-    document.getElementById('txt-btn-2').innerText = "Browse Textbooks";
-
     // Footer
     document.getElementById('txt-footer-left-1').innerText = "Academic Faculty Portal";
     document.getElementById('txt-footer-left-2').innerText = "Curriculum & Information Systems Administration";
@@ -283,14 +236,13 @@ function applyLanguage(lang) {
     document.querySelectorAll('.nav-chevron').forEach(icon => {
       icon.innerText = "chevron_right";
     });
-    document.querySelectorAll('.btn-card-icon').forEach(icon => {
-      icon.innerText = "arrow_forward";
-      icon.className = "material-symbols-outlined text-[16px] btn-card-icon group-hover:translate-x-1 transition-transform";
-    });
-
     sidebar.classList.remove('border-l');
     sidebar.classList.add('border-r');
   }
+
+  document.querySelectorAll('[data-card-title], [data-card-action]').forEach(element => {
+    element.textContent = lang === 'ar' ? element.dataset.ar : element.dataset.en;
+  });
 
   updateNavStyles(currentTheme);
 }

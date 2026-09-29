@@ -28,14 +28,7 @@
 ├── screen.png                 # مرجع التصميم (الوضع الداكن)
 ├── screen 2.png               # مرجع التصميم (الوضع الفاتح)
 ├── assets/
-│   ├── images/                # صور المحتوى
-│   │   ├── desk.jpg
-│   │   ├── desk2.jpg
-│   │   ├── books.jpg
-│   │   ├── books2.jpg
-│   │   ├── report.jpg
-│   │   ├── report2.jpg
-│   │   └── campus.jpg
+│   ├── images/                # مساحة صور المحتوى لإضافة الصور لاحقاً
 │   └── mockups/               # نسخ من تصميمات المرجع
 │       ├── screen-dark.png
 │       └── screen-light.png
