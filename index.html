@@ -18,29 +18,27 @@
       theme: {
         extend: {
           colors: {
-            // الهوية اللونية الخضراء المشتركة والمتناسقة (Unified Academic Forest & Mint)
             forest: {
-              sidebar: "#132821",       // القائمة في اللايت مود (أخضر صنوبري أكاديمي)
-              sidebarHover: "#1b382e",  // هوفر القائمة
-              sidebarActive: "#244d3f", // العنصر النشط في اللايت
-              primary: "#1e3e34",       // الأخضر الرئيسي للأزرار
-              primaryHover: "#162e27",  // الأخضر عند التمرير
-              accent: "#34d399",        // الأخضر الزمردي المتناسق
-              mint: "#57f1db",          // المينت المضيء
-              border: "#d1ded9",        // الحدود الفاتحة
-              light: "#e9f2ee"          // خلفية الشارات
+              sidebar: "#132821",
+              sidebarHover: "#1b382e",
+              sidebarActive: "#244d3f",
+              primary: "#1e3e34",
+              primaryHover: "#162e27",
+              accent: "#34d399",
+              mint: "#57f1db",
+              border: "#d1ded9",
+              light: "#e9f2ee"
             },
-            // الدارك مود: أسود هادئ ناعم مريح للعين مع صبغة خضراء خفيفة متناسقة (مش أسود حالك)
             softdark: {
-              bg: "#121514",            // أسود فاتح مريح وليس 000000#
-              surface: "#171c1a",       // هيدر وفوتر
-              card: "#1b221f",          // بطاقات المحتوى
-              cardBorder: "#27332e",    // حدود البطاقات
-              sidebar: "#0d1815",       // قائمة الدارك مود بلون غابي متميز
-              sidebarBorder: "#1c2b25", // حد القائمة الداكن
-              sidebarActive: "#1a382d", // العنصر النشط بالدارك
-              text: "#e1ebe6",          // نصوص واضحة وعالية التباين
-              muted: "#8fa39b"          // نصوص ثانوية
+              bg: "#121514",
+              surface: "#171c1a",
+              card: "#1b221f",
+              cardBorder: "#27332e",
+              sidebar: "#0d1815",
+              sidebarBorder: "#1c2b25",
+              sidebarActive: "#1a382d",
+              text: "#e1ebe6",
+              muted: "#8fa39b"
             }
           },
           fontFamily: {
@@ -66,7 +64,6 @@
       display: inline-block;
       vertical-align: middle;
     }
-    /* Scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -81,7 +78,6 @@
     ::-webkit-scrollbar-thumb:hover {
       background: rgba(52, 211, 153, 0.6);
     }
-    /* Modal Animation */
     @keyframes modalPop {
       from { opacity: 0; transform: scale(0.96) translateY(8px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
@@ -94,60 +90,66 @@
 <body id="body-app" class="min-h-screen flex text-right antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300">
 
   <!-- ================= 1. القائمة الجانبية (SIDEBAR) ================= -->
-  <!-- اللون الأخضر الأكاديمي الأصلي موجود ومتناسق تماماً في كلا الوضعين -->
-  <!-- في اللايت مود: أخضر صنوبري أصلي وأنيق (#132821) -->
-  <!-- في الدارك مود: أخضر غابي داكن مميز (#0d1815) منفصل بوضوح عن سواد الصفحة الفاتح -->
   <aside id="sidebar" class="w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 border-l border-[#1f3f35] select-none shadow-xl transition-all duration-300">
     <!-- Top Section -->
     <div class="p-5 flex flex-col gap-6">
       <!-- Logo Header -->
-      <div id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439]">
-        <div id="sidebar-logo-icon" class="w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300">
+      <a href="index.html" id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer">
+        <div id="sidebar-logo-icon" class="w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300 group-hover:bg-[#2c5f4e] transition-colors">
           <span class="material-symbols-outlined text-2xl">school</span>
         </div>
         <div class="flex flex-col">
           <div class="flex items-center gap-2">
-            <span id="txt-brand-name" class="font-bold text-base text-white tracking-wide">مثال</span>
-            <span id="txt-brand-badge" class="text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight">مثال</span>
+            <span id="txt-brand-name" class="font-bold text-base text-white tracking-wide">النظام الأكاديمي</span>
+            <span id="txt-brand-badge" class="text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight">المنصة</span>
           </div>
-          <span id="txt-brand-sub" class="text-xs text-emerald-100/60 mt-0.5">مثال</span>
+          <span id="txt-brand-sub" class="text-xs text-emerald-100/60 mt-0.5">بوابة هيئة التدريس</span>
         </div>
-      </div>
+      </a>
 
-      <!-- Navigation Links (List Items in Harmonious Green) -->
+      <!-- Navigation Links -->
       <nav class="flex flex-col gap-1.5" id="sidebar-nav">
-        <!-- Item 1 - Active -->
-        <button onclick="handleNavClick(this)" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer">
+        <!-- Item 1 - لوحة التحكم (Active on this page) -->
+        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer">
           <div class="flex items-center gap-3">
-            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-300">edit_note</span>
-            <span class="nav-label text-sm">مثال</span>
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-300">dashboard</span>
+            <span class="nav-label text-sm" id="nav-lbl-dashboard">لوحة التحكم الأكاديمية</span>
           </div>
           <span class="nav-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-        </button>
+        </a>
 
         <!-- Item 2 - الفيديوهات التعليمية (Link to videos.html) -->
         <a href="videos.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">smart_display</span>
-            <span class="nav-label text-sm" id="nav-lbl-videos-index">الفيديوهات التعليمية</span>
+            <span class="nav-label text-sm" id="nav-lbl-videos">الفيديوهات التعليمية</span>
           </div>
           <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
         </a>
 
-        <!-- Item 3 - الكتب والمناهج (Link to books.html) -->
+        <!-- Item 3 - المكتبة والكتب الدراسية (Link to books.html) -->
         <a href="books.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">menu_book</span>
-            <span class="nav-label text-sm" id="nav-lbl-books-index">المكتبة والكتب الدراسية</span>
+            <span class="nav-label text-sm" id="nav-lbl-books">المكتبة والكتب الدراسية</span>
           </div>
           <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
         </a>
 
-        <!-- Item 4 -->
-        <button onclick="handleNavClick(this)" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+        <!-- Item 4 - سجل الدرجات والتقييم -->
+        <button onclick="openModal('report')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">bar_chart</span>
+            <span class="nav-label text-sm" id="nav-lbl-reports">سجل الدرجات والتقييم</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </button>
+
+        <!-- Item 5 - الحرم الجامعي والمختبرات -->
+        <button onclick="openModal('campus')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">domain</span>
-            <span class="nav-label text-sm">مثال</span>
+            <span class="nav-label text-sm" id="nav-lbl-campus">الحرم والمختبرات</span>
           </div>
           <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
         </button>
@@ -162,8 +164,8 @@
             <span class="material-symbols-outlined text-lg">person</span>
           </div>
           <div class="text-start">
-            <div id="txt-user-name" class="text-xs font-bold text-white group-hover:text-emerald-200 transition-colors">مثال</div>
-            <div id="txt-user-role" class="text-[11px] text-emerald-100/50">مثال</div>
+            <div id="txt-user-name" class="text-xs font-bold text-white group-hover:text-emerald-200 transition-colors">د. أحمد عبد الرحمن</div>
+            <div id="txt-user-role" class="text-[11px] text-emerald-100/50">أستاذ المادة • منسق الأقسام</div>
           </div>
         </div>
         <span class="material-symbols-outlined text-emerald-100/50 text-[18px]">more_vert</span>
@@ -180,32 +182,47 @@
         
         <!-- Title & Badge -->
         <div class="flex items-center gap-3">
-          <h1 id="txt-page-title" class="text-xl font-bold tracking-tight">مثال</h1>
-          <span id="txt-page-badge" class="text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]">مثال</span>
+          <div class="w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]" id="header-icon-box">
+            <span class="material-symbols-outlined text-xl">school</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 id="txt-page-title" class="text-xl font-bold tracking-tight text-gray-900">لوحة التحكم الأكاديمية</h1>
+              <span id="txt-page-badge" class="text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]">الفصل الدراسي الحالي 2026</span>
+            </div>
+            <p id="txt-page-desc" class="text-xs text-gray-500 font-medium mt-0.5">البوابة الموحدة لإدارة وتوصيف المقررات والمناهج والأنشطة الجامعية</p>
+          </div>
         </div>
 
         <!-- Action & Toggle Buttons -->
         <div class="flex items-center flex-wrap gap-2.5 text-xs">
           
+          <!-- زر الفيديوهات التعليمية (Direct Video Link) -->
+          <a href="videos.html" id="btn-quick-videos" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">smart_display</span>
+            <span id="txt-quick-videos">الفيديوهات التعليمية</span>
+          </a>
+
           <!-- زر تقويم (Calendar) -->
           <button onclick="openModal('calendar')" id="btn-calendar" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
             <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-calendar">calendar_today</span>
-            <span id="txt-calendar-btn">مثال</span>
+            <span id="txt-calendar-btn">التقويم الأكاديمي</span>
           </button>
 
           <!-- زر إشعارات (Notifications) -->
-          <button onclick="openModal('notifications')" id="btn-notifications" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
+          <button onclick="openModal('notifications')" id="btn-notifications" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer relative">
             <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-notifications">notifications</span>
-            <span id="txt-notifications-btn">مثال</span>
+            <span id="txt-notifications-btn">الإشعارات</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500 absolute top-1.5 end-1.5 ring-2 ring-white"></span>
           </button>
 
-          <!-- ================= زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) ================= -->
+          <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
           <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
             <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
             <span id="txt-theme-toggle">الوضع الداكن</span>
           </button>
 
-          <!-- ================= زر تبديل اللغة (LANGUAGE TOGGLE: AR / EN) ================= -->
+          <!-- زر تبديل اللغة (LANGUAGE TOGGLE: AR / EN) -->
           <button onclick="toggleLanguage()" id="btn-lang-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200" title="تبديل اللغة (العربية / English)">
             <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-lang">translate</span>
             <span id="txt-lang-toggle">English</span>
@@ -217,12 +234,22 @@
 
     <!-- Information Banner (Green Border matching design) -->
     <div class="px-8 pt-6">
-      <div id="info-banner" class="bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex items-center justify-between text-xs sm:text-sm font-medium transition-all duration-300">
-        <div class="flex items-center gap-2.5">
-          <span class="material-symbols-outlined text-[#1e3e34] text-[20px]" id="info-icon">info</span>
-          <span id="txt-banner-title" class="font-semibold text-gray-900">مثال</span>
+      <div id="info-banner" class="bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium transition-all duration-300">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]" id="info-icon-wrapper">
+            <span class="material-symbols-outlined text-[20px]" id="info-icon">verified_user</span>
+          </div>
+          <div>
+            <span id="txt-banner-title" class="font-bold text-gray-900">منظومة التعليم الأكاديمي وإدارة المقررات والمناهج</span>
+            <span class="hidden sm:inline text-gray-400 mx-1.5">•</span>
+            <span id="txt-banner-sub" class="text-xs text-gray-600 font-normal">متابعة المناهج الدراسية، المحاضرات المرئية، سجل الدرجات، والأنشطة البحثية.</span>
+          </div>
         </div>
-        <span id="txt-banner-sub" class="text-xs text-gray-500 font-medium">مثال</span>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="text-xs font-bold text-[#1e3e34] bg-[#e9f2ee] px-2.5 py-1 rounded-md border border-[#d1ded9]" id="txt-banner-stat">
+            الفصل الدراسي 2 • معتمد
+          </span>
+        </div>
       </div>
     </div>
 
@@ -230,109 +257,113 @@
     <main class="p-8 flex-1">
       <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <!-- Card 1: Study Desk with Lamp -->
+        <!-- Card 1: Study Desk with Lamp (Curriculum / Syllabus) -->
         <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-desk">
           <div class="h-44 sm:h-48 w-full overflow-hidden bg-gray-100 relative">
             <img 
-              alt="Course" 
+              alt="Coursework & Syllabus" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               src="assets/images/desk2.jpg" 
-              onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuA_3zJt3Un9zR9tYaoh8dAU3qGfXEG1BhWorhS07Ed4kQlK3w8nt5l_Rw8axAVdF01rw4xvKp5fmlly2x59lWxpsXt99TJsnEaD21OBOwGspWvSAUIfMNg_unapB_OjUADJ7WGIkxbCmKrsyZvoCq--YPJS37a7kM51IIifwGmtHy5G63uZR_nSu5VewPEiMOd6UFcAZaP0skoQuWlS-no7KQgJdoXChsiLRsWq2blUKxbB1nB35hbp'"
+              onerror="this.src='assets/images/desk.jpg'"
             />
             <div id="tag-card-1" class="absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60">
-              <span class="txt-tag">مثال</span>
+              <span class="txt-tag" id="txt-tag-1">الخطة والمناهج</span>
             </div>
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2">
-                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">مثال</h3>
-                <span id="badge-card-1" class="text-xs bg-emerald-50 text-emerald-800 font-semibold px-2 py-0.5 rounded border border-emerald-100">مثال</span>
+                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" id="txt-card-title-1">مكتب إعداد المناهج والخطط</h3>
+                <span id="badge-card-1" class="text-xs bg-emerald-50 text-emerald-800 font-semibold px-2 py-0.5 rounded border border-emerald-100">معتمد 96%</span>
               </div>
+              <p class="text-xs text-gray-500 line-clamp-2 mt-1" id="txt-card-desc-1">توصيف المقررات الأكاديمية والخطط الأسبوعية وتوزيع درجات أعمال السنة.</p>
             </div>
             <button onclick="openModal('desk')" id="btn-card-1" class="card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
-              <span class="btn-card-text">مثال</span>
+              <span class="btn-card-text" id="txt-btn-1">استعراض الخطط الدراسية</span>
               <span class="material-symbols-outlined text-[16px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
             </button>
           </div>
         </div>
 
-        <!-- Card 2: Stack of Books -->
+        <!-- Card 2: Stack of Books (Library & Textbooks) -->
         <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-books">
           <div class="h-44 sm:h-48 w-full overflow-hidden bg-gray-100 relative">
             <img 
-              alt="Curriculum" 
+              alt="Library & Textbooks" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               src="assets/images/books2.jpg" 
-              onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuCNiRLRm8s68Sbg02SzzBhz8W6D0pMLbb5x46B4kUF5TSWB4JHtFsTwknVr8YBrePW2_HIHuJF-oiE8tAciqwoaZmyvOet4wWkUb0PkkHqAjhfA4-No4SPVeThjZKxr1nUkYnPHcQkyTydyjiuEYMKgk67L2cZ3kWN8O1NWqr0mC4hpVeNt8gE0_BbuX32EyZP5NN3EmTiB27JKj0LM0eILO4bdvoFOkXa6GcbCj0ZEAB12opTiC4wY'"
+              onerror="this.src='assets/images/books.jpg'"
             />
             <div id="tag-card-2" class="absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60">
-              <span class="txt-tag">مثال</span>
+              <span class="txt-tag" id="txt-tag-2">المكتبة الرقمية</span>
             </div>
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2">
-                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">مثال</h3>
-                <span id="badge-card-2" class="text-xs bg-blue-50 text-blue-800 font-semibold px-2 py-0.5 rounded border border-blue-100">مثال</span>
+                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" id="txt-card-title-2">المكتبة والمراجع والكتب</h3>
+                <span id="badge-card-2" class="text-xs bg-blue-50 text-blue-800 font-semibold px-2 py-0.5 rounded border border-blue-100">14 كتاباً متاحاً</span>
               </div>
+              <p class="text-xs text-gray-500 line-clamp-2 mt-1" id="txt-card-desc-2">فهرس المراجع والكتب المقررة مع إمكانية القراءة والتحميل لكافة التخصصات.</p>
             </div>
-            <button onclick="openModal('books')" id="btn-card-2" class="card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
-              <span class="btn-card-text">مثال</span>
+            <a href="books.html" id="btn-card-2" class="card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" id="txt-btn-2">تصفح مكتبة الكتب</span>
               <span class="material-symbols-outlined text-[16px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
-            </button>
+            </a>
           </div>
         </div>
 
-        <!-- Card 3: Student Progress Report -->
+        <!-- Card 3: Student Progress Report (Grades Ledger) -->
         <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-report">
           <div class="h-44 sm:h-48 w-full overflow-hidden bg-gray-100 relative">
             <img 
-              alt="Grades" 
+              alt="Grades & Evaluation" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               src="assets/images/report2.jpg" 
-              onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuC3XWiv3JCzenwpp-9iCYkuDvMnQCqouCobvjq02QYYT4COL_sPYPmdqwNGyBcJk7KVldDLCk_XTyPfkCg-6dDpUirbnth2NQ0skIJYLUJ8MpaTCGuldFgPFPXSuLuMxwHDeEEv9FoWydtNSgCLsMDHRPJ4D7lfRj0Z2GBFmtHonU9nd7z7iC8A0M83m76OP1Rd4SL4unfcQ6hk6bdW0ucTg1Z1EXuDM3iG5s0sHsP_jO_zo1RtnBd7'"
+              onerror="this.src='assets/images/report.jpg'"
             />
             <div id="tag-card-3" class="absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60">
-              <span class="txt-tag">مثال</span>
+              <span class="txt-tag" id="txt-tag-3">سجل الدرجات</span>
             </div>
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2">
-                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">مثال</h3>
-                <span id="badge-card-3" class="text-xs bg-amber-50 text-amber-800 font-semibold px-2 py-0.5 rounded border border-amber-100">مثال</span>
+                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" id="txt-card-title-3">سجل الدرجات والتقييم</h3>
+                <span id="badge-card-3" class="text-xs bg-amber-50 text-amber-800 font-semibold px-2 py-0.5 rounded border border-amber-100">متوسط A (92%)</span>
               </div>
+              <p class="text-xs text-gray-500 line-clamp-2 mt-1" id="txt-card-desc-3">رصد نتائج الاختبارات النصفية والواجبات وتقارير أداء الطلاب المسجلين.</p>
             </div>
             <button onclick="openModal('report')" id="btn-card-3" class="card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
-              <span class="btn-card-text">مثال</span>
+              <span class="btn-card-text" id="txt-btn-3">عرض سجل الدرجات</span>
               <span class="material-symbols-outlined text-[16px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
             </button>
           </div>
         </div>
 
-        <!-- Card 4: Campus Illustration -->
+        <!-- Card 4: Campus Illustration (Facilities & Hubs) -->
         <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-campus">
           <div class="h-44 sm:h-48 w-full overflow-hidden bg-gray-100 relative">
             <img 
-              alt="Campus" 
+              alt="Campus & Labs" 
               class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
               src="assets/images/campus.jpg" 
-              onerror="this.src='https://lh3.googleusercontent.com/aida-public/AB6AXuBSawbjLZRTygT7dsfPFhqlUmsz8mgvGY4Pzt8gXu40pFnAvJbFvuZ_fGyPfa0MiWK0BMXmTaj7xJxO8Q5atgP6XHN2HRAPMJqh0tcdTWHfuVV-E5ymA32IBpP4_bZofjfPTdg8cJCVmk8IIGa5DmZcJbt--wlZ8f8YkiCszpIKiYK0NkCo4Q8C6Y1mT9Tt2Q9TwTvVj57fN3H9wnwGWNM00JIoxUnnooNbf3k_Dx9H_85nyO7DUfdm'"
+              onerror="this.src='assets/images/campus.jpg'"
             />
             <div id="tag-card-4" class="absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60">
-              <span class="txt-tag">مثال</span>
+              <span class="txt-tag" id="txt-tag-4">الحرم الجامعي</span>
             </div>
           </div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between gap-2 mb-2">
-                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">مثال</h3>
-                <span id="badge-card-4" class="text-xs bg-purple-50 text-purple-800 font-semibold px-2 py-0.5 rounded border border-purple-100">مثال</span>
+                <h3 class="card-title text-base font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" id="txt-card-title-4">الحرم والمختبرات الإبداعية</h3>
+                <span id="badge-card-4" class="text-xs bg-purple-50 text-purple-800 font-semibold px-2 py-0.5 rounded border border-purple-100">متاح للحجز</span>
               </div>
+              <p class="text-xs text-gray-500 line-clamp-2 mt-1" id="txt-card-desc-4">متابعة جاهزية القاعات والمعامل البحثية والأنشطة الإبداعية المشتركة.</p>
             </div>
             <button onclick="openModal('campus')" id="btn-card-4" class="card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
-              <span class="btn-card-text">مثال</span>
+              <span class="btn-card-text" id="txt-btn-4">استكشاف مرافق الحرم</span>
               <span class="material-symbols-outlined text-[16px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
             </button>
           </div>
@@ -345,12 +376,12 @@
     <footer id="main-footer" class="bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
         <div class="flex items-center gap-2">
-          <span id="txt-footer-left-1" class="font-bold text-gray-800">مثال</span>
+          <span id="txt-footer-left-1" class="font-bold text-gray-800">بوابة النظام الأكاديمي الموحد</span>
           <span>•</span>
-          <span id="txt-footer-left-2">مثال</span>
+          <span id="txt-footer-left-2">الإدارة العامة للمناهج ونظم المعلومات</span>
         </div>
         <div>
-          <span id="txt-footer-right">مثال</span>
+          <span id="txt-footer-right">جميع الحقوق محفوظة © 2026</span>
         </div>
       </div>
     </footer>
@@ -379,7 +410,7 @@
         محتوى تفاعلي متوافق مع نظام التصميم المعتمد.
       </div>
 
-      <div class="flex justify-end gap-2 mt-5">
+      <div class="flex justify-end gap-2 mt-5" id="modal-footer-btns">
         <button onclick="closeModal()" id="btn-modal-cancel" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer">
           إغلاق
         </button>
@@ -416,7 +447,7 @@
       applyLanguage(currentLang);
     }
 
-    // Apply Theme Styles (Harmonious Green & Soft Black Palette)
+    // Apply Theme Styles
     function applyTheme(theme) {
       const root = document.getElementById('root-html');
       const body = document.getElementById('body-app');
@@ -428,22 +459,20 @@
       const mainHeader = document.getElementById('main-header');
       const mainFooter = document.getElementById('main-footer');
       const infoBanner = document.getElementById('info-banner');
+      const infoIconWrapper = document.getElementById('info-icon-wrapper');
       const infoIcon = document.getElementById('info-icon');
+      const headerIconBox = document.getElementById('header-icon-box');
       const cardsGrid = document.getElementById('cards-grid');
       const cardCampus = document.getElementById('card-campus');
 
-      // Theme toggle button elements
       const btnTheme = document.getElementById('btn-theme-toggle');
       const iconTheme = document.getElementById('icon-theme');
       const txtTheme = document.getElementById('txt-theme-toggle');
 
       if (theme === 'dark') {
         root.classList.add('dark');
-        
-        // الخلفية: أسود هادئ ناعم بلمسة غابية خفيفة (#121514) مش أسود خالص 000000#
         body.className = "min-h-screen flex antialiased bg-[#121514] text-[#e1ebe6] transition-colors duration-300";
 
-        // القائمة الجانبية: أخضر غابي داكن مميز (#0d1815) مع إطار (#1c2b25) متناسق مع اللون الأخضر العام
         sidebar.className = "w-64 bg-[#0d1815] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 select-none shadow-2xl transition-all duration-300 " + (currentLang === 'ar' ? 'border-l border-[#1c2b25]' : 'border-r border-[#1c2b25]');
         sidebarHeaderBox.className = "flex items-center gap-3 pb-5 border-b border-[#1c2b25]";
         sidebarLogoIcon.className = "w-10 h-10 rounded-xl bg-[#14261f] border border-[#234235] flex items-center justify-center shrink-0 shadow-sm text-[#34d399]";
@@ -456,14 +485,25 @@
         document.getElementById('txt-user-name').className = "text-xs font-bold text-white group-hover:text-[#34d399] transition-colors";
         document.getElementById('txt-user-role').className = "text-[11px] text-[#8fa39b]";
 
-        // Header (أسود فاتح ناعم متناسق #171c1a)
+        // Header
         mainHeader.className = "bg-[#171c1a] border-b border-[#25332d] sticky top-0 z-20 px-8 py-3.5 transition-colors duration-300";
+        if (headerIconBox) headerIconBox.className = "w-9 h-9 rounded-xl bg-[#14261f] text-[#34d399] flex items-center justify-center border border-[#234235]";
+        document.getElementById('txt-page-title').className = "text-xl font-bold tracking-tight text-white";
+        document.getElementById('txt-page-badge').className = "text-xs bg-[#173328] text-[#57f1db] font-bold px-2.5 py-0.5 rounded-md border border-[#275340]";
+        document.getElementById('txt-page-desc').className = "text-xs text-[#8fa39b] font-medium mt-0.5";
 
-        // Info Banner (مؤطر بالأخضر المينت الأنيق #2dd4bf)
-        infoBanner.className = "bg-[#171c1a] border border-[#2dd4bf] px-4 py-3 rounded-xl flex items-center justify-between text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        // Quick videos button
+        const btnQuickVid = document.getElementById('btn-quick-videos');
+        if (btnQuickVid) btnQuickVid.className = "bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 border border-[#2e5446] shadow-xs transition-all cursor-pointer";
+
+        // Info Banner
+        infoBanner.className = "bg-[#171c1a] border border-[#2dd4bf] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        if (infoIconWrapper) infoIconWrapper.className = "w-8 h-8 rounded-lg bg-[#14261f] text-[#34d399] flex items-center justify-center shrink-0 border border-[#234235]";
         infoIcon.className = "material-symbols-outlined text-[#2dd4bf] text-[20px]";
-        document.getElementById('txt-banner-title').className = "font-semibold text-white";
-        document.getElementById('txt-banner-sub').className = "text-xs text-[#8fa39b] font-medium";
+        document.getElementById('txt-banner-title').className = "font-bold text-white";
+        document.getElementById('txt-banner-sub').className = "text-xs text-[#8fa39b] font-normal";
+        const bStat = document.getElementById('txt-banner-stat');
+        if (bStat) bStat.className = "text-xs font-bold text-[#57f1db] bg-[#173328] px-2.5 py-1 rounded-md border border-[#275340]";
 
         // Footer
         mainFooter.className = "bg-[#171c1a] border-t border-[#25332d] py-4 px-8 text-xs text-[#8fa39b] mt-auto transition-colors duration-300";
@@ -486,14 +526,13 @@
         document.getElementById('btn-lang-toggle').className = "px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-[#1d2622] hover:bg-[#25312c] text-white border-[#2a3a33]";
         document.getElementById('icon-lang').className = "material-symbols-outlined text-[18px] text-[#34d399]";
 
-        // Cards Dark Theme Styling (أسود ناعم متناسق #1b221f)
+        // Cards Dark Theme Styling
         document.querySelectorAll('.card-item').forEach(card => {
           card.className = "card-item bg-[#1b221f] rounded-2xl border border-[#27332e] overflow-hidden shadow-sm hover:shadow-xl hover:border-[#2dd4bf]/40 transition-all duration-300 flex flex-col group";
         });
         document.querySelectorAll('.card-title').forEach(t => {
           t.className = "card-title text-base font-bold text-white group-hover:text-[#34d399] transition-colors";
         });
-        // Card action buttons (أخضر صنوبري مميز ومتناسق مع هوية الأخضر)
         document.querySelectorAll('.card-action-btn').forEach(btn => {
           btn.className = "card-action-btn mt-4 w-full py-2.5 px-4 bg-[#1e382e] hover:bg-[#284d3f] text-[#57f1db] hover:text-white rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer border border-[#2e5446]";
         });
@@ -513,22 +552,13 @@
         const b4 = document.getElementById('badge-card-4');
         if (b4) b4.className = "text-xs bg-[#2e1d3d] text-[#c084fc] font-medium px-2 py-0.5 rounded border border-[#4c2d66]";
 
-        if (currentLang === 'en') {
-          cardsGrid.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
-          cardCampus.classList.add('hidden');
-        } else {
-          cardsGrid.className = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6";
-          cardCampus.classList.remove('hidden');
-        }
-
         updateNavStyles('dark');
 
       } else {
-        // LIGHT THEME (الأخضر الأكاديمي الأصلي المتناسق كما في الصورة الأصلية)
+        // LIGHT THEME
         root.classList.remove('dark');
         body.className = "min-h-screen flex antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300";
 
-        // Sidebar in Light Mode: الأخضر الصنوبري الأكاديمي الأصلي الفخم (#132821)
         sidebar.className = "w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 select-none shadow-xl transition-all duration-300 " + (currentLang === 'ar' ? 'border-l border-[#1f3f35]' : 'border-r border-[#1f3f35]');
         sidebarHeaderBox.className = "flex items-center gap-3 pb-5 border-b border-[#224439]";
         sidebarLogoIcon.className = "w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300";
@@ -543,12 +573,23 @@
 
         // Header
         mainHeader.className = "bg-white border-b border-gray-100 sticky top-0 z-20 px-8 py-3.5 shadow-xs transition-colors duration-300";
+        if (headerIconBox) headerIconBox.className = "w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]";
+        document.getElementById('txt-page-title').className = "text-xl font-bold tracking-tight text-gray-900";
+        document.getElementById('txt-page-badge').className = "text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]";
+        document.getElementById('txt-page-desc').className = "text-xs text-gray-500 font-medium mt-0.5";
 
-        // Info Banner (مؤطر بالأخضر الأكاديمي #1e3e34)
-        infoBanner.className = "bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex items-center justify-between text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        // Quick videos button
+        const btnQuickVid = document.getElementById('btn-quick-videos');
+        if (btnQuickVid) btnQuickVid.className = "bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer";
+
+        // Info Banner
+        infoBanner.className = "bg-white border border-[#1e3e34] px-4 py-3 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs sm:text-sm font-medium shadow-xs transition-all duration-300";
+        if (infoIconWrapper) infoIconWrapper.className = "w-8 h-8 rounded-lg bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center shrink-0 border border-[#d1ded9]";
         infoIcon.className = "material-symbols-outlined text-[#1e3e34] text-[20px]";
-        document.getElementById('txt-banner-title').className = "font-semibold text-gray-900";
-        document.getElementById('txt-banner-sub').className = "text-xs text-gray-500 font-medium";
+        document.getElementById('txt-banner-title').className = "font-bold text-gray-900";
+        document.getElementById('txt-banner-sub').className = "text-xs text-gray-600 font-normal";
+        const bStat = document.getElementById('txt-banner-stat');
+        if (bStat) bStat.className = "text-xs font-bold text-[#1e3e34] bg-[#e9f2ee] px-2.5 py-1 rounded-md border border-[#d1ded9]";
 
         // Footer
         mainFooter.className = "bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300";
@@ -587,7 +628,7 @@
           tag.className = "absolute top-3 start-3 bg-white/90 backdrop-blur-xs text-[#1e3e34] text-[11px] font-bold px-2.5 py-0.5 rounded-md shadow-xs border border-gray-200/60";
         });
 
-        // Specific badges in light theme
+        // Badges in light theme
         const b1 = document.getElementById('badge-card-1');
         if (b1) b1.className = "text-xs bg-emerald-50 text-emerald-800 font-semibold px-2 py-0.5 rounded border border-emerald-100";
         const b2 = document.getElementById('badge-card-2');
@@ -619,32 +660,65 @@
         btnLang.querySelector('span:last-child').innerText = "English";
         txtTheme.innerText = currentTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الداكن';
 
-        // Text Content in Arabic
-        document.getElementById('txt-brand-name').innerText = "مثال";
-        document.getElementById('txt-brand-badge').innerText = "مثال";
-        document.getElementById('txt-brand-sub').innerText = "مثال";
-        document.getElementById('txt-user-name').innerText = "مثال";
-        document.getElementById('txt-user-role').innerText = "مثال";
-        document.getElementById('txt-page-title').innerText = "مثال";
-        document.getElementById('txt-page-badge').innerText = "مثال";
-        document.getElementById('txt-calendar-btn').innerText = "مثال";
-        document.getElementById('txt-notifications-btn').innerText = "مثال";
-        document.getElementById('txt-banner-title').innerText = "مثال";
-        document.getElementById('txt-banner-sub').innerText = "مثال";
+        // Brand & User
+        document.getElementById('txt-brand-name').innerText = "النظام الأكاديمي";
+        document.getElementById('txt-brand-badge').innerText = "المنصة";
+        document.getElementById('txt-brand-sub').innerText = "بوابة هيئة التدريس";
+        document.getElementById('txt-user-name').innerText = "د. أحمد عبد الرحمن";
+        document.getElementById('txt-user-role').innerText = "أستاذ المادة • منسق الأقسام";
 
-        document.querySelectorAll('.nav-label:not(#nav-lbl-videos-index):not(#nav-lbl-books-index)').forEach(el => el.innerText = "مثال");
-        const navVidAr = document.getElementById('nav-lbl-videos-index');
-        if (navVidAr) navVidAr.innerText = "الفيديوهات التعليمية";
-        const navBooksAr = document.getElementById('nav-lbl-books-index');
-        if (navBooksAr) navBooksAr.innerText = "المكتبة والكتب الدراسية";
-        document.querySelectorAll('.card-title').forEach(el => el.innerText = "مثال");
-        document.querySelectorAll('.txt-tag').forEach(el => el.innerText = "مثال");
-        document.querySelectorAll('.btn-card-text').forEach(el => el.innerText = "مثال");
-        document.querySelectorAll('[id^="badge-card-"]').forEach(el => el.innerText = "مثال");
+        // Navigation
+        document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
+        document.getElementById('nav-lbl-videos').innerText = "الفيديوهات التعليمية";
+        document.getElementById('nav-lbl-books').innerText = "المكتبة والكتب الدراسية";
+        document.getElementById('nav-lbl-reports').innerText = "سجل الدرجات والتقييم";
+        document.getElementById('nav-lbl-campus').innerText = "الحرم والمختبرات";
 
-        document.getElementById('txt-footer-left-1').innerText = "مثال";
-        document.getElementById('txt-footer-left-2').innerText = "مثال";
-        document.getElementById('txt-footer-right').innerText = "مثال";
+        // Header
+        document.getElementById('txt-page-title').innerText = "لوحة التحكم الأكاديمية";
+        document.getElementById('txt-page-badge').innerText = "الفصل الدراسي الحالي 2026";
+        document.getElementById('txt-page-desc').innerText = "البوابة الموحدة لإدارة وتوصيف المقررات والمناهج والأنشطة الجامعية";
+        document.getElementById('txt-quick-videos').innerText = "الفيديوهات التعليمية";
+        document.getElementById('txt-calendar-btn').innerText = "التقويم الأكاديمي";
+        document.getElementById('txt-notifications-btn').innerText = "الإشعارات";
+
+        // Banner
+        document.getElementById('txt-banner-title').innerText = "منظومة التعليم الأكاديمي وإدارة المقررات والمناهج";
+        document.getElementById('txt-banner-sub').innerText = "متابعة المناهج الدراسية، المحاضرات المرئية، سجل الدرجات، والأنشطة البحثية.";
+        document.getElementById('txt-banner-stat').innerText = "الفصل الدراسي 2 • معتمد";
+
+        // Card 1
+        document.getElementById('txt-tag-1').innerText = "الخطة والمناهج";
+        document.getElementById('txt-card-title-1').innerText = "مكتب إعداد المناهج والخطط";
+        document.getElementById('badge-card-1').innerText = "معتمد 96%";
+        document.getElementById('txt-card-desc-1').innerText = "توصيف المقررات الأكاديمية والخطط الأسبوعية وتوزيع درجات أعمال السنة.";
+        document.getElementById('txt-btn-1').innerText = "استعراض الخطط الدراسية";
+
+        // Card 2
+        document.getElementById('txt-tag-2').innerText = "المكتبة الرقمية";
+        document.getElementById('txt-card-title-2').innerText = "المكتبة والمراجع والكتب";
+        document.getElementById('badge-card-2').innerText = "14 كتاباً متاحاً";
+        document.getElementById('txt-card-desc-2').innerText = "فهرس المراجع والكتب المقررة مع إمكانية القراءة والتحميل لكافة التخصصات.";
+        document.getElementById('txt-btn-2').innerText = "تصفح مكتبة الكتب";
+
+        // Card 3
+        document.getElementById('txt-tag-3').innerText = "سجل الأداء";
+        document.getElementById('txt-card-title-3').innerText = "سجل الدرجات والتقييم";
+        document.getElementById('badge-card-3').innerText = "متوسط A (92%)";
+        document.getElementById('txt-card-desc-3').innerText = "رصد نتائج الاختبارات النصفية والواجبات وتقارير أداء الطلاب المسجلين.";
+        document.getElementById('txt-btn-3').innerText = "عرض سجل الدرجات";
+
+        // Card 4
+        document.getElementById('txt-tag-4').innerText = "الحرم الجامعي";
+        document.getElementById('txt-card-title-4').innerText = "الحرم والمختبرات الإبداعية";
+        document.getElementById('badge-card-4').innerText = "متاح للحجز";
+        document.getElementById('txt-card-desc-4').innerText = "متابعة جاهزية القاعات والمعامل البحثية والأنشطة الإبداعية المشتركة.";
+        document.getElementById('txt-btn-4').innerText = "استكشاف مرافق الحرم";
+
+        // Footer
+        document.getElementById('txt-footer-left-1').innerText = "بوابة النظام الأكاديمي الموحد";
+        document.getElementById('txt-footer-left-2').innerText = "الإدارة العامة للمناهج ونظم المعلومات";
+        document.getElementById('txt-footer-right').innerText = "جميع الحقوق محفوظة © 2026";
 
         document.querySelectorAll('.nav-chevron').forEach(icon => {
           icon.innerText = "chevron_left";
@@ -668,31 +742,65 @@
         btnLang.querySelector('span:last-child').innerText = "العربية";
         txtTheme.innerText = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
 
-        document.getElementById('txt-brand-name').innerText = "Example";
-        document.getElementById('txt-brand-badge').innerText = "Example";
-        document.getElementById('txt-brand-sub').innerText = "Example";
-        document.getElementById('txt-user-name').innerText = "Example";
-        document.getElementById('txt-user-role').innerText = "Example";
-        document.getElementById('txt-page-title').innerText = "Example";
-        document.getElementById('txt-page-badge').innerText = "Example";
-        document.getElementById('txt-calendar-btn').innerText = "Example";
-        document.getElementById('txt-notifications-btn').innerText = "Example";
-        document.getElementById('txt-banner-title').innerText = "Example";
-        document.getElementById('txt-banner-sub').innerText = "Example";
+        // Brand & User
+        document.getElementById('txt-brand-name').innerText = "Academic Portal";
+        document.getElementById('txt-brand-badge').innerText = "Faculty";
+        document.getElementById('txt-brand-sub').innerText = "Faculty & Student Workspace";
+        document.getElementById('txt-user-name').innerText = "Dr. Ahmed Abdelrahman";
+        document.getElementById('txt-user-role').innerText = "Professor • Department Coordinator";
 
-        document.querySelectorAll('.nav-label:not(#nav-lbl-videos-index):not(#nav-lbl-books-index)').forEach(el => el.innerText = "Example");
-        const navVidEn = document.getElementById('nav-lbl-videos-index');
-        if (navVidEn) navVidEn.innerText = "Educational Videos";
-        const navBooksEn = document.getElementById('nav-lbl-books-index');
-        if (navBooksEn) navBooksEn.innerText = "Library & Textbooks";
-        document.querySelectorAll('.card-title').forEach(el => el.innerText = "Example");
-        document.querySelectorAll('.txt-tag').forEach(el => el.innerText = "Example");
-        document.querySelectorAll('.btn-card-text').forEach(el => el.innerText = "Example");
-        document.querySelectorAll('[id^="badge-card-"]').forEach(el => el.innerText = "Example");
+        // Navigation
+        document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
+        document.getElementById('nav-lbl-videos').innerText = "Educational Videos";
+        document.getElementById('nav-lbl-books').innerText = "Library & Textbooks";
+        document.getElementById('nav-lbl-reports').innerText = "Grades & Evaluation";
+        document.getElementById('nav-lbl-campus').innerText = "Campus & Labs";
 
-        document.getElementById('txt-footer-left-1').innerText = "Example";
-        document.getElementById('txt-footer-left-2').innerText = "Example";
-        document.getElementById('txt-footer-right').innerText = "Example";
+        // Header
+        document.getElementById('txt-page-title').innerText = "Academic Dashboard";
+        document.getElementById('txt-page-badge').innerText = "Current Term 2026";
+        document.getElementById('txt-page-desc').innerText = "Unified portal for coursework planning, syllabi, and academic activities";
+        document.getElementById('txt-quick-videos').innerText = "Educational Videos";
+        document.getElementById('txt-calendar-btn').innerText = "Calendar";
+        document.getElementById('txt-notifications-btn').innerText = "Notifications";
+
+        // Banner
+        document.getElementById('txt-banner-title').innerText = "Academic System & Curriculum Management Infrastructure";
+        document.getElementById('txt-banner-sub').innerText = "Facilitating coursework tracking, video lectures, student grading ledger, and research labs.";
+        document.getElementById('txt-banner-stat').innerText = "Term 2 • Verified";
+
+        // Card 1
+        document.getElementById('txt-tag-1').innerText = "Curriculum Plan";
+        document.getElementById('txt-card-title-1').innerText = "Coursework & Syllabus Desk";
+        document.getElementById('badge-card-1').innerText = "96% Approved";
+        document.getElementById('txt-card-desc-1').innerText = "Syllabi rubrics, weekly lesson modules, and grading criteria verification.";
+        document.getElementById('txt-btn-1').innerText = "Review Syllabi";
+
+        // Card 2
+        document.getElementById('txt-tag-2').innerText = "Digital Library";
+        document.getElementById('txt-card-title-2').innerText = "Textbooks & Reference Works";
+        document.getElementById('badge-card-2').innerText = "14 Books Available";
+        document.getElementById('txt-card-desc-2').innerText = "Comprehensive repository of approved textbooks with instant reading and downloads.";
+        document.getElementById('txt-btn-2').innerText = "Browse Textbooks";
+
+        // Card 3
+        document.getElementById('txt-tag-3').innerText = "Grade Ledger";
+        document.getElementById('txt-card-title-3').innerText = "Evaluation & Grade Ledger";
+        document.getElementById('badge-card-3').innerText = "Avg: A (92%)";
+        document.getElementById('txt-card-desc-3').innerText = "Midterm examination results, assignment assessments, and student progress reports.";
+        document.getElementById('txt-btn-3').innerText = "View Grade Ledger";
+
+        // Card 4
+        document.getElementById('txt-tag-4').innerText = "Campus Hub";
+        document.getElementById('txt-card-title-4').innerText = "Campus & Innovation Labs";
+        document.getElementById('badge-card-4').innerText = "Open for Booking";
+        document.getElementById('txt-card-desc-4').innerText = "Laboratory availability, creative research hubs, and joint student initiatives.";
+        document.getElementById('txt-btn-4').innerText = "Explore Facilities";
+
+        // Footer
+        document.getElementById('txt-footer-left-1').innerText = "Academic Faculty Portal";
+        document.getElementById('txt-footer-left-2').innerText = "Curriculum & Information Systems Administration";
+        document.getElementById('txt-footer-right').innerText = "All rights reserved © 2026";
 
         document.querySelectorAll('.nav-chevron').forEach(icon => {
           icon.innerText = "chevron_right";
@@ -712,40 +820,6 @@
       }
 
       updateNavStyles(currentTheme);
-    }
-
-    // Handle Active Nav Link switching in the sidebar list
-    function handleNavClick(element) {
-      document.querySelectorAll('.nav-item').forEach(el => {
-        if (currentTheme === 'dark') {
-          el.className = "nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-[#cbdad3] hover:text-white hover:bg-[#152921] font-semibold transition-all cursor-pointer";
-        } else {
-          el.className = "nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer";
-        }
-        const dot = el.querySelector('.nav-dot');
-        if (dot) dot.remove();
-        if (!el.querySelector('.nav-chevron')) {
-          const span = document.createElement('span');
-          span.className = "nav-chevron material-symbols-outlined text-[16px] " + (currentTheme === 'dark' ? 'text-[#8fa39b]' : 'text-emerald-100/40');
-          span.innerText = currentLang === 'ar' ? 'chevron_left' : 'chevron_right';
-          el.appendChild(span);
-        }
-      });
-
-      // Set clicked item as active in harmonious green
-      if (currentTheme === 'dark') {
-        element.className = "nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#173328] text-[#57f1db] font-bold shadow-inner transition-all border border-[#275340] cursor-pointer";
-      } else {
-        element.className = "nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer";
-      }
-
-      const chevron = element.querySelector('.nav-chevron');
-      if (chevron) chevron.remove();
-      if (!element.querySelector('.nav-dot')) {
-        const dot = document.createElement('span');
-        dot.className = "nav-dot w-1.5 h-1.5 rounded-full " + (currentTheme === 'dark' ? 'bg-[#57f1db]' : 'bg-emerald-400');
-        element.appendChild(dot);
-      }
     }
 
     function updateNavStyles(theme) {
@@ -787,7 +861,6 @@
       const isAr = currentLang === 'ar';
       const isDark = currentTheme === 'dark';
 
-      // Apply modal theme styling
       if (isDark) {
         mContainer.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-lg w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative";
       } else {
@@ -795,58 +868,133 @@
       }
 
       if (type === 'desk') {
-        mTitle.innerText = isAr ? "مكتب الدراسة والتحضير الأكاديمي" : "Academic Writing & Study Desk";
-        mSub.innerText = isAr ? "إدارة الخطة الدراسية وتوصيف المقررات" : "Coursework & Evaluation Framework";
+        mTitle.innerText = isAr ? "مكتب إعداد المناهج وتوصيف المقررات" : "Academic Writing & Syllabus Desk";
+        mSub.innerText = isAr ? "إدارة الخطة الدراسية وتوصيف المقررات الأكاديمية" : "Coursework & Evaluation Framework";
         mIcon.innerText = "edit_note";
         mBody.innerHTML = isAr ? 
-          `<p>تم رصد وتوثيق المناهج بنجاح بنسبة إنجاز 96% للفصل الحالي.</p>` :
-          `<p>Curriculum syllabi and rubrics have been verified with 96% completion rate.</p>`;
-      } else if (type === 'books') {
-        mTitle.innerText = isAr ? "المكتبة والمراجع المعتمدة" : "Departmental Literature & Texts";
-        mSub.innerText = isAr ? "فهرس الكتب والمصادر التعليمية" : "Verified Reference Volumes";
-        mIcon.innerText = "menu_book";
-        mBody.innerHTML = isAr ? 
-          `<p>قائمة المراجع تضم الكتب الأساسية في التاريخ، الأحياء، والجبر المتقدم.</p>` :
-          `<p>Repository contains core reference works in World History, Biology, and Algebra.</p>`;
+          `<div class="space-y-3">
+            <p>تم اعتماد خطة الفصل الدراسي الحالي بنسبة إنجاز <strong>96%</strong> متوافقة مع معايير الجودة الأكاديمية.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>المقررات المعتمدة:</span><span class="font-bold text-emerald-600">8 مقررات رئيسية</span></div>
+              <div class="flex justify-between"><span>توصيف الواجبات:</span><span class="font-bold">مكتمل 100%</span></div>
+              <div class="flex justify-between"><span>تحديث بنك الأسئلة:</span><span class="font-bold">الأسبوع 6</span></div>
+            </div>
+          </div>` :
+          `<div class="space-y-3">
+            <p>Curriculum syllabi and rubrics have been verified with <strong>96%</strong> completion rate compliant with quality standards.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>Approved Syllabi:</span><span class="font-bold text-emerald-600">8 Core Modules</span></div>
+              <div class="flex justify-between"><span>Assignment Rubrics:</span><span class="font-bold">100% Completed</span></div>
+              <div class="flex justify-between"><span>Item Bank Update:</span><span class="font-bold">Week 6</span></div>
+            </div>
+          </div>`;
       } else if (type === 'report') {
         mTitle.innerText = isAr ? "سجل الدرجات وتقارير التقييم" : "Student Progress & Evaluation Report";
-        mSub.innerText = isAr ? "رصد الاختبارات النصفية والواجبات" : "Tabular Ledger of Academic Scores";
+        mSub.innerText = isAr ? "رصد الاختبارات النصفية والواجبات الدورية" : "Tabular Ledger of Academic Scores";
         mIcon.innerText = "fact_check";
         mBody.innerHTML = isAr ? 
-          `<p>متوسط درجات الطلاب المسجلين للفصل الدراسي هو <strong>A (92%)</strong>.</p>` :
-          `<p>Overall term score average is verified at <strong>A (92%)</strong>.</p>`;
+          `<div class="space-y-3">
+            <p>متوسط درجات الطلاب المسجلين للفصل الدراسي هو <strong class="text-emerald-600">A (92%)</strong> عبر جميع المقررات.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>إجمالي الطلاب المرصودين:</span><span class="font-bold">340 طالباً</span></div>
+              <div class="flex justify-between"><span>نسبة النجاح المتوقعة:</span><span class="font-bold text-emerald-600">97.4%</span></div>
+              <div class="flex justify-between"><span>حالات الإنذار الأكاديمي:</span><span class="font-bold text-amber-500">2 حالة فقط</span></div>
+            </div>
+          </div>` :
+          `<div class="space-y-3">
+            <p>Overall term score average is verified at <strong class="text-emerald-600">A (92%)</strong> across all academic cohorts.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>Total Monitored Students:</span><span class="font-bold">340 Students</span></div>
+              <div class="flex justify-between"><span>Expected Passing Rate:</span><span class="font-bold text-emerald-600">97.4%</span></div>
+              <div class="flex justify-between"><span>Academic Warnings:</span><span class="font-bold text-amber-500">2 cases</span></div>
+            </div>
+          </div>`;
       } else if (type === 'campus') {
         mTitle.innerText = isAr ? "الحرم الجامعي والمختبرات الإبداعية" : "Campus Hub & Creative Labs";
-        mSub.innerText = isAr ? "متابعة أنشطة الطلاب والمعامل" : "Innovation Workshops & Student Activities";
+        mSub.innerText = isAr ? "متابعة أنشطة الطلاب والقاعات والمعامل" : "Innovation Workshops & Student Activities";
         mIcon.innerText = "domain";
         mBody.innerHTML = isAr ? 
-          `<p>المختبرات الإبداعية مفتوحة للأنشطة البحثية والتعليمية المشتركة.</p>` :
-          `<p>Innovation hubs are open for joint faculty and student research projects.</p>`;
+          `<div class="space-y-3">
+            <p>المختبرات الإبداعية مفتوحة للأنشطة البحثية والتعليمية المشتركة على مدار أيام الأسبوع.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>معامل الحاسب والبرمجة:</span><span class="font-bold text-emerald-600">متاحة للحجز</span></div>
+              <div class="flex justify-between"><span>مختبرات الفيزياء والكيمياء:</span><span class="font-bold text-emerald-600">نشطة حالياً</span></div>
+              <div class="flex justify-between"><span>قاعات المناقشة الجماعية:</span><span class="font-bold">حجز مسبق</span></div>
+            </div>
+          </div>` :
+          `<div class="space-y-3">
+            <p>Innovation hubs are open for joint faculty and student research projects during working hours.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>Computer & CS Labs:</span><span class="font-bold text-emerald-600">Available</span></div>
+              <div class="flex justify-between"><span>Science & Optics Labs:</span><span class="font-bold text-emerald-600">Active</span></div>
+              <div class="flex justify-between"><span>Seminar & Study Rooms:</span><span class="font-bold">Booking Required</span></div>
+            </div>
+          </div>`;
       } else if (type === 'calendar') {
         mTitle.innerText = isAr ? "التقويم الأكاديمي" : "Academic Calendar";
-        mSub.innerText = isAr ? "جدول الاختبارات والمحاضرات" : "Coursework and Office Hours Schedule";
+        mSub.innerText = isAr ? "جدول الاختبارات والمحاضرات وساعات الإرشاد" : "Coursework and Office Hours Schedule";
         mIcon.innerText = "calendar_month";
         mBody.innerHTML = isAr ? 
-          `<p>الأسبوع الجاري يشمل مراجعات منتصف الفصل الدراسي.</p>` :
-          `<p>Current calendar week is scheduled for midterm academic reviews.</p>`;
+          `<div class="space-y-3">
+            <p>الأسبوع الجاري يشمل مراجعات منتصف الفصل الدراسي وتسليم المشاريع البحثية.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>بداية الاختبارات النصفية:</span><span class="font-bold">الأحد القادم</span></div>
+              <div class="flex justify-between"><span>آخر موعد لتعديل الخطط:</span><span class="font-bold text-amber-500">الخميس 15 أكتوبر</span></div>
+            </div>
+          </div>` :
+          `<div class="space-y-3">
+            <p>Current calendar week is scheduled for midterm academic reviews and project milestones.</p>
+            <div class="bg-gray-50 dark:bg-[#141a17] p-3 rounded-xl border border-gray-200 dark:border-[#27332e] text-xs space-y-1.5">
+              <div class="flex justify-between"><span>Midterm Exam Window:</span><span class="font-bold">Next Sunday</span></div>
+              <div class="flex justify-between"><span>Syllabus Revision Deadline:</span><span class="font-bold text-amber-500">Oct 15</span></div>
+            </div>
+          </div>`;
       } else if (type === 'notifications') {
         mTitle.innerText = isAr ? "مركز الإشعارات الأكاديمية" : "Notifications Center";
         mSub.innerText = isAr ? "التنبيهات الإدارية النشطة" : "Active System Alerts";
         mIcon.innerText = "notifications_active";
         mBody.innerHTML = isAr ? 
-          `<p>جميع التقييمات تم اعتمادها ولا توجد مهام متأخرة حالياً.</p>` :
-          `<p>All rubric evaluations have been approved; no overdue flags detected.</p>`;
+          `<div class="space-y-2 text-xs">
+            <div class="p-2.5 bg-emerald-50 dark:bg-[#152e26] border border-emerald-200 dark:border-[#225042] rounded-lg">
+              <strong class="text-emerald-800 dark:text-[#34d399] block mb-0.5">اعتماد الخطة الأكاديمية:</strong>
+              <span>تم توثيق كافة المناهج ومراجعتها بنجاح من عمادة الكلية.</span>
+            </div>
+            <div class="p-2.5 bg-blue-50 dark:bg-[#172d3f] border border-blue-200 dark:border-[#204969] rounded-lg">
+              <strong class="text-blue-800 dark:text-[#7bd0ff] block mb-0.5">محاضرات مصورة جديدة:</strong>
+              <span>تمت إضافة 8 فيديوهات تعليمية جديدة لكافة المواد.</span>
+            </div>
+          </div>` :
+          `<div class="space-y-2 text-xs">
+            <div class="p-2.5 bg-emerald-50 dark:bg-[#152e26] border border-emerald-200 dark:border-[#225042] rounded-lg">
+              <strong class="text-emerald-800 dark:text-[#34d399] block mb-0.5">Curriculum Approval:</strong>
+              <span>All module rubrics verified and approved by dean of faculty.</span>
+            </div>
+            <div class="p-2.5 bg-blue-50 dark:bg-[#172d3f] border border-blue-200 dark:border-[#204969] rounded-lg">
+              <strong class="text-blue-800 dark:text-[#7bd0ff] block mb-0.5">New Video Lectures:</strong>
+              <span>8 newly recorded lectures are now accessible in the video library.</span>
+            </div>
+          </div>`;
       } else {
-        mTitle.innerText = isAr ? "الملف الشخصي" : "User Profile";
-        mSub.innerText = isAr ? "عضو هيئة التدريس" : "Faculty Staff Profile";
+        mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Staff Profile";
+        mSub.innerText = isAr ? "عضو هيئة التدريس ومنسق المواد" : "Academic Faculty Member";
         mIcon.innerText = "person";
         mBody.innerHTML = isAr ? 
-          `<p>الحساب نشط ومتصل بالنظام الأكاديمي.</p>` :
-          `<p>Account is active and connected to faculty services.</p>`;
+          `<div class="space-y-2 text-xs">
+            <p><strong>الاسم:</strong> د. أحمد عبد الرحمن</p>
+            <p><strong>الرتبة:</strong> أستاذ مساعد • قسم العلوم الأكاديمية</p>
+            <p><strong>البريد الأكاديمي:</strong> ahmed.rahman@faculty.edu</p>
+            <p><strong>حالة الحساب:</strong> <span class="text-emerald-600 font-bold">متصل ونشط</span></p>
+          </div>` :
+          `<div class="space-y-2 text-xs">
+            <p><strong>Name:</strong> Dr. Ahmed Abdelrahman</p>
+            <p><strong>Rank:</strong> Associate Professor • Academic Sciences</p>
+            <p><strong>Email:</strong> ahmed.rahman@faculty.edu</p>
+            <p><strong>Status:</strong> <span class="text-emerald-600 font-bold">Active & Verified</span></p>
+          </div>`;
       }
 
       document.getElementById('btn-modal-cancel').innerText = isAr ? "إغلاق" : "Close";
-      document.getElementById('btn-modal-confirm').innerText = isAr ? "تأكيد" : "Confirm";
+      document.getElementById('btn-modal-confirm').innerText = isAr ? "حسناً" : "OK";
 
       modal.classList.remove('hidden');
     }
@@ -856,7 +1004,6 @@
     }
 
     function handleModalConfirm() {
-      alert(currentLang === 'ar' ? 'تم حفظ التحديثات بنجاح!' : 'Changes successfully updated!');
       closeModal();
     }
 

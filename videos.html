@@ -271,31 +271,24 @@
         <!-- Header row of filters -->
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-100" id="filter-header-row">
           
-          <!-- Subject Dropdown List (ليست باختيار المادة) -->
-          <div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
-            <div class="flex items-center gap-2 shrink-0">
-              <span class="material-symbols-outlined text-[20px] text-[#1e3e34]" id="filter-subject-icon">category</span>
-              <label for="subject-select" id="lbl-subject-select" class="text-xs sm:text-sm font-bold text-gray-800">
-                اختيار المادة الدراسية:
-              </label>
-            </div>
-            
-            <div class="relative flex-1 max-w-md">
-              <select id="subject-select" onchange="handleSubjectDropdown(this.value)" class="w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs">
-                <option value="all">📚 جميع المواد الدراسية (عرض الكل)</option>
-                <option value="physics">⚡ الفيزياء (Physics)</option>
-                <option value="math">📐 الرياضيات وحساب التفاضل (Mathematics)</option>
-                <option value="chemistry">🧪 الكيمياء وحركية التفاعلات (Chemistry)</option>
-                <option value="cs">💻 الحاسب والبرمجة والخوارزميات (Computer Science)</option>
-                <option value="biology">🧬 الأحياء والعلوم الطبية (Biology)</option>
-                <option value="arabic">📖 اللغة العربية والبلاغة (Arabic)</option>
-                <option value="english">✍️ اللغة الإنجليزية الأكاديمية (English)</option>
-                <option value="history">🏛️ التاريخ والحضارة العالمية (History)</option>
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-3 text-gray-500">
-                <span class="material-symbols-outlined text-[18px]">expand_more</span>
-              </div>
-            </div>
+          <!-- Subject Navigation Label & Search -->
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[20px] text-[#1e3e34]" id="filter-subject-icon">category</span>
+            <span id="lbl-subject-select" class="text-xs sm:text-sm font-bold text-gray-800">
+              تصفح المواد الدراسية:
+            </span>
+            <!-- Hidden select kept for JS state synchronization -->
+            <select id="subject-select" onchange="handleSubjectDropdown(this.value)" class="hidden">
+              <option value="all">📚 جميع المواد الدراسية (عرض الكل)</option>
+              <option value="physics">⚡ الفيزياء (Physics)</option>
+              <option value="math">📐 الرياضيات وحساب التفاضل (Mathematics)</option>
+              <option value="chemistry">🧪 الكيمياء وحركية التفاعلات (Chemistry)</option>
+              <option value="cs">💻 الحاسب والبرمجة والخوارزميات (Computer Science)</option>
+              <option value="biology">🧬 الأحياء والعلوم الطبية (Biology)</option>
+              <option value="arabic">📖 اللغة العربية والبلاغة (Arabic)</option>
+              <option value="english">✍️ اللغة الإنجليزية الأكاديمية (English)</option>
+              <option value="history">🏛️ التاريخ والحضارة العالمية (History)</option>
+            </select>
           </div>
 
           <!-- Search & Sorting Controls -->
@@ -1117,7 +1110,7 @@
         document.getElementById('txt-notifications-btn').innerText = "الإشعارات";
         document.getElementById('txt-banner-title').innerText = "منصة الشروحات والمحاضرات المصورة الأكاديمية";
         document.getElementById('txt-banner-sub').innerText = "تمكين أعضاء التدريس والطلاب من متابعة الدروس مع تتبع نسب الإنجاز والاختبارات المرفقة.";
-        document.getElementById('lbl-subject-select').innerText = "اختيار المادة الدراسية:";
+        document.getElementById('lbl-subject-select').innerText = "تصفح المواد الدراسية:";
         document.getElementById('search-input').placeholder = "ابحث عن درس أو محاضر...";
 
         document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
@@ -1159,7 +1152,7 @@
         document.getElementById('txt-notifications-btn').innerText = "Notifications";
         document.getElementById('txt-banner-title').innerText = "Faculty Video & Lecture Repository";
         document.getElementById('txt-banner-sub').innerText = "Facilitating video lectures and coursework tracking with attached rubrics.";
-        document.getElementById('lbl-subject-select').innerText = "Select Academic Subject:";
+        document.getElementById('lbl-subject-select').innerText = "Browse Academic Subjects:";
         document.getElementById('search-input').placeholder = "Search lectures, professors...";
 
         document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
