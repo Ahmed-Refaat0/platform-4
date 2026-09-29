@@ -102,6 +102,38 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
+    .custom-dropdown-menu {
+      top: calc(100% + 0.5rem);
+      inset-inline-start: 0;
+      min-width: 100%;
+      max-height: 16rem;
+      overflow-y: auto;
+      z-index: 60;
+    }
+    .custom-dropdown-trigger:focus-visible,
+    .custom-dropdown-option:focus-visible {
+      outline: 2px solid #1e3e34;
+      outline-offset: 2px;
+    }
+    .custom-dropdown-option {
+      width: 100%;
+      text-align: start;
+      white-space: normal;
+    }
+    .dark .custom-dropdown-trigger {
+      border-color: #2a3a33;
+      background: #151c19;
+      color: #e1ebe6;
+    }
+    .dark .custom-dropdown-menu {
+      border-color: #27332e;
+      background: #1b221f;
+      color: #e1ebe6;
+    }
+    .dark .custom-dropdown-option:hover,
+    .dark .custom-dropdown-option[aria-selected="true"] {
+      background: #25332d;
+    }
     /* Book cover 3D shadow effect */
     .book-cover-3d {
       box-shadow: -4px 6px 16px rgba(0, 0, 0, 0.2), inset 2px 0 3px rgba(255, 255, 255, 0.2);
@@ -383,20 +415,22 @@
               </label>
             </div>
             
-            <div class="relative flex-1 max-w-md">
-              <select id="subject-select" onchange="handleSubjectDropdown(this.value)" class="w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs">
-                <option value="all">📚 جميع التخصصات الأكاديمية (عرض الكل)</option>
-                <option value="physics">⚡ قسم الفيزياء (Physics)</option>
-                <option value="math">📐 الرياضيات وحساب التفاضل (Mathematics)</option>
-                <option value="chemistry">🧪 الكيمياء العامة والعضوية (Chemistry)</option>
-                <option value="cs">💻 علوم الحاسب وهندسة البرمجيات (Computer Science)</option>
-                <option value="biology">🧬 علم الأحياء والوراثة الخلوية (Biology)</option>
-                <option value="arabic">📖 اللغة العربية والبلاغة والنقد (Arabic)</option>
-                <option value="english">✍️ اللغة الإنجليزية والكتابة الأكاديمية (English)</option>
-                <option value="history">🏛️ التاريخ والحضارة العالمية (History)</option>
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-3 text-gray-500">
-                <span class="material-symbols-outlined text-[18px]">expand_more</span>
+            <div class="custom-dropdown relative flex-1 max-w-md" id="subject-select-dropdown" data-onchange="handleSubjectDropdown">
+              <button type="button" id="subject-select-trigger" class="custom-dropdown-trigger w-full flex items-center justify-between gap-3 text-xs sm:text-sm font-semibold py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-900 shadow-xs cursor-pointer" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-subject-select" onclick="toggleCustomDropdown('subject-select')">
+                <span data-dropdown-label>📚 جميع التخصصات الأكاديمية (عرض الكل)</span>
+                <span class="material-symbols-outlined text-[18px] text-gray-500">expand_more</span>
+              </button>
+              <input type="hidden" id="subject-select" value="all"/>
+              <div id="subject-select-menu" class="custom-dropdown-menu absolute hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl" role="listbox">
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="all" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)">📚 جميع التخصصات الأكاديمية (عرض الكل)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="physics" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">⚡ قسم الفيزياء (Physics)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="math" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">📐 الرياضيات وحساب التفاضل (Mathematics)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="chemistry" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">🧪 الكيمياء العامة والعضوية (Chemistry)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="cs" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">💻 علوم الحاسب وهندسة البرمجيات (Computer Science)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="biology" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">🧬 علم الأحياء والوراثة الخلوية (Biology)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="arabic" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">📖 اللغة العربية والبلاغة والنقد (Arabic)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="english" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">✍️ اللغة الإنجليزية والكتابة الأكاديمية (English)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="history" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">🏛️ التاريخ والحضارة العالمية (History)</button>
               </div>
             </div>
           </div>
@@ -418,16 +452,18 @@
             </div>
 
             <!-- Sort By Select -->
-            <div class="relative">
-              <select id="sort-select" onchange="handleSort(this.value)" class="text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] shadow-xs cursor-pointer">
-                <option value="latest">الأحدث إضافة</option>
-                <option value="popular">الأكثر تحميلاً</option>
-                <option value="rating">الأعلى تقييماً ★</option>
-                <option value="pages">الأكثر صفحات</option>
-                <option value="title">أبجدياً (أ - ي)</option>
-              </select>
-              <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-2 text-gray-500">
-                <span class="material-symbols-outlined text-[16px]">sort</span>
+            <div class="custom-dropdown relative" id="sort-select-dropdown" data-onchange="handleSort">
+              <button type="button" id="sort-select-trigger" class="custom-dropdown-trigger min-w-40 flex items-center justify-between gap-3 text-xs font-medium py-2.5 px-3 rounded-xl border border-gray-300 bg-white text-gray-800 shadow-xs cursor-pointer" aria-haspopup="listbox" aria-expanded="false" aria-label="ترتيب الكتب" onclick="toggleCustomDropdown('sort-select')">
+                <span data-dropdown-label>الأحدث إضافة</span>
+                <span class="material-symbols-outlined text-[16px] text-gray-500">sort</span>
+              </button>
+              <input type="hidden" id="sort-select" value="latest"/>
+              <div id="sort-select-menu" class="custom-dropdown-menu absolute hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl" role="listbox">
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="latest" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)">الأحدث إضافة</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="popular" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">الأكثر تحميلاً</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="rating" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">الأعلى تقييماً ★</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="pages" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">الأكثر صفحات</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="title" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">أبجدياً (أ - ي)</button>
               </div>
             </div>
 
@@ -777,16 +813,23 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
             <label id="lbl-up-subject" class="block font-bold text-gray-800 mb-1.5">القسم / التخصص الأكاديمي *</label>
-            <select id="up-subject" required class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] cursor-pointer">
-              <option value="physics">⚡ الفيزياء (Physics)</option>
-              <option value="math">📐 الرياضيات (Mathematics)</option>
-              <option value="chemistry">🧪 الكيمياء (Chemistry)</option>
-              <option value="cs">💻 الحاسب والبرمجة (Computer Science)</option>
-              <option value="biology">🧬 الأحياء والعلوم الطبية (Biology)</option>
-              <option value="arabic">📖 اللغة العربية (Arabic)</option>
-              <option value="english">✍️ اللغة الإنجليزية (English)</option>
-              <option value="history">🏛️ التاريخ والحضارة (History)</option>
-            </select>
+            <div class="custom-dropdown relative w-full" id="up-subject-dropdown">
+              <button type="button" id="up-subject-trigger" class="custom-dropdown-trigger w-full flex items-center justify-between gap-3 p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 text-xs" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-up-subject" onclick="toggleCustomDropdown('up-subject')">
+                <span data-dropdown-label>⚡ الفيزياء (Physics)</span>
+                <span class="material-symbols-outlined text-[18px] text-gray-500">expand_more</span>
+              </button>
+              <input type="hidden" id="up-subject" value="physics"/>
+              <div id="up-subject-menu" class="custom-dropdown-menu absolute hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl" role="listbox">
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="physics" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)">⚡ الفيزياء (Physics)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="math" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">📐 الرياضيات (Mathematics)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="chemistry" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">🧪 الكيمياء (Chemistry)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="cs" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">💻 الحاسب والبرمجة (Computer Science)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="biology" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">🧬 الأحياء والعلوم الطبية (Biology)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="arabic" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">📖 اللغة العربية (Arabic)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="english" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">✍️ اللغة الإنجليزية (English)</button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="history" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)">🏛️ التاريخ والحضارة (History)</button>
+              </div>
+            </div>
           </div>
 
           <div>
@@ -841,9 +884,16 @@
         <!-- Cover Image Selector -->
         <div>
           <label id="lbl-up-cover" class="block font-bold text-gray-800 mb-1.5">صورة الغلاف الأكاديمي</label>
-          <select id="up-cover" class="w-full p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] cursor-pointer">
-            <option value="">بدون غلاف حالياً</option>
-          </select>
+          <div class="custom-dropdown relative w-full" id="up-cover-dropdown">
+            <button type="button" id="up-cover-trigger" class="custom-dropdown-trigger w-full flex items-center justify-between gap-3 p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 text-xs" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-up-cover" onclick="toggleCustomDropdown('up-cover')">
+              <span data-dropdown-label>بدون غلاف حالياً</span>
+              <span class="material-symbols-outlined text-[18px] text-gray-500">expand_more</span>
+            </button>
+            <input type="hidden" id="up-cover" value=""/>
+            <div id="up-cover-menu" class="custom-dropdown-menu absolute hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl" role="listbox">
+              <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)">بدون غلاف حالياً</button>
+            </div>
+          </div>
         </div>
 
         <!-- Description -->
@@ -1445,6 +1495,56 @@
       renderBooks();
     }
 
+    function closeCustomDropdowns() {
+      document.querySelectorAll('.custom-dropdown').forEach(dropdown => {
+        dropdown.querySelector('.custom-dropdown-menu').classList.add('hidden');
+        dropdown.querySelector('.custom-dropdown-trigger').setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    function toggleCustomDropdown(fieldId) {
+      const dropdown = document.getElementById(`${fieldId}-dropdown`);
+      const menu = dropdown.querySelector('.custom-dropdown-menu');
+      const shouldOpen = menu.classList.contains('hidden');
+      closeCustomDropdowns();
+      if (shouldOpen) {
+        menu.classList.remove('hidden');
+        dropdown.querySelector('.custom-dropdown-trigger').setAttribute('aria-expanded', 'true');
+      }
+    }
+
+    function setCustomDropdownValue(fieldId, value) {
+      const dropdown = document.getElementById(`${fieldId}-dropdown`);
+      const option = Array.from(dropdown.querySelectorAll('.custom-dropdown-option'))
+        .find(item => item.dataset.value === String(value));
+      if (!option) return;
+
+      dropdown.querySelector(`#${fieldId}`).value = value;
+      dropdown.querySelector('[data-dropdown-label]').textContent = option.textContent.trim();
+      dropdown.querySelectorAll('.custom-dropdown-option').forEach(item => {
+        item.setAttribute('aria-selected', String(item === option));
+      });
+    }
+
+    function selectCustomDropdownOption(option) {
+      const dropdown = option.closest('.custom-dropdown');
+      const field = dropdown.querySelector('input[type="hidden"]');
+      setCustomDropdownValue(field.id, option.dataset.value);
+      closeCustomDropdowns();
+
+      const handler = dropdown.dataset.onchange;
+      if (handler && typeof window[handler] === 'function') {
+        window[handler](field.value);
+      }
+    }
+
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.custom-dropdown')) closeCustomDropdowns();
+    });
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeCustomDropdowns();
+    });
+
     // Apply Theme Function
     function applyTheme(theme) {
       const root = document.getElementById('root-html');
@@ -1458,9 +1558,7 @@
       const mainFooter = document.getElementById('main-footer');
       const filterContainer = document.getElementById('filter-container');
       const filterSubjectIcon = document.getElementById('filter-subject-icon');
-      const subjectSelect = document.getElementById('subject-select');
       const searchInput = document.getElementById('search-input');
-      const sortSelect = document.getElementById('sort-select');
       const headerIconBox = document.getElementById('header-icon-box');
       const viewModeContainer = document.getElementById('view-mode-container');
 
@@ -1499,9 +1597,7 @@
         filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#34d399]";
         document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-[#e1ebe6]";
         
-        subjectSelect.className = "w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399] transition-all cursor-pointer shadow-xs";
         searchInput.className = "w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] placeholder-[#8fa39b] focus:outline-none focus:ring-2 focus:ring-[#34d399] shadow-xs transition-all";
-        sortSelect.className = "text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-[#2a3a33] bg-[#151c19] text-[#e1ebe6] focus:outline-none focus:ring-2 focus:ring-[#34d399] shadow-xs cursor-pointer";
         
         viewModeContainer.className = "flex items-center rounded-xl border border-[#2a3a33] p-0.5 bg-[#151c19]";
         updateViewButtonsStyle('dark');
@@ -1547,9 +1643,7 @@
         filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#1e3e34]";
         document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-gray-800";
         
-        subjectSelect.className = "w-full text-xs sm:text-sm font-semibold py-2.5 px-3.5 pe-10 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent transition-all cursor-pointer shadow-xs";
         searchInput.className = "w-full text-xs py-2.5 ps-9 pe-3 rounded-xl border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] focus:border-transparent shadow-xs transition-all";
-        sortSelect.className = "text-xs font-medium py-2.5 px-3 pe-8 rounded-xl border border-gray-300 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#1e3e34] shadow-xs cursor-pointer";
         
         viewModeContainer.className = "flex items-center rounded-xl border border-gray-300 p-0.5 bg-gray-50";
         updateViewButtonsStyle('light');
@@ -1706,7 +1800,7 @@
 
     function filterBySubject(sub) {
       currentSubjectFilter = sub;
-      document.getElementById('subject-select').value = sub;
+      setCustomDropdownValue('subject-select', sub);
       updatePillsTheme(currentTheme);
       renderBooks();
     }
@@ -1747,7 +1841,7 @@
       currentSubjectFilter = 'all';
       currentSearchTerm = '';
       showFavoritesOnly = false;
-      document.getElementById('subject-select').value = 'all';
+      setCustomDropdownValue('subject-select', 'all');
       document.getElementById('search-input').value = '';
       document.getElementById('fav-filter-indicator').classList.add('hidden');
       document.getElementById('fav-filter-indicator').classList.remove('flex');
@@ -2284,7 +2378,7 @@
       document.getElementById('txt-btn-up-submit').innerText = isAr ? "نشر الكتاب في المكتبة" : "Publish to Library";
 
       if (currentSubjectFilter !== 'all') {
-        document.getElementById('up-subject').value = currentSubjectFilter;
+        setCustomDropdownValue('up-subject', currentSubjectFilter);
       }
 
       modal.classList.remove('hidden');
@@ -2293,6 +2387,8 @@
     function closeUploadModal() {
       document.getElementById('upload-book-modal').classList.add('hidden');
       document.getElementById('upload-book-form').reset();
+      setCustomDropdownValue('up-subject', 'physics');
+      setCustomDropdownValue('up-cover', '');
     }
 
     function handleBookUpload(e) {
