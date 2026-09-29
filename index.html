@@ -91,6 +91,64 @@
     #fav-filter-indicator {
       visibility: hidden !important;
     }
+    .project-credits {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
+      margin-top: 0.875rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    .project-credits__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      color: #1e3e34;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .project-credits__mark {
+      display: inline-flex;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d1ded9;
+      border-radius: 0.625rem;
+      background: #e9f2ee;
+      color: #1e3e34;
+    }
+    .project-credits__team {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem 1.25rem;
+    }
+    .project-credit-role {
+      display: block;
+      color: #6b7280;
+      font-size: 0.625rem;
+      font-weight: 700;
+    }
+    .project-credit-name {
+      display: block;
+      color: #374151;
+      font-size: 0.6875rem;
+      font-weight: 700;
+    }
+    .dark .project-credits {
+      border-color: #27332e;
+      color: #8fa39b;
+    }
+    .dark .project-credits__brand,
+    .dark .project-credit-name {
+      color: #e1ebe6;
+    }
+    .dark .project-credits__mark {
+      border-color: #234235;
+      background: #14261f;
+      color: #34d399;
+    }
     @media (max-width: 767px) {
       body#body-app {
         display: block;
@@ -163,6 +221,32 @@
       }
       #main-footer {
         padding-inline: 1rem;
+      }
+      .project-credits {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .project-credits__team {
+        width: 100%;
+        gap: 0.5rem 0.75rem;
+      }
+    }
+    @media (max-width: 420px) {
+      #txt-theme-toggle,
+      #txt-lang-toggle {
+        display: none;
+      }
+      #btn-theme-toggle,
+      #btn-lang-toggle {
+        padding-inline: 0.65rem;
+      }
+    }
+    @media (max-width: 360px) {
+      #txt-quick-videos {
+        display: none;
+      }
+      #btn-quick-videos {
+        padding-inline: 0.65rem;
       }
     }
   </style>
@@ -260,7 +344,7 @@
         <div class="flex items-center flex-wrap gap-2.5 text-xs">
           
           <!-- زر الفيديوهات التعليمية (Direct Video Link) -->
-          <a href="videos.html" id="btn-quick-videos" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
+          <a href="videos.html" id="btn-quick-videos" title="الفيديوهات التعليمية" aria-label="الفيديوهات التعليمية" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
             <span class="material-symbols-outlined text-[18px]">smart_display</span>
             <span id="txt-quick-videos">الفيديوهات التعليمية</span>
           </a>
@@ -350,6 +434,16 @@
         </div>
         <div>
           <span id="txt-footer-right">جميع الحقوق محفوظة © 2026</span>
+        </div>
+      </div>
+      <div class="project-credits">
+        <div class="project-credits__brand">
+          <span class="project-credits__mark"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">code</span></span>
+          <span id="credits-title">فريق التطوير</span>
+        </div>
+        <div class="project-credits__team">
+          <div><span id="credits-frontend-role" class="project-credit-role">الواجهة الأمامية</span><span id="credits-frontend-names" class="project-credit-name">أحمد رفعت · أحمد صلاح</span></div>
+          <div><span id="credits-backend-role" class="project-credit-role">الخلفية</span><span id="credits-backend-name" class="project-credit-name">سيف محمود</span></div>
         </div>
       </div>
     </footer>

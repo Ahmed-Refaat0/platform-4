@@ -145,6 +145,64 @@
     .dark #btn-fav-filter:hover {
       background: #25332d;
     }
+    .project-credits {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
+      margin-top: 0.875rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    .project-credits__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      color: #1e3e34;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .project-credits__mark {
+      display: inline-flex;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d1ded9;
+      border-radius: 0.625rem;
+      background: #e9f2ee;
+      color: #1e3e34;
+    }
+    .project-credits__team {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem 1.25rem;
+    }
+    .project-credit-role {
+      display: block;
+      color: #6b7280;
+      font-size: 0.625rem;
+      font-weight: 700;
+    }
+    .project-credit-name {
+      display: block;
+      color: #374151;
+      font-size: 0.6875rem;
+      font-weight: 700;
+    }
+    .dark .project-credits {
+      border-color: #27332e;
+      color: #8fa39b;
+    }
+    .dark .project-credits__brand,
+    .dark .project-credit-name {
+      color: #e1ebe6;
+    }
+    .dark .project-credits__mark {
+      border-color: #234235;
+      background: #14261f;
+      color: #34d399;
+    }
     /* Book cover 3D shadow effect */
     .book-cover-3d {
       box-shadow: -4px 6px 16px rgba(0, 0, 0, 0.2), inset 2px 0 3px rgba(255, 255, 255, 0.2);
@@ -269,6 +327,17 @@
       #main-footer {
         padding-inline: 1rem;
       }
+      body > div.flex-1.flex.flex-col > main > div:first-child > div:last-child > div:last-child {
+        display: none;
+      }
+      .project-credits {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .project-credits__team {
+        width: 100%;
+        gap: 0.5rem 0.75rem;
+      }
       #book-reader-modal {
         padding: 0.5rem;
       }
@@ -285,6 +354,27 @@
       #upload-modal-container,
       #modal-container {
         padding: 1rem;
+      }
+    }
+    @media (max-width: 420px) {
+      #txt-fav-filter,
+      #fav-count-badge,
+      #txt-theme-toggle,
+      #txt-lang-toggle {
+        display: none;
+      }
+      #btn-fav-filter,
+      #btn-theme-toggle,
+      #btn-lang-toggle {
+        padding-inline: 0.65rem;
+      }
+    }
+    @media (max-width: 360px) {
+      #txt-upload-btn {
+        display: none;
+      }
+      #btn-upload-book {
+        padding-inline: 0.65rem;
       }
     }
   </style>
@@ -382,13 +472,13 @@
         <div class="flex items-center flex-wrap gap-2.5 text-xs">
           
           <!-- زر إضافة كتاب جديد (Add Book Button) -->
-          <button onclick="openUploadModal()" id="btn-upload-book" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
+          <button onclick="openUploadModal()" id="btn-upload-book" title="إضافة كتاب جديد" aria-label="إضافة كتاب جديد" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
             <span class="material-symbols-outlined text-[18px]">post_add</span>
             <span id="txt-upload-btn">إضافة كتاب جديد</span>
           </button>
 
           <!-- زر المفضلة / المحفوظات (Bookmarks Filter Button) -->
-          <button onclick="toggleFavoritesOnly()" id="btn-fav-filter" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
+          <button onclick="toggleFavoritesOnly()" id="btn-fav-filter" title="المحفوظات" aria-label="المحفوظات" class="header-action-btn bg-white hover:bg-gray-50 text-gray-700 font-medium px-3.5 py-2 rounded-lg flex items-center gap-2 border border-gray-200 shadow-xs cursor-pointer">
             <span class="material-symbols-outlined text-[18px] text-rose-500" id="icon-fav-filter">bookmark</span>
             <span id="txt-fav-filter">المحفوظات</span>
             <span class="text-[10px] bg-rose-50 text-rose-700 font-bold px-1.5 py-0.2 rounded-full border border-rose-200" id="fav-count-badge">0</span>
@@ -571,6 +661,16 @@
         </div>
         <div>
           <span id="txt-footer-right">جميع الحقوق الأكاديمية محفوظة © 2026</span>
+        </div>
+      </div>
+      <div class="project-credits">
+        <div class="project-credits__brand">
+          <span class="project-credits__mark"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">code</span></span>
+          <span id="credits-title">فريق التطوير</span>
+        </div>
+        <div class="project-credits__team">
+          <div><span id="credits-frontend-role" class="project-credit-role">الواجهة الأمامية</span><span id="credits-frontend-names" class="project-credit-name">أحمد رفعت · أحمد صلاح</span></div>
+          <div><span id="credits-backend-role" class="project-credit-role">الخلفية</span><span id="credits-backend-name" class="project-credit-name">سيف محمود</span></div>
         </div>
       </div>
     </footer>
@@ -1735,6 +1835,15 @@
         document.getElementById('txt-footer-left-1').innerText = "بوابة النظام الأكاديمي";
         document.getElementById('txt-footer-left-2').innerText = "المكتبة الرقمية والمناهج المعتمدة";
         document.getElementById('txt-footer-right').innerText = "جميع الحقوق الأكاديمية محفوظة © 2026";
+        document.getElementById('credits-title').innerText = "فريق التطوير";
+        document.getElementById('credits-frontend-role').innerText = "الواجهة الأمامية";
+        document.getElementById('credits-frontend-names').innerText = "أحمد رفعت · أحمد صلاح";
+        document.getElementById('credits-backend-role').innerText = "الخلفية";
+        document.getElementById('credits-backend-name').innerText = "سيف محمود";
+        document.getElementById('btn-upload-book').title = "إضافة كتاب جديد";
+        document.getElementById('btn-fav-filter').title = "المحفوظات";
+        document.getElementById('btn-theme-toggle').title = "تبديل الوضع (فاتح / داكن)";
+        document.getElementById('btn-lang-toggle').title = "تبديل اللغة (العربية / English)";
 
         document.querySelectorAll('.nav-chevron').forEach(icon => {
           icon.innerText = "chevron_left";
@@ -1774,6 +1883,15 @@
         document.getElementById('txt-footer-left-1').innerText = "Academic Faculty Portal";
         document.getElementById('txt-footer-left-2').innerText = "Digital Textbooks & Library";
         document.getElementById('txt-footer-right').innerText = "All Academic Rights Reserved © 2026";
+        document.getElementById('credits-title').innerText = "Project team";
+        document.getElementById('credits-frontend-role').innerText = "FRONT-END";
+        document.getElementById('credits-frontend-names').innerText = "Ahmed Refaat · Ahmed Salah";
+        document.getElementById('credits-backend-role').innerText = "BACK-END";
+        document.getElementById('credits-backend-name').innerText = "Saif Mahmoud";
+        document.getElementById('btn-upload-book').title = "Add a book";
+        document.getElementById('btn-fav-filter').title = "Bookmarks";
+        document.getElementById('btn-theme-toggle').title = "Toggle light or dark mode";
+        document.getElementById('btn-lang-toggle').title = "Switch language";
 
         document.querySelectorAll('.nav-chevron').forEach(icon => {
           icon.innerText = "chevron_right";
