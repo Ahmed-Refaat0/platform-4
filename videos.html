@@ -361,24 +361,19 @@
           <div class="flex items-center gap-2.5 flex-1 max-w-md">
             <span class="material-symbols-outlined text-[20px] text-[#1e3e34]" id="filter-subject-icon">category</span>
             <span id="lbl-subject-select" class="text-xs sm:text-sm font-bold text-gray-800 whitespace-nowrap">
-              تصفح المواد الدراسية:
+              اختيار الصف الدراسي:
             </span>
             <div class="custom-dropdown relative flex-1" id="subject-select-dropdown" data-onchange="handleSubjectDropdown">
               <button type="button" id="subject-select-trigger" class="custom-dropdown-trigger w-full flex items-center justify-between gap-3 text-xs sm:text-sm font-semibold py-2.5 px-3.5 rounded-xl border border-gray-300 bg-white text-gray-900 shadow-xs cursor-pointer" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-subject-select" onclick="toggleCustomDropdown('subject-select')">
-                <span class="flex items-center gap-2 min-w-0"><span data-dropdown-icon class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">library_books</span><span data-dropdown-label>جميع المواد الدراسية (عرض الكل)</span></span>
+                <span class="flex items-center gap-2 min-w-0"><span data-dropdown-icon class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">school</span><span data-dropdown-label>كل الصفوف الدراسية (عرض الكل)</span></span>
                 <span class="material-symbols-outlined text-[18px] text-gray-500">expand_more</span>
               </button>
               <input type="hidden" id="subject-select" value="all"/>
               <div id="subject-select-menu" class="custom-dropdown-menu absolute hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl" role="listbox">
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="all" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">library_books</span><span data-option-label>جميع المواد الدراسية (عرض الكل)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="physics" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">bolt</span><span data-option-label>الفيزياء (Physics)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="math" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">functions</span><span data-option-label>الرياضيات وحساب التفاضل (Mathematics)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="chemistry" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">science</span><span data-option-label>الكيمياء وحركية التفاعلات (Chemistry)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="cs" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">computer</span><span data-option-label>الحاسب والبرمجة والخوارزميات (Computer Science)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="biology" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">biotech</span><span data-option-label>الأحياء والعلوم الطبية (Biology)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="arabic" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">menu_book</span><span data-option-label>اللغة العربية والبلاغة (Arabic)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="english" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">edit_note</span><span data-option-label>اللغة الإنجليزية الأكاديمية (English)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="history" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">account_balance</span><span data-option-label>التاريخ والحضارة العالمية (History)</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="all" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">school</span><span data-option-label>كل الصفوف الدراسية (عرض الكل)</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="first-secondary" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">looks_one</span><span data-option-label>أولى ثانوي</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="second-secondary-general" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">looks_two</span><span data-option-label>تانية ثانوي عام</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="second-secondary-baccalaureate" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">workspace_premium</span><span data-option-label>تانية ثانوي بكالوريا</span></button>
               </div>
             </div>
           </div>
@@ -430,7 +425,7 @@
         </div>
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span id="txt-filter-active-label">المادة: جميع المواد</span>
+          <span id="txt-filter-active-label">الصف: كل الصفوف الدراسية</span>
         </div>
       </div>
 
@@ -601,22 +596,17 @@
         <!-- Subject & Unit (2 cols) -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label class="block font-bold text-gray-700 mb-1" id="lbl-up-subject">المادة الدراسية *</label>
+            <label class="block font-bold text-gray-700 mb-1" id="lbl-up-subject">الصف الدراسي *</label>
             <div class="custom-dropdown relative w-full" id="up-subject-dropdown">
               <button type="button" id="up-subject-trigger" class="custom-dropdown-trigger w-full flex items-center justify-between gap-3 p-2.5 rounded-xl border border-gray-300 bg-white text-gray-900 text-xs" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lbl-up-subject" onclick="toggleCustomDropdown('up-subject')">
-                <span class="flex items-center gap-2 min-w-0"><span data-dropdown-icon class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">bolt</span><span data-dropdown-label>الفيزياء (Physics)</span></span>
+                <span class="flex items-center gap-2 min-w-0"><span data-dropdown-icon class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">looks_one</span><span data-dropdown-label>أولى ثانوي</span></span>
                 <span class="material-symbols-outlined text-[18px] text-gray-500">expand_more</span>
               </button>
-              <input type="hidden" id="up-subject" value="physics"/>
+              <input type="hidden" id="up-subject" value="first-secondary"/>
               <div id="up-subject-menu" class="custom-dropdown-menu absolute hidden rounded-xl border border-gray-200 bg-white py-1 shadow-xl" role="listbox">
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="physics" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">bolt</span><span data-option-label>الفيزياء (Physics)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="math" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">functions</span><span data-option-label>الرياضيات (Mathematics)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="chemistry" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">science</span><span data-option-label>الكيمياء (Chemistry)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="cs" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">computer</span><span data-option-label>الحاسب والبرمجة (Computer Science)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="biology" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">biotech</span><span data-option-label>الأحياء (Biology)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="arabic" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">menu_book</span><span data-option-label>اللغة العربية (Arabic)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="english" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">edit_note</span><span data-option-label>اللغة الإنجليزية (English)</span></button>
-                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="history" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">account_balance</span><span data-option-label>التاريخ والجغرافيا (History)</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="first-secondary" role="option" aria-selected="true" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">looks_one</span><span data-option-label>أولى ثانوي</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="second-secondary-general" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">looks_two</span><span data-option-label>تانية ثانوي عام</span></button>
+                <button type="button" class="custom-dropdown-option block px-3 py-2 text-xs hover:bg-gray-50" data-value="second-secondary-baccalaureate" role="option" aria-selected="false" onclick="selectCustomDropdownOption(this)"><span class="material-symbols-outlined text-base text-[#1e3e34]" aria-hidden="true">workspace_premium</span><span data-option-label>تانية ثانوي بكالوريا</span></button>
               </div>
             </div>
           </div>
@@ -739,6 +729,32 @@
     let currentSubjectFilter = 'all';
     let currentSearchTerm = '';
     let currentSortOption = 'latest';
+
+    const SCHOOL_GRADES = {
+      'first-secondary': { ar: 'أولى ثانوي', en: 'First Secondary' },
+      'second-secondary-general': { ar: 'تانية ثانوي عام', en: 'Second Secondary - General' },
+      'second-secondary-baccalaureate': { ar: 'تانية ثانوي بكالوريا', en: 'Second Secondary - Baccalaureate' }
+    };
+    const SCHOOL_GRADE_IDS = Object.keys(SCHOOL_GRADES);
+    const LEGACY_SUBJECT_GRADES = {
+      physics: 'first-secondary',
+      math: 'second-secondary-general',
+      chemistry: 'second-secondary-baccalaureate',
+      cs: 'first-secondary',
+      biology: 'second-secondary-general',
+      arabic: 'second-secondary-baccalaureate',
+      english: 'first-secondary',
+      history: 'second-secondary-general'
+    };
+
+    function normalizeSchoolGradeRecords(records) {
+      return records.map((record, index) => {
+        const gradeId = SCHOOL_GRADES[record.subject] ? record.subject :
+          (LEGACY_SUBJECT_GRADES[record.subject] || SCHOOL_GRADE_IDS[index % SCHOOL_GRADE_IDS.length]);
+        const grade = SCHOOL_GRADES[gradeId];
+        return { ...record, subject: gradeId, subjectNameAr: grade.ar, subjectNameEn: grade.en };
+      });
+    }
 
     // Initial Educational Videos Data (with Arabic & English metadata)
     const initialVideos = [
@@ -925,6 +941,10 @@
     } catch (e) {
       allVideos = [...initialVideos];
     }
+    allVideos = normalizeSchoolGradeRecords(allVideos);
+    try {
+      localStorage.setItem('platform_videos', JSON.stringify(allVideos));
+    } catch (e) {}
 
     // Initialize Page
     document.addEventListener('DOMContentLoaded', () => {
@@ -1131,7 +1151,7 @@
         document.getElementById('txt-page-desc').innerText = "استعراض وتصفية المحاضرات المرئية المرفوعة لكافة المواد الدراسية";
         
         document.getElementById('txt-upload-btn').innerText = "رفع فيديو جديد";
-        document.getElementById('lbl-subject-select').innerText = "تصفح المواد الدراسية:";
+        document.getElementById('lbl-subject-select').innerText = "اختيار الصف الدراسي:";
         document.getElementById('search-input').placeholder = "ابحث عن درس أو محاضر...";
 
         document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
@@ -1164,10 +1184,10 @@
         document.getElementById('txt-user-role').innerText = "Professor • Course Coordinator";
         document.getElementById('txt-page-title').innerText = "Educational Videos";
         document.getElementById('txt-page-badge').innerText = "Lecture Library";
-        document.getElementById('txt-page-desc').innerText = "Browse and filter recorded video lectures across all academic subjects";
+        document.getElementById('txt-page-desc').innerText = "Browse and filter recorded video lectures by secondary-school grade";
 
         document.getElementById('txt-upload-btn').innerText = "Upload Video";
-        document.getElementById('lbl-subject-select').innerText = "Browse Academic Subjects:";
+        document.getElementById('lbl-subject-select').innerText = "Choose School Grade:";
         document.getElementById('search-input').placeholder = "Search lectures, professors...";
 
         document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
@@ -1194,15 +1214,10 @@
     function updateDropdownTranslations(lang) {
       const isAr = lang === 'ar';
       const map = {
-        'all': isAr ? 'جميع المواد الدراسية (عرض الكل)' : 'All Academic Subjects (Show All)',
-        'physics': isAr ? 'الفيزياء (Physics)' : 'Physics & Optics',
-        'math': isAr ? 'الرياضيات وحساب التفاضل (Mathematics)' : 'Mathematics & Calculus',
-        'chemistry': isAr ? 'الكيمياء وحركية التفاعلات (Chemistry)' : 'Chemistry & Kinetics',
-        'cs': isAr ? 'الحاسب والبرمجة والخوارزميات (Computer Science)' : 'Computer Science & Algorithms',
-        'biology': isAr ? 'الأحياء والعلوم الطبية (Biology)' : 'Biology & Genetics',
-        'arabic': isAr ? 'اللغة العربية والبلاغة (Arabic)' : 'Arabic Language & Literature',
-        'english': isAr ? 'اللغة الإنجليزية الأكاديمية (English)' : 'English Academic Writing',
-        'history': isAr ? 'التاريخ والحضارة العالمية (History)' : 'World History & Geography'
+        'all': isAr ? 'كل الصفوف الدراسية (عرض الكل)' : 'All School Grades (Show All)',
+        'first-secondary': isAr ? 'أولى ثانوي' : 'First Secondary',
+        'second-secondary-general': isAr ? 'تانية ثانوي عام' : 'Second Secondary - General',
+        'second-secondary-baccalaureate': isAr ? 'تانية ثانوي بكالوريا' : 'Second Secondary - Baccalaureate'
       };
       document.querySelectorAll('#subject-select-menu [data-value]').forEach(option => {
         if (map[option.dataset.value]) option.querySelector('[data-option-label]').textContent = map[option.dataset.value];
@@ -1289,12 +1304,12 @@
       const isDark = currentTheme === 'dark';
 
       document.getElementById('visible-count').innerText = filtered.length;
-      const subName = currentSubjectFilter === 'all' ? 
-        (isAr ? 'جميع المواد' : 'All Subjects') : 
+      const subName = currentSubjectFilter === 'all' ?
+        (isAr ? 'كل الصفوف الدراسية' : 'All School Grades') :
         (isAr ? (allVideos.find(v => v.subject === currentSubjectFilter)?.subjectNameAr || currentSubjectFilter) : 
                 (allVideos.find(v => v.subject === currentSubjectFilter)?.subjectNameEn || currentSubjectFilter));
       
-      document.getElementById('txt-filter-active-label').innerText = isAr ? `المادة: ${subName}` : `Subject: ${subName}`;
+      document.getElementById('txt-filter-active-label').innerText = isAr ? `الصف: ${subName}` : `Grade: ${subName}`;
       document.getElementById('txt-results-count').innerHTML = isAr ? 
         `المعروض حالياً: <strong id="visible-count" class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> محاضرات تعليمية` :
         `Showing: <strong id="visible-count" class="${isDark ? 'text-white' : 'text-gray-900'}">${filtered.length}</strong> recorded lectures`;
@@ -1475,7 +1490,7 @@
       document.getElementById('upload-modal-title').innerText = isAr ? "رفع فيديو تعليمي جديد" : "Upload Educational Video";
       document.getElementById('upload-modal-sub').innerText = isAr ? "إضافة ونشر محاضرة مصورة على المنصة الأكاديمية" : "Publish new video lecture to the faculty platform";
       document.getElementById('lbl-up-title').innerText = isAr ? "عنوان الفيديو / المحاضرة *" : "Lecture Title *";
-      document.getElementById('lbl-up-subject').innerText = isAr ? "المادة الدراسية *" : "Academic Subject *";
+      document.getElementById('lbl-up-subject').innerText = isAr ? "الصف الدراسي *" : "School Grade *";
       document.getElementById('lbl-up-unit').innerText = isAr ? "الوحدة والدرس *" : "Unit & Lesson *";
       document.getElementById('lbl-up-instructor').innerText = isAr ? "اسم المحاضر / المعلم *" : "Instructor Name *";
       document.getElementById('lbl-up-duration').innerText = isAr ? "مدة المحاضرة *" : "Duration *";
@@ -1495,7 +1510,7 @@
     function closeUploadModal() {
       document.getElementById('upload-modal').classList.add('hidden');
       document.getElementById('upload-form').reset();
-      setCustomDropdownValue('up-subject', 'physics');
+      setCustomDropdownValue('up-subject', 'first-secondary');
       setCustomDropdownValue('up-thumbnail', '');
     }
 
@@ -1509,16 +1524,7 @@
       const thumb = document.getElementById('up-thumbnail').value;
       const desc = document.getElementById('up-description').value.trim();
 
-      const subjectNames = {
-        physics: { ar: "الفيزياء", en: "Physics" },
-        math: { ar: "الرياضيات", en: "Mathematics" },
-        chemistry: { ar: "الكيمياء", en: "Chemistry" },
-        cs: { ar: "الحاسب والبرمجة", en: "Computer Science" },
-        biology: { ar: "الأحياء", en: "Biology" },
-        arabic: { ar: "اللغة العربية", en: "Arabic" },
-        english: { ar: "اللغة الإنجليزية", en: "English" },
-        history: { ar: "التاريخ والجغرافيا", en: "History" }
-      };
+      const subjectNames = SCHOOL_GRADES;
 
       const newVideo = {
         id: "vid-" + Date.now(),
