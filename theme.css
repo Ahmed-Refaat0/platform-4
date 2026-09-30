@@ -1,39 +1,39 @@
 :root {
   color-scheme: light;
-  --canvas: #f2f2f2;
-  --surface: #f8f8f8;
-  --surface-raised: #e8e8e8;
-  --surface-soft: #dedede;
-  --line: #c8c8c8;
-  --ink: #2c2c2c;
-  --muted: #5d5d5d;
-  --brand: #4d4d4d;
-  --brand-hover: #3d3d3d;
-  --brand-deep: #333333;
-  --brand-soft: #e5e5e5;
-  --accent: #5b5b5b;
-  --accent-bright: #777777;
-  --on-brand: #f8f8f8;
-  --sidebar: #414141;
+  --canvas: #ffffff;
+  --surface: #ffffff;
+  --surface-raised: #f4f6f8;
+  --surface-soft: #e9edf2;
+  --line: #cbd1d9;
+  --ink: #111318;
+  --muted: #505661;
+  --brand: #2d69a8;
+  --brand-hover: #24588f;
+  --brand-deep: #1c4d80;
+  --brand-soft: #e6eff9;
+  --accent: #3779bd;
+  --accent-bright: #72a9dc;
+  --on-brand: #ffffff;
+  --sidebar: #2d69a8;
 }
 
 #root-html.dark {
   color-scheme: dark;
-  --canvas: #1c1c1c;
-  --surface: #262626;
-  --surface-raised: #303030;
-  --surface-soft: #3a3a3a;
-  --line: #494949;
-  --ink: #e8e8e8;
-  --muted: #b7b7b7;
-  --brand: #5b5b5b;
-  --brand-hover: #707070;
-  --brand-deep: #454545;
-  --brand-soft: #353535;
-  --accent: #bcbcbc;
-  --accent-bright: #d0d0d0;
-  --on-brand: #f4f4f4;
-  --sidebar: #242424;
+  --canvas: #08090c;
+  --surface: #111318;
+  --surface-raised: #191c23;
+  --surface-soft: #222630;
+  --line: #343945;
+  --ink: #f4f6fa;
+  --muted: #b4bac5;
+  --brand: #2d69a8;
+  --brand-hover: #24588f;
+  --brand-deep: #1c4d80;
+  --brand-soft: #1b2d42;
+  --accent: #91bee9;
+  --accent-bright: #b3d5f5;
+  --on-brand: #ffffff;
+  --sidebar: #2d69a8;
 }
 
 button,
@@ -42,12 +42,12 @@ a,
 #books-grid > div,
 #videos-grid > div,
 .custom-dropdown-option {
-  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  transition: color 140ms ease, background-color 140ms ease, border-color 140ms ease, transform 140ms ease, opacity 140ms ease;
 }
 
 .transition-all {
-  transition-property: color, background-color, border-color, box-shadow !important;
-  transition-duration: 160ms !important;
+  transition-property: color, background-color, border-color, transform, opacity !important;
+  transition-duration: 140ms !important;
   transition-timing-function: ease-out !important;
 }
 
@@ -69,6 +69,11 @@ a,
 #body-app {
   background-color: var(--canvas) !important;
   color: var(--ink) !important;
+}
+
+#root-html #sidebar {
+  background-color: var(--sidebar) !important;
+  background-image: none !important;
 }
 
 #root-html:not(.dark) #body-app,

@@ -196,9 +196,9 @@ function applyLanguage(lang) {
     document.getElementById('txt-footer-left-2').innerText = "الإدارة العامة للمناهج ونظم المعلومات";
     document.getElementById('txt-footer-right').innerText = "جميع الحقوق محفوظة © 2026";
     document.getElementById('credits-title').innerText = "فريق التطوير";
-    document.getElementById('credits-frontend-role').innerText = "الواجهة الأمامية";
+    document.getElementById('credits-frontend-role').innerText = "front-end";
     document.getElementById('credits-frontend-names').innerText = "أحمد رفعت · أحمد صلاح";
-    document.getElementById('credits-backend-role').innerText = "الخلفية";
+    document.getElementById('credits-backend-role').innerText = "back-end";
     document.getElementById('credits-backend-name').innerText = "سيف محمود";
     document.getElementById('btn-quick-videos').title = "الفيديوهات التعليمية";
     document.getElementById('btn-theme-toggle').title = "تبديل الوضع (فاتح / داكن)";
@@ -241,9 +241,9 @@ function applyLanguage(lang) {
     document.getElementById('txt-footer-left-2').innerText = "Curriculum & Information Systems Administration";
     document.getElementById('txt-footer-right').innerText = "All rights reserved © 2026";
     document.getElementById('credits-title').innerText = "Project team";
-    document.getElementById('credits-frontend-role').innerText = "FRONT-END";
+    document.getElementById('credits-frontend-role').innerText = "front-end";
     document.getElementById('credits-frontend-names').innerText = "Ahmed Refaat · Ahmed Salah";
-    document.getElementById('credits-backend-role').innerText = "BACK-END";
+    document.getElementById('credits-backend-role').innerText = "back-end";
     document.getElementById('credits-backend-name').innerText = "Saif Mahmoud";
     document.getElementById('btn-quick-videos').title = "Educational videos";
     document.getElementById('btn-theme-toggle').title = "Toggle light or dark mode";
