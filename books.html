@@ -353,7 +353,6 @@
     @media (max-width: 420px) {
       #txt-fav-filter,
       #fav-count-badge,
-      #txt-theme-toggle,
       #txt-lang-toggle {
         display: none;
       }
@@ -482,7 +481,7 @@
           <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
           <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
             <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
-            <span id="txt-theme-toggle">الوضع الداكن</span>
+            <span id="txt-theme-toggle" class="sr-only">الوضع الداكن</span>
           </button>
 
           <!-- زر تبديل اللغة (LANGUAGE TOGGLE: AR / EN) -->
