@@ -86,6 +86,95 @@
     #fav-filter-indicator {
       visibility: hidden !important;
     }
+
+    /* ===== Profile Badge Panel ===== */
+    @keyframes profileSlideUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    @keyframes profileSlideDown {
+      from { opacity: 1; transform: translateY(0)   scale(1); }
+      to   { opacity: 0; transform: translateY(12px) scale(0.97); }
+    }
+    #profile-badge {
+      position: fixed;
+      /* mobile: just above the bottom nav bar */
+      bottom: calc(4.5rem + 12px);
+      inset-inline-start: 1rem;
+      width: 15rem;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #profile-badge.open {
+      pointer-events: auto;
+      animation: profileSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #profile-badge.closing {
+      animation: profileSlideDown 0.18s ease-in forwards;
+    }
+    @media (min-width: 768px) {
+      /* desktop: fixed above the sidebar footer, aligned to sidebar start */
+      #profile-badge {
+        bottom: 5.5rem;      /* height of footer area + gap */
+        inset-inline-start: 0.75rem;
+        width: 15.5rem;
+      }
+    }
+    .profile-badge-inner {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.32), 0 2px 8px rgba(0,0,0,0.18);
+    }
+    /* avatar ring gradient */
+    .profile-avatar-ring {
+      background: conic-gradient(from 135deg, #34d399, #2d69a8, #34d399);
+      border-radius: 50%;
+      padding: 2px;
+      display: inline-flex;
+    }
+    .profile-avatar-ring-inner {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* stat item */
+    .pb-stat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .pb-stat-val {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .pb-stat-lbl {
+      font-size: 0.6rem;
+      font-weight: 600;
+      opacity: 0.65;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    /* action row */
+    .pb-action {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease;
+      border: none;
+      width: 100%;
+      text-align: start;
+      background: transparent;
+    }
     .project-credits {
       display: flex;
       align-items: center;
@@ -437,7 +526,7 @@
           <span id="credits-title">فريق التطوير</span>
         </div>
         <div class="project-credits__team">
-          <div><span id="credits-frontend-role" class="project-credit-role">front-end</span><span id="credits-frontend-names" class="project-credit-name">أحمد رفعت · أحمد صلاح</span></div>
+          <div><span id="credits-frontend-role" class="project-credit-role">front-end</span><span id="credits-frontend-names" class="project-credit-name">أحمد محمد رفعت · أحمد محمد صلاح</span></div>
           <div><span id="credits-backend-role" class="project-credit-role">back-end</span><span id="credits-backend-name" class="project-credit-name">سيف محمود</span></div>
         </div>
       </div>
@@ -475,6 +564,93 @@
           تأكيد
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- ================= PROFILE BADGE PANEL ================= -->
+  <div id="profile-badge" role="dialog" aria-modal="true" aria-label="الملف الشخصي">
+    <div class="profile-badge-inner" id="profile-badge-inner">
+
+      <!-- Header gradient band -->
+      <div id="pb-header" style="background: linear-gradient(135deg, #0f2a22 0%, #1a3d30 60%, #1c4d80 100%); padding: 1.1rem 1rem 0.7rem;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+          <!-- Avatar -->
+          <div class="profile-avatar-ring">
+            <div class="profile-avatar-ring-inner" id="pb-avatar-inner" style="width:3rem; height:3rem; background:#14261f;">
+              <span class="material-symbols-outlined" id="pb-avatar-icon" style="font-size:1.6rem; color:#34d399;">person</span>
+            </div>
+          </div>
+          <!-- Close -->
+          <button onclick="closeProfileBadge()" id="pb-close-btn" style="width:1.75rem;height:1.75rem;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);transition:background 140ms;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <span class="material-symbols-outlined" style="font-size:1rem;">close</span>
+          </button>
+        </div>
+        <!-- Name & role -->
+        <div style="margin-top:0.55rem;">
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <span id="pb-name" style="font-size:0.875rem; font-weight:800; color:#ffffff; line-height:1.2;">د. أحمد عبد الرحمن</span>
+            <span style="display:inline-flex; align-items:center; background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.3); border-radius:99px; padding:0.05rem 0.45rem;">
+              <span class="material-symbols-outlined" style="font-size:0.7rem; color:#34d399; margin-inline-end:0.2rem;">verified</span>
+              <span id="pb-badge-lbl" style="font-size:0.6rem; font-weight:700; color:#34d399; letter-spacing:0.03em;">معتمد</span>
+            </span>
+          </div>
+          <div id="pb-role" style="font-size:0.675rem; color:rgba(255,255,255,0.55); margin-top:0.2rem; font-weight:600;">أستاذ المادة • منسق الأقسام</div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div id="pb-stats" style="display:flex; gap:0; border-bottom: 1px solid; padding: 0.65rem 0.5rem;">
+        <div class="pb-stat">
+          <span class="pb-stat-val" id="pb-stat1-val">8</span>
+          <span class="pb-stat-lbl" id="pb-stat1-lbl">مقررات</span>
+        </div>
+        <div style="width:1px; background:currentColor; opacity:0.12; margin:0.15rem 0;"></div>
+        <div class="pb-stat">
+          <span class="pb-stat-val" id="pb-stat2-val">96%</span>
+          <span class="pb-stat-lbl" id="pb-stat2-lbl">إنجاز</span>
+        </div>
+        <div style="width:1px; background:currentColor; opacity:0.12; margin:0.15rem 0;"></div>
+        <div class="pb-stat">
+          <span class="pb-stat-val" id="pb-stat3-val">2026</span>
+          <span class="pb-stat-lbl" id="pb-stat3-lbl">الفصل</span>
+        </div>
+      </div>
+
+      <!-- Info rows -->
+      <div id="pb-info" style="padding: 0.5rem 0.875rem; display:flex; flex-direction:column; gap:0.3rem; font-size:0.68rem;">
+        <div style="display:flex; align-items:center; gap:0.4rem; opacity:0.75;">
+          <span class="material-symbols-outlined" style="font-size:0.9rem;">mail</span>
+          <span id="pb-email">ahmed.rahman@faculty.edu</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem; opacity:0.75;">
+          <span class="material-symbols-outlined" style="font-size:0.9rem;">school</span>
+          <span id="pb-dept">قسم العلوم الأكاديمية</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <span class="material-symbols-outlined" style="font-size:0.9rem; color:#34d399;">radio_button_checked</span>
+          <span id="pb-status" style="color:#34d399; font-weight:700;">متصل ونشط</span>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div id="pb-divider" style="margin: 0 0.875rem; height:1px;"></div>
+
+      <!-- Action buttons -->
+      <div style="padding: 0.4rem 0.5rem 0.6rem;">
+        <button class="pb-action" id="pb-action-profile" onclick="window.location.href='profile.html'">
+          <span class="material-symbols-outlined" style="font-size:1rem;">account_circle</span>
+          <span id="pb-lbl-profile">ملفك الشخصي</span>
+        </button>
+        <button class="pb-action" id="pb-action-theme" onclick="closeProfileBadge(); toggleTheme();">
+          <span class="material-symbols-outlined" style="font-size:1rem;" id="pb-theme-icon">dark_mode</span>
+          <span id="pb-lbl-theme">الوضع الداكن</span>
+        </button>
+        <button class="pb-action" id="pb-action-signout" style="margin-top:0.15rem;">
+          <span class="material-symbols-outlined" style="font-size:1rem;">logout</span>
+          <span id="pb-lbl-signout">تسجيل الخروج</span>
+        </button>
+      </div>
+
     </div>
   </div>
 

@@ -197,7 +197,7 @@ function applyLanguage(lang) {
     document.getElementById('txt-footer-right').innerText = "جميع الحقوق محفوظة © 2026";
     document.getElementById('credits-title').innerText = "فريق التطوير";
     document.getElementById('credits-frontend-role').innerText = "front-end";
-    document.getElementById('credits-frontend-names').innerText = "أحمد رفعت · أحمد صلاح";
+    document.getElementById('credits-frontend-names').innerText = "أحمد محمد رفعت · أحمد محمد صلاح";
     document.getElementById('credits-backend-role').innerText = "back-end";
     document.getElementById('credits-backend-name').innerText = "سيف محمود";
     document.getElementById('btn-quick-videos').title = "الفيديوهات التعليمية";
@@ -242,7 +242,7 @@ function applyLanguage(lang) {
     document.getElementById('txt-footer-right').innerText = "All rights reserved © 2026";
     document.getElementById('credits-title').innerText = "Project team";
     document.getElementById('credits-frontend-role').innerText = "front-end";
-    document.getElementById('credits-frontend-names').innerText = "Ahmed Refaat · Ahmed Salah";
+    document.getElementById('credits-frontend-names').innerText = "Ahmed Mohamed Refaat · Ahmed Mohamed Salah";
     document.getElementById('credits-backend-role').innerText = "back-end";
     document.getElementById('credits-backend-name').innerText = "Saif Mahmoud";
     document.getElementById('btn-quick-videos').title = "Educational videos";
@@ -301,6 +301,11 @@ function openModal(type) {
   const mIcon = document.getElementById('modal-icon');
   const isAr = currentLang === 'ar';
   const isDark = currentTheme === 'dark';
+
+  if (type === 'user') {
+    openProfileBadge();
+    return;
+  }
 
   if (isDark) {
     mContainer.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-lg w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative";
@@ -369,5 +374,109 @@ window.addEventListener('click', (e) => {
   if (e.target === modal) closeModal();
 });
 window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeModal();
+  if (e.key === 'Escape') {
+    closeModal();
+    closeProfileBadge();
+  }
 });
+
+// ============================================================
+// PROFILE BADGE PANEL
+// ============================================================
+let profileBadgeOpen = false;
+
+function openProfileBadge() {
+  const badge = document.getElementById('profile-badge');
+  if (!badge) return;
+  badge.classList.remove('closing');
+  badge.classList.add('open');
+  profileBadgeOpen = true;
+  applyProfileBadgeTheme();
+  applyProfileBadgeLang();
+}
+
+function closeProfileBadge() {
+  const badge = document.getElementById('profile-badge');
+  if (!badge || !profileBadgeOpen) return;
+  badge.classList.add('closing');
+  badge.classList.remove('open');
+  profileBadgeOpen = false;
+  setTimeout(() => badge.classList.remove('closing'), 200);
+}
+
+function applyProfileBadgeTheme() {
+  const isDark = currentTheme === 'dark';
+  const inner  = document.getElementById('profile-badge-inner');
+  const stats  = document.getElementById('pb-stats');
+  const info   = document.getElementById('pb-info');
+  const div    = document.getElementById('pb-divider');
+  const thIcon = document.getElementById('pb-theme-icon');
+  const thLbl  = document.getElementById('pb-lbl-theme');
+  const actions = document.querySelectorAll('.pb-action');
+
+  if (isDark) {
+    inner.style.background   = '#1b221f';
+    inner.style.color         = '#e1ebe6';
+    inner.style.border        = '1px solid #27332e';
+    stats.style.borderColor   = '#27332e';
+    stats.style.color         = '#e1ebe6';
+    div.style.background      = '#27332e';
+    info.style.color          = '#cbdad3';
+    actions.forEach(a => {
+      a.style.color = '#e1ebe6';
+    });
+    const profileAction = document.getElementById('pb-action-profile');
+    const signOutAction = document.getElementById('pb-action-signout');
+    if (profileAction) { profileAction.onmouseover = () => profileAction.style.background='#252e29'; profileAction.onmouseout = () => profileAction.style.background='transparent'; }
+    if (signOutAction) { signOutAction.onmouseover = () => signOutAction.style.background='#2a1c1c'; signOutAction.style.color='#f87171'; signOutAction.onmouseout = () => { signOutAction.style.background='transparent'; signOutAction.style.color='#e1ebe6'; }; }
+    if (thIcon) thIcon.textContent = 'light_mode';
+    if (thLbl)  thLbl.textContent  = currentLang === 'ar' ? 'الوضع النهاري' : 'Light Mode';
+    const themeAction = document.getElementById('pb-action-theme');
+    if (themeAction) { themeAction.onmouseover = () => themeAction.style.background='#252e29'; themeAction.onmouseout = () => themeAction.style.background='transparent'; }
+  } else {
+    inner.style.background   = '#ffffff';
+    inner.style.color         = '#192420';
+    inner.style.border        = '1px solid #e5e7eb';
+    stats.style.borderColor   = '#e5e7eb';
+    stats.style.color         = '#192420';
+    div.style.background      = '#e5e7eb';
+    info.style.color          = '#505661';
+    actions.forEach(a => {
+      a.style.color = '#192420';
+    });
+    const profileAction = document.getElementById('pb-action-profile');
+    const signOutAction = document.getElementById('pb-action-signout');
+    if (profileAction) { profileAction.onmouseover = () => profileAction.style.background='#f0f4f2'; profileAction.onmouseout = () => profileAction.style.background='transparent'; }
+    if (signOutAction) { signOutAction.onmouseover = () => signOutAction.style.background='#fff0f0'; signOutAction.style.color='#dc2626'; signOutAction.onmouseout = () => { signOutAction.style.background='transparent'; signOutAction.style.color='#192420'; }; }
+    if (thIcon) thIcon.textContent = 'dark_mode';
+    if (thLbl)  thLbl.textContent  = currentLang === 'ar' ? 'الوضع الداكن' : 'Dark Mode';
+    const themeAction = document.getElementById('pb-action-theme');
+    if (themeAction) { themeAction.onmouseover = () => themeAction.style.background='#f0f4f2'; themeAction.onmouseout = () => themeAction.style.background='transparent'; }
+  }
+}
+
+function applyProfileBadgeLang() {
+  const isAr = currentLang === 'ar';
+  const set  = (id, ar, en) => { const el = document.getElementById(id); if (el) el.textContent = isAr ? ar : en; };
+
+  set('pb-name',        'د. أحمد عبد الرحمن',         'Dr. Ahmed Abdelrahman');
+  set('pb-badge-lbl',   'معتمد',                        'Verified');
+  set('pb-role',        'أستاذ المادة • منسق الأقسام', 'Professor • Dept. Coordinator');
+  set('pb-stat1-lbl',   'مقررات',                       'Courses');
+  set('pb-stat2-lbl',   'إنجاز',                        'Progress');
+  set('pb-stat3-lbl',   'الفصل',                        'Term');
+  set('pb-dept',        'قسم العلوم الأكاديمية',        'Academic Sciences Dept.');
+  set('pb-status',      'متصل ونشط',                    'Online & Active');
+  set('pb-lbl-profile', 'ملفك الشخصي',         'Your Profile');
+  set('pb-lbl-signout', 'تسجيل الخروج',                 'Sign Out');
+}
+
+// Close badge when clicking outside
+window.addEventListener('click', (e) => {
+  if (!profileBadgeOpen) return;
+  const badge = document.getElementById('profile-badge');
+  const trigger = document.querySelector('#sidebar-footer-box button');
+  if (badge && !badge.contains(e.target) && trigger && !trigger.contains(e.target)) {
+    closeProfileBadge();
+  }
+}, true);

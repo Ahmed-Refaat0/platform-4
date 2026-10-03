@@ -83,6 +83,71 @@
     .animate-modal {
       animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    /* ===== Profile Badge Panel ===== */
+    @keyframes profileSlideUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    @keyframes profileSlideDown {
+      from { opacity: 1; transform: translateY(0)   scale(1); }
+      to   { opacity: 0; transform: translateY(12px) scale(0.97); }
+    }
+    #profile-badge {
+      position: fixed;
+      bottom: calc(4.5rem + 12px);
+      inset-inline-start: 1rem;
+      width: 15rem;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #profile-badge.open {
+      pointer-events: auto;
+      animation: profileSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #profile-badge.closing {
+      animation: profileSlideDown 0.18s ease-in forwards;
+    }
+    @media (min-width: 768px) {
+      #profile-badge {
+        bottom: 5.5rem;
+        inset-inline-start: 0.75rem;
+        width: 15.5rem;
+      }
+    }
+    .profile-badge-inner {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.32), 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .profile-avatar-ring {
+      background: conic-gradient(from 135deg, #34d399, #2d69a8, #34d399);
+      border-radius: 50%;
+      padding: 2px;
+      display: inline-flex;
+    }
+    .profile-avatar-ring-inner {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .pb-stat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .pb-stat-val { font-size: 1rem; font-weight: 800; line-height: 1; }
+    .pb-stat-lbl { font-size: 0.6rem; font-weight: 600; opacity: 0.65; text-transform: uppercase; letter-spacing: 0.04em; }
+    .pb-action {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 0.75rem; border-radius: 0.6rem;
+      font-size: 0.72rem; font-weight: 700; cursor: pointer;
+      transition: background 140ms ease, color 140ms ease;
+      border: none; width: 100%; text-align: start; background: transparent;
+    }
     #txt-brand-badge,
     #txt-page-badge,
     #fav-count-badge,
@@ -548,7 +613,7 @@
           <span id="credits-title">فريق التطوير</span>
         </div>
         <div class="project-credits__team">
-          <div><span id="credits-frontend-role" class="project-credit-role">front-end</span><span id="credits-frontend-names" class="project-credit-name">أحمد رفعت · أحمد صلاح</span></div>
+          <div><span id="credits-frontend-role" class="project-credit-role">front-end</span><span id="credits-frontend-names" class="project-credit-name">أحمد محمد رفعت · أحمد محمد صلاح</span></div>
           <div><span id="credits-backend-role" class="project-credit-role">back-end</span><span id="credits-backend-name" class="project-credit-name">سيف محمود</span></div>
         </div>
       </div>
@@ -808,6 +873,52 @@
         <button onclick="closeModal()" id="btn-modal-confirm" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#1e3e34] text-white hover:opacity-90 transition cursor-pointer">
           تأكيد
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PROFILE BADGE PANEL ================= -->
+  <div id="profile-badge" role="dialog" aria-modal="true" aria-label="الملف الشخصي">
+    <div class="profile-badge-inner" id="profile-badge-inner">
+      <div id="pb-header" style="background: linear-gradient(135deg, #0f2a22 0%, #1a3d30 60%, #1c4d80 100%); padding: 1.1rem 1rem 0.7rem;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+          <div class="profile-avatar-ring">
+            <div class="profile-avatar-ring-inner" id="pb-avatar-inner" style="width:3rem; height:3rem; background:#14261f;">
+              <span class="material-symbols-outlined" id="pb-avatar-icon" style="font-size:1.6rem; color:#34d399;">person</span>
+            </div>
+          </div>
+          <button onclick="closeProfileBadge()" id="pb-close-btn" style="width:1.75rem;height:1.75rem;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);transition:background 140ms;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <span class="material-symbols-outlined" style="font-size:1rem;">close</span>
+          </button>
+        </div>
+        <div style="margin-top:0.55rem;">
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <span id="pb-name" style="font-size:0.875rem; font-weight:800; color:#ffffff; line-height:1.2;">د. أحمد عبد الرحمن</span>
+            <span style="display:inline-flex; align-items:center; background:rgba(52,211,153,0.15); border:1px solid rgba(52,211,153,0.3); border-radius:99px; padding:0.05rem 0.45rem;">
+              <span class="material-symbols-outlined" style="font-size:0.7rem; color:#34d399; margin-inline-end:0.2rem;">verified</span>
+              <span id="pb-badge-lbl" style="font-size:0.6rem; font-weight:700; color:#34d399; letter-spacing:0.03em;">معتمد</span>
+            </span>
+          </div>
+          <div id="pb-role" style="font-size:0.675rem; color:rgba(255,255,255,0.55); margin-top:0.2rem; font-weight:600;">أستاذ المادة • منسق الأقسام</div>
+        </div>
+      </div>
+      <div id="pb-stats" style="display:flex; gap:0; border-bottom: 1px solid; padding: 0.65rem 0.5rem;">
+        <div class="pb-stat"><span class="pb-stat-val" id="pb-stat1-val">8</span><span class="pb-stat-lbl" id="pb-stat1-lbl">مقررات</span></div>
+        <div style="width:1px; background:currentColor; opacity:0.12; margin:0.15rem 0;"></div>
+        <div class="pb-stat"><span class="pb-stat-val" id="pb-stat2-val">96%</span><span class="pb-stat-lbl" id="pb-stat2-lbl">إنجاز</span></div>
+        <div style="width:1px; background:currentColor; opacity:0.12; margin:0.15rem 0;"></div>
+        <div class="pb-stat"><span class="pb-stat-val" id="pb-stat3-val">2026</span><span class="pb-stat-lbl" id="pb-stat3-lbl">الفصل</span></div>
+      </div>
+      <div id="pb-info" style="padding: 0.5rem 0.875rem; display:flex; flex-direction:column; gap:0.3rem; font-size:0.68rem;">
+        <div style="display:flex; align-items:center; gap:0.4rem; opacity:0.75;"><span class="material-symbols-outlined" style="font-size:0.9rem;">mail</span><span id="pb-email">ahmed.rahman@faculty.edu</span></div>
+        <div style="display:flex; align-items:center; gap:0.4rem; opacity:0.75;"><span class="material-symbols-outlined" style="font-size:0.9rem;">school</span><span id="pb-dept">قسم العلوم الأكاديمية</span></div>
+        <div style="display:flex; align-items:center; gap:0.4rem;"><span class="material-symbols-outlined" style="font-size:0.9rem; color:#34d399;">radio_button_checked</span><span id="pb-status" style="color:#34d399; font-weight:700;">متصل ونشط</span></div>
+      </div>
+      <div id="pb-divider" style="margin: 0 0.875rem; height:1px;"></div>
+      <div style="padding: 0.4rem 0.5rem 0.6rem;">
+        <button class="pb-action" id="pb-action-profile" onclick="window.location.href='profile.html'"><span class="material-symbols-outlined" style="font-size:1rem;">account_circle</span><span id="pb-lbl-profile">ملفك الشخصي</span></button>
+        <button class="pb-action" id="pb-action-theme" onclick="closeProfileBadge(); toggleTheme();"><span class="material-symbols-outlined" style="font-size:1rem;" id="pb-theme-icon">dark_mode</span><span id="pb-lbl-theme">الوضع الداكن</span></button>
+        <button class="pb-action" id="pb-action-signout" style="margin-top:0.15rem;"><span class="material-symbols-outlined" style="font-size:1rem;">logout</span><span id="pb-lbl-signout">تسجيل الخروج</span></button>
       </div>
     </div>
   </div>
@@ -1253,7 +1364,7 @@
         document.getElementById('txt-footer-right').innerText = "جميع الحقوق محفوظة © 2026";
         document.getElementById('credits-title').innerText = "فريق التطوير";
         document.getElementById('credits-frontend-role').innerText = "front-end";
-        document.getElementById('credits-frontend-names').innerText = "أحمد رفعت · أحمد صلاح";
+        document.getElementById('credits-frontend-names').innerText = "أحمد محمد رفعت · أحمد محمد صلاح";
         document.getElementById('credits-backend-role').innerText = "back-end";
         document.getElementById('credits-backend-name').innerText = "سيف محمود";
         document.getElementById('btn-upload-video').title = "رفع فيديو جديد";
@@ -1297,7 +1408,7 @@
         document.getElementById('txt-footer-right').innerText = "All rights reserved © 2026";
         document.getElementById('credits-title').innerText = "Project team";
         document.getElementById('credits-frontend-role').innerText = "front-end";
-        document.getElementById('credits-frontend-names').innerText = "Ahmed Refaat · Ahmed Salah";
+        document.getElementById('credits-frontend-names').innerText = "Ahmed Mohamed Refaat · Ahmed Mohamed Salah";
         document.getElementById('credits-backend-role').innerText = "back-end";
         document.getElementById('credits-backend-name').innerText = "Saif Mahmoud";
         document.getElementById('btn-upload-video').title = "Upload a video";
@@ -1497,6 +1608,15 @@
       const vid = allVideos.find(v => v.id === videoId);
       if (!vid) return;
 
+      // Track watched video
+      try {
+        let watched = JSON.parse(localStorage.getItem('platform_watched_videos') || '[]');
+        if (!watched.includes(videoId)) {
+          watched.push(videoId);
+          localStorage.setItem('platform_watched_videos', JSON.stringify(watched));
+        }
+      } catch(e) {}
+
       currentActiveVideoId = videoId;
       const isAr = currentLang === 'ar';
       const isDark = currentTheme === 'dark';
@@ -1682,6 +1802,8 @@
       const isAr = currentLang === 'ar';
       const isDark = currentTheme === 'dark';
 
+      if (type === 'user') { openProfileBadge(); return; }
+
       if (isDark) {
         mContainer.className = "bg-[#1b221f] text-[#e1ebe6] rounded-2xl max-w-lg w-full p-6 border border-[#27332e] shadow-2xl animate-modal relative";
       } else {
@@ -1691,7 +1813,7 @@
       mTitle.innerText = isAr ? "الملف الشخصي للأستاذ" : "Faculty Profile";
       mSub.innerText = isAr ? "د. أحمد عبد الرحمن" : "Dr. Ahmed Abdelrahman";
       mIcon.innerText = "person";
-      mBody.innerHTML = isAr ? 
+      mBody.innerHTML = isAr ?
         `<p>أستاذ مشارك ومسؤول نشر المحاضرات المرئية بقسم العلوم والرياضيات.</p>` :
         `<p>Associate Professor & Video Lecture Coordinator for Sciences & Mathematics.</p>`;
 
@@ -1720,12 +1842,98 @@
         closeVideoModal();
         closeUploadModal();
         closeModal();
+        closeProfileBadge();
       }
     });
 
     function updateNavStyles(theme) {
       // Keep active styles intact
     }
+
+    // ============================================================
+    // PROFILE BADGE PANEL
+    // ============================================================
+    let profileBadgeOpen = false;
+
+    function openProfileBadge() {
+      const badge = document.getElementById('profile-badge');
+      if (!badge) return;
+      badge.classList.remove('closing');
+      badge.classList.add('open');
+      profileBadgeOpen = true;
+      applyProfileBadgeTheme();
+      applyProfileBadgeLang();
+    }
+
+    function closeProfileBadge() {
+      const badge = document.getElementById('profile-badge');
+      if (!badge || !profileBadgeOpen) return;
+      badge.classList.add('closing');
+      badge.classList.remove('open');
+      profileBadgeOpen = false;
+      setTimeout(() => badge.classList.remove('closing'), 200);
+    }
+
+    function applyProfileBadgeTheme() {
+      const isDark = currentTheme === 'dark';
+      const inner  = document.getElementById('profile-badge-inner');
+      const stats  = document.getElementById('pb-stats');
+      const info   = document.getElementById('pb-info');
+      const div    = document.getElementById('pb-divider');
+      const thIcon = document.getElementById('pb-theme-icon');
+      const thLbl  = document.getElementById('pb-lbl-theme');
+      const actions = document.querySelectorAll('.pb-action');
+      if (!inner) return;
+      if (isDark) {
+        inner.style.background = '#1b221f'; inner.style.color = '#e1ebe6'; inner.style.border = '1px solid #27332e';
+        stats.style.borderColor = '#27332e'; stats.style.color = '#e1ebe6';
+        div.style.background = '#27332e'; info.style.color = '#cbdad3';
+        actions.forEach(a => { a.style.color = '#e1ebe6'; });
+        const pA = document.getElementById('pb-action-profile');
+        const sA = document.getElementById('pb-action-signout');
+        const tA = document.getElementById('pb-action-theme');
+        if (pA) { pA.onmouseover = () => pA.style.background='#252e29'; pA.onmouseout = () => pA.style.background='transparent'; }
+        if (sA) { sA.style.color='#f87171'; sA.onmouseover = () => sA.style.background='#2a1c1c'; sA.onmouseout = () => { sA.style.background='transparent'; sA.style.color='#f87171'; }; }
+        if (tA) { tA.onmouseover = () => tA.style.background='#252e29'; tA.onmouseout = () => tA.style.background='transparent'; }
+        if (thIcon) thIcon.textContent = 'light_mode';
+        if (thLbl)  thLbl.textContent  = currentLang === 'ar' ? 'الوضع النهاري' : 'Light Mode';
+      } else {
+        inner.style.background = '#ffffff'; inner.style.color = '#192420'; inner.style.border = '1px solid #e5e7eb';
+        stats.style.borderColor = '#e5e7eb'; stats.style.color = '#192420';
+        div.style.background = '#e5e7eb'; info.style.color = '#505661';
+        actions.forEach(a => { a.style.color = '#192420'; });
+        const pA = document.getElementById('pb-action-profile');
+        const sA = document.getElementById('pb-action-signout');
+        const tA = document.getElementById('pb-action-theme');
+        if (pA) { pA.onmouseover = () => pA.style.background='#f0f4f2'; pA.onmouseout = () => pA.style.background='transparent'; }
+        if (sA) { sA.style.color='#dc2626'; sA.onmouseover = () => sA.style.background='#fff0f0'; sA.onmouseout = () => { sA.style.background='transparent'; sA.style.color='#dc2626'; }; }
+        if (tA) { tA.onmouseover = () => tA.style.background='#f0f4f2'; tA.onmouseout = () => tA.style.background='transparent'; }
+        if (thIcon) thIcon.textContent = 'dark_mode';
+        if (thLbl)  thLbl.textContent  = currentLang === 'ar' ? 'الوضع الداكن' : 'Dark Mode';
+      }
+    }
+
+    function applyProfileBadgeLang() {
+      const isAr = currentLang === 'ar';
+      const set = (id, ar, en) => { const el = document.getElementById(id); if (el) el.textContent = isAr ? ar : en; };
+      set('pb-name',        'د. أحمد عبد الرحمن',         'Dr. Ahmed Abdelrahman');
+      set('pb-badge-lbl',   'معتمد',                        'Verified');
+      set('pb-role',        'أستاذ المادة • منسق الأقسام', 'Professor • Dept. Coordinator');
+      set('pb-stat1-lbl',   'مقررات',                       'Courses');
+      set('pb-stat2-lbl',   'إنجاز',                        'Progress');
+      set('pb-stat3-lbl',   'الفصل',                        'Term');
+      set('pb-dept',        'قسم العلوم الأكاديمية',        'Academic Sciences Dept.');
+      set('pb-status',      'متصل ونشط',                    'Online & Active');
+      set('pb-lbl-profile', currentLang === 'ar' ? 'ملفك الشخصي' : 'Your Profile', currentLang === 'ar' ? 'ملفك الشخصي' : 'Your Profile');
+      set('pb-lbl-signout', 'تسجيل الخروج',                 'Sign Out');
+    }
+
+    window.addEventListener('click', (e) => {
+      if (!profileBadgeOpen) return;
+      const badge = document.getElementById('profile-badge');
+      const trigger = document.querySelector('#sidebar-footer-box button');
+      if (badge && !badge.contains(e.target) && trigger && !trigger.contains(e.target)) closeProfileBadge();
+    }, true);
   </script>
 </body>
 </html>
