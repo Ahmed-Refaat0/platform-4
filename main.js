@@ -183,7 +183,8 @@ function applyLanguage(lang) {
     // Navigation
     document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
     document.getElementById('nav-lbl-videos').innerText = "الفيديوهات التعليمية";
-    document.getElementById('nav-lbl-books').innerText = "المكتبة والكتب الدراسية";
+    document.getElementById('nav-lbl-books').innerText = "الكتب والمنهج الدراسي";
+    document.getElementById('nav-lbl-profile').innerText = "ملفك الشخصي";
 
     // Header
     document.getElementById('txt-page-title').innerText = "لوحة التحكم الأكاديمية";
@@ -228,7 +229,8 @@ function applyLanguage(lang) {
     // Navigation
     document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
     document.getElementById('nav-lbl-videos').innerText = "Educational Videos";
-    document.getElementById('nav-lbl-books').innerText = "Library & Textbooks";
+    document.getElementById('nav-lbl-books').innerText = "Books & Curriculum";
+    document.getElementById('nav-lbl-profile').innerText = "Your Profile";
 
     // Header
     document.getElementById('txt-page-title').innerText = "Academic Dashboard";
@@ -410,48 +412,38 @@ function applyProfileBadgeTheme() {
   const stats  = document.getElementById('pb-stats');
   const info   = document.getElementById('pb-info');
   const div    = document.getElementById('pb-divider');
-  const thIcon = document.getElementById('pb-theme-icon');
-  const thLbl  = document.getElementById('pb-lbl-theme');
   const actions = document.querySelectorAll('.pb-action');
 
   if (isDark) {
-    inner.style.background   = '#1b221f';
-    inner.style.color         = '#e1ebe6';
-    inner.style.border        = '1px solid #27332e';
-    stats.style.borderColor   = '#27332e';
-    stats.style.color         = '#e1ebe6';
-    div.style.background      = '#27332e';
-    info.style.color          = '#cbdad3';
+    inner.style.background   = '#111318';
+    inner.style.color         = '#f4f6fa';
+    inner.style.border        = '1px solid #343945';
+    stats.style.borderColor   = '#343945';
+    stats.style.color         = '#f4f6fa';
+    div.style.background      = '#343945';
+    info.style.color          = '#b4bac5';
     actions.forEach(a => {
       a.style.color = '#e1ebe6';
     });
     const profileAction = document.getElementById('pb-action-profile');
     const signOutAction = document.getElementById('pb-action-signout');
-    if (profileAction) { profileAction.onmouseover = () => profileAction.style.background='#252e29'; profileAction.onmouseout = () => profileAction.style.background='transparent'; }
-    if (signOutAction) { signOutAction.onmouseover = () => signOutAction.style.background='#2a1c1c'; signOutAction.style.color='#f87171'; signOutAction.onmouseout = () => { signOutAction.style.background='transparent'; signOutAction.style.color='#e1ebe6'; }; }
-    if (thIcon) thIcon.textContent = 'light_mode';
-    if (thLbl)  thLbl.textContent  = currentLang === 'ar' ? 'الوضع النهاري' : 'Light Mode';
-    const themeAction = document.getElementById('pb-action-theme');
-    if (themeAction) { themeAction.onmouseover = () => themeAction.style.background='#252e29'; themeAction.onmouseout = () => themeAction.style.background='transparent'; }
+    if (profileAction) { profileAction.onmouseover = () => profileAction.style.background='#222630'; profileAction.onmouseout = () => profileAction.style.background='transparent'; }
+    if (signOutAction) { signOutAction.onmouseover = () => signOutAction.style.background='#2a1c1c'; signOutAction.style.color='#f87171'; signOutAction.onmouseout = () => { signOutAction.style.background='transparent'; signOutAction.style.color='#f4f6fa'; }; }
   } else {
     inner.style.background   = '#ffffff';
-    inner.style.color         = '#192420';
-    inner.style.border        = '1px solid #e5e7eb';
-    stats.style.borderColor   = '#e5e7eb';
-    stats.style.color         = '#192420';
-    div.style.background      = '#e5e7eb';
+    inner.style.color         = '#111318';
+    inner.style.border        = '1px solid #cbd1d9';
+    stats.style.borderColor   = '#cbd1d9';
+    stats.style.color         = '#111318';
+    div.style.background      = '#cbd1d9';
     info.style.color          = '#505661';
     actions.forEach(a => {
       a.style.color = '#192420';
     });
     const profileAction = document.getElementById('pb-action-profile');
     const signOutAction = document.getElementById('pb-action-signout');
-    if (profileAction) { profileAction.onmouseover = () => profileAction.style.background='#f0f4f2'; profileAction.onmouseout = () => profileAction.style.background='transparent'; }
-    if (signOutAction) { signOutAction.onmouseover = () => signOutAction.style.background='#fff0f0'; signOutAction.style.color='#dc2626'; signOutAction.onmouseout = () => { signOutAction.style.background='transparent'; signOutAction.style.color='#192420'; }; }
-    if (thIcon) thIcon.textContent = 'dark_mode';
-    if (thLbl)  thLbl.textContent  = currentLang === 'ar' ? 'الوضع الداكن' : 'Dark Mode';
-    const themeAction = document.getElementById('pb-action-theme');
-    if (themeAction) { themeAction.onmouseover = () => themeAction.style.background='#f0f4f2'; themeAction.onmouseout = () => themeAction.style.background='transparent'; }
+    if (profileAction) { profileAction.onmouseover = () => profileAction.style.background='#e6eff9'; profileAction.onmouseout = () => profileAction.style.background='transparent'; }
+    if (signOutAction) { signOutAction.onmouseover = () => signOutAction.style.background='#fff0f0'; signOutAction.style.color='#dc2626'; signOutAction.onmouseout = () => { signOutAction.style.background='transparent'; signOutAction.style.color='#111318'; }; }
   }
 }
 

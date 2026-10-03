@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>المكتبة والكتب الدراسية | Academic Digital Library & Textbooks</title>
+  <title>الكتب والمنهج الدراسي | Books & Curriculum</title>
   
   <!-- Google Fonts: Cairo, Inter & Newsreader -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -53,6 +53,14 @@
   <style>
     * {
       box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
     }
     .material-symbols-outlined {
       font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -359,6 +367,19 @@
       #filter-container {
         padding: 1rem;
       }
+      #filter-controls {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        width: 100%;
+      }
+      #filter-controls > div:first-child {
+        grid-column: 1 / -1;
+        width: 100%;
+        min-width: 0;
+      }
+      #filter-controls > div:first-child input {
+        width: 100%;
+      }
       #filter-header-row > div:first-child,
       #filter-header-row > div:last-child {
         width: 100%;
@@ -482,9 +503,16 @@
         <a href="books.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer">
           <div class="flex items-center gap-3">
             <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-300">menu_book</span>
-            <span class="nav-label text-sm" id="nav-lbl-books">المكتبة والمناهج الدراسية</span>
+            <span class="nav-label text-sm" id="nav-lbl-books">الكتب والمنهج الدراسي</span>
           </div>
           <span class="nav-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        </a>
+        <a href="profile.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">account_circle</span>
+            <span class="nav-label text-sm" id="nav-lbl-profile">ملفك الشخصي</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
         </a>
       </nav>
     </div>
@@ -520,10 +548,10 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h1 id="txt-page-title" class="text-xl font-bold tracking-tight text-gray-900">المكتبة الرقمية والكتب الدراسية</h1>
+              <h1 id="txt-page-title" class="text-xl font-bold tracking-tight text-gray-900">الكتب والمنهج الدراسي</h1>
               <span id="txt-page-badge" class="text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]">المراجع المعتمدة 2026</span>
             </div>
-            <p id="txt-page-desc" class="text-xs text-gray-500 font-medium mt-0.5">تصفح وقراءة وتحميل الكتب الأكاديمية والملخصات المقررة لكافة التخصصات الجامعية</p>
+            <p id="txt-page-desc" class="text-xs text-gray-500 font-medium mt-0.5">كتب ومقررات المنهج الدراسي للبكالوريا المصرية، للقراءة والتحميل بصيغة PDF</p>
           </div>
         </div>
 
@@ -564,7 +592,7 @@
       <div id="filter-container" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300">
         
         <!-- Header row of filters -->
-        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4" id="filter-header-row">
+        <div class="flex flex-col 2xl:flex-row 2xl:items-center justify-between gap-4" id="filter-header-row">
           
           <!-- Subject Dropdown List -->
           <div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1">
@@ -591,7 +619,7 @@
           </div>
 
           <!-- Search, Sorting & View Toggle Controls -->
-          <div class="flex items-center flex-wrap gap-2.5">
+          <div class="flex items-center flex-wrap gap-2.5" id="filter-controls">
             <!-- Search Input -->
             <div class="relative flex-1 sm:w-64">
               <span class="absolute inset-y-0 start-0 flex items-center ps-3 text-gray-400 pointer-events-none">
@@ -670,7 +698,7 @@
       <!-- List View: Comprehensive Academic Table view -->
       <div id="books-list" class="hidden overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xs">
         <div class="overflow-x-auto">
-          <table class="w-full text-right text-xs">
+          <table class="w-full min-w-[960px] text-right text-xs">
             <thead id="books-table-head" class="bg-gray-50 text-gray-700 uppercase font-bold border-b border-gray-200">
               <tr>
                 <th scope="col" class="px-5 py-3.5">الكتاب والغلاف</th>
@@ -712,12 +740,7 @@
 
     <!-- Footer -->
     <footer id="main-footer" class="bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <span id="txt-footer-left-1" class="font-bold text-gray-800">بوابة النظام الأكاديمي</span>
-          <span>•</span>
-          <span id="txt-footer-left-2">المكتبة الرقمية والمناهج المعتمدة</span>
-        </div>
+      <div class="flex items-center justify-center text-center">
         <div>
           <span id="txt-footer-right">جميع الحقوق الأكاديمية محفوظة © 2026</span>
         </div>
@@ -776,7 +799,11 @@
           <div class="flex gap-4 p-4 rounded-xl border border-gray-200 bg-gray-50/50" id="bmodal-info-card">
             <!-- 3D Book Cover -->
             <div class="w-28 sm:w-32 h-40 sm:h-44 rounded-lg overflow-hidden shrink-0 book-cover-3d relative bg-gray-900 border border-gray-300">
-              <div id="bmodal-cover-img" class="w-full h-full bg-gray-900" aria-hidden="true"></div>
+              <img id="bmodal-cover-img" class="w-full h-full object-cover bg-white" alt=""/>
+              <div id="bmodal-cover-fallback" class="hidden w-full h-full flex-col items-center justify-center gap-3 p-3 text-center bg-gradient-to-br from-[#e9f2ee] to-[#d7e6df] text-[#1e3e34]">
+                <span class="material-symbols-outlined text-3xl">menu_book</span>
+                <span id="bmodal-cover-fallback-title" class="text-[10px] font-bold line-clamp-4"></span>
+              </div>
               <div class="absolute inset-y-0 start-0 w-2.5 bg-black/40 book-cover-spine"></div>
             </div>
 
@@ -846,8 +873,8 @@
               <span class="font-bold text-gray-800" id="txt-reader-title">معاينة صفحات الكتاب الأكاديمي</span>
             </div>
 
-            <!-- Page Navigation Controls -->
-            <div class="flex items-center gap-1.5">
+            <!-- PDF controls are provided by the embedded document viewer. -->
+            <div class="hidden">
               <button onclick="prevPage()" class="p-1 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer" title="الصفحة السابقة">
                 <span class="material-symbols-outlined text-[16px]">chevron_right</span>
               </button>
@@ -863,11 +890,16 @@
                 <span class="material-symbols-outlined text-[16px]">zoom_out</span>
               </button>
             </div>
+            <a id="btn-reader-open" href="#" target="_blank" rel="noopener" class="p-1.5 rounded-md bg-gray-100 hover:bg-gray-200 text-gray-700 transition" title="فتح PDF في نافذة جديدة">
+              <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+            </a>
           </div>
 
           <!-- Realistic Academic Book Page Canvas -->
           <div class="flex-1 p-6 overflow-y-auto flex items-center justify-center bg-gray-100/60" id="reader-viewport">
-            <div id="book-page-sheet" class="w-full max-w-xl bg-white rounded-lg shadow-md border border-gray-300 p-8 text-right font-serif leading-relaxed text-gray-900 transition-all duration-300 relative select-none">
+            <iframe id="book-pdf-viewer" class="w-full min-h-[65vh] rounded-lg bg-white shadow-sm" title="معاينة الكتاب PDF"></iframe>
+            <div id="book-pdf-unavailable" class="hidden text-center text-sm text-gray-500">لا يتوفر ملف PDF لهذا الكتاب.</div>
+            <div id="book-page-sheet" class="hidden w-full max-w-xl bg-white rounded-lg shadow-md border border-gray-300 p-8 text-right font-serif leading-relaxed text-gray-900 transition-all duration-300 relative select-none">
               
               <!-- Page Header -->
               <div class="flex items-center justify-between text-[11px] text-gray-400 font-sans border-b border-gray-200 pb-3 mb-5">
@@ -1688,6 +1720,45 @@
       }
     ];
 
+    const providedPdfSources = [
+      { id: 'pdf-arabic-assessments', titleAr: 'اللغة العربية - التقييمات', titleEn: 'Arabic Language - Assessments', fileName: 'Arabic-EB-Assessments-1.pdf', pages: 88, fileSize: '8.1 MB', sectionAr: 'التقييمات', sectionEn: 'Assessments' },
+      { id: 'pdf-arabic-part-1', titleAr: 'اللغة العربية - الجزء الأول', titleEn: 'Arabic Language - Part 1', fileName: 'Arabic-EB-part1.pdf', pages: 164, fileSize: '34.0 MB', sectionAr: 'الجزء الأول', sectionEn: 'Part 1' },
+      { id: 'pdf-arabic-part-2', titleAr: 'اللغة العربية - الجزء الثاني', titleEn: 'Arabic Language - Part 2', fileName: 'Arabic-EB-part2.pdf', pages: 175, fileSize: '22.7 MB', sectionAr: 'الجزء الثاني', sectionEn: 'Part 2' },
+      { id: 'pdf-history-assessments', titleAr: 'تاريخ مصر - التقييمات', titleEn: 'Egyptian History - Assessments', fileName: 'EgyptianHistory-Ar-EB-Assessments-1.pdf', pages: 88, fileSize: '1.0 MB', sectionAr: 'التقييمات', sectionEn: 'Assessments' },
+      { id: 'pdf-history-part-1', titleAr: 'تاريخ مصر - الجزء الأول', titleEn: 'Egyptian History - Part 1', fileName: 'EgyptianHistory-Ar-EB-part1.pdf', pages: 127, fileSize: '54.3 MB', sectionAr: 'الجزء الأول', sectionEn: 'Part 1' },
+      { id: 'pdf-history-part-2', titleAr: 'تاريخ مصر - الجزء الثاني', titleEn: 'Egyptian History - Part 2', fileName: 'EgyptianHistory-Ar-EB-part2.pdf', pages: 114, fileSize: '26.4 MB', sectionAr: 'الجزء الثاني', sectionEn: 'Part 2' },
+      { id: 'pdf-english-assessments', titleAr: 'اللغة الإنجليزية - التقييمات', titleEn: 'English Language - Assessments', fileName: 'Eng-L1-EB-Assessments-1.pdf', pages: 88, fileSize: '3.3 MB', sectionAr: 'التقييمات', sectionEn: 'Assessments' },
+      { id: 'pdf-english-part-1', titleAr: 'اللغة الإنجليزية - الجزء الأول', titleEn: 'English Language - Part 1', fileName: 'Eng-L1-EB-Part1.pdf', pages: 172, fileSize: '33.8 MB', sectionAr: 'الجزء الأول', sectionEn: 'Part 1' },
+      { id: 'pdf-english-part-2', titleAr: 'اللغة الإنجليزية - الجزء الثاني', titleEn: 'English Language - Part 2', fileName: 'Eng-L1-EB-Part2.pdf', pages: 164, fileSize: '32.0 MB', sectionAr: 'الجزء الثاني', sectionEn: 'Part 2' },
+      { id: 'pdf-ai-assessments', titleAr: 'البرمجة والذكاء الاصطناعي - التقييمات', titleEn: 'Programming & AI - Assessments', fileName: 'Programming-ArtificialIntelligence-Ar-EB-Assessments-1.pdf', pages: 87, fileSize: '1.0 MB', sectionAr: 'التقييمات', sectionEn: 'Assessments' },
+      { id: 'pdf-ai-part-1', titleAr: 'البرمجة والذكاء الاصطناعي - الجزء الأول', titleEn: 'Programming & AI - Part 1', fileName: 'Programming-ArtificialIntelligence-Ar-EB-part1.pdf', pages: 95, fileSize: '31.4 MB', sectionAr: 'الجزء الأول', sectionEn: 'Part 1' },
+      { id: 'pdf-ai-part-2', titleAr: 'البرمجة والذكاء الاصطناعي - الجزء الثاني', titleEn: 'Programming & AI - Part 2', fileName: 'Programming-ArtificialIntelligence-Ar-EB-part2.pdf', pages: 77, fileSize: '19.5 MB', sectionAr: 'الجزء الثاني', sectionEn: 'Part 2' },
+      { id: 'pdf-story-arabic', titleAr: 'قصة باللغة العربية: من روائع الأدب', titleEn: 'Arabic Story: Masterpieces of Literature', fileName: 'Story-Ar-EB.pdf', pages: 130, fileSize: '15.6 MB', sectionAr: 'قصة للقراءة', sectionEn: 'Reading story' },
+      { id: 'pdf-story-english', titleAr: 'قصة باللغة الإنجليزية - المستوى الأول', titleEn: 'English Story - Level 1', fileName: 'Story-En-EB-L1.pdf', pages: 78, fileSize: '3.1 MB', sectionAr: 'قصة للقراءة', sectionEn: 'Reading story' }
+    ];
+    const providedPdfBooks = providedPdfSources.map(source => ({
+      ...source,
+      subject: 'second-secondary-baccalaureate',
+      authorsAr: 'وزارة التربية والتعليم والتعليم الفني',
+      authorsEn: 'Ministry of Education and Technical Education',
+      editionAr: `البكالوريا المصرية • ${source.sectionAr}`,
+      editionEn: `Egyptian Baccalaureate • ${source.sectionEn}`,
+      format: 'PDF',
+      downloads: 0,
+      rating: 0,
+      reviewsCount: 0,
+      badgeAr: 'كتاب دراسي',
+      badgeEn: 'Textbook',
+      badgeColor: 'blue',
+      thumbnail: `assets/images/books/${source.fileName.replace(/\.pdf$/i, '.jpg')}`,
+      pdfPath: `PDF%20Books/${source.fileName}`,
+      date: '2026-01-01',
+      descriptionAr: `نسخة PDF من الكتاب المدرسي ضمن مناهج البكالوريا المصرية، ${source.sectionAr}.`,
+      descriptionEn: `PDF textbook from the Egyptian Baccalaureate curriculum, ${source.sectionEn}.`,
+      chaptersAr: [],
+      chaptersEn: []
+    }));
+
     // Load from localStorage if present
     let allBooks = [];
     try {
@@ -1701,7 +1772,12 @@
     } catch (e) {
       allBooks = [...initialBooks];
     }
-    allBooks = normalizeSchoolGradeRecords(allBooks);
+    const seededBookIds = new Set(initialBooks.map(book => book.id));
+    const providedBookIds = new Set(providedPdfBooks.map(book => book.id));
+    allBooks = normalizeSchoolGradeRecords([
+      ...providedPdfBooks,
+      ...allBooks.filter(book => !seededBookIds.has(book.id) && !providedBookIds.has(book.id))
+    ]);
     try {
       localStorage.setItem('platform_books', JSON.stringify(allBooks));
     } catch (e) {}
@@ -1833,7 +1909,7 @@
 
         // Filter Container
         filterContainer.className = "bg-[#1b221f] rounded-2xl border border-[#27332e] p-5 shadow-sm transition-all duration-300";
-        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4";
+        document.getElementById('filter-header-row').className = "flex flex-col 2xl:flex-row 2xl:items-center justify-between gap-4";
         filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#34d399]";
         document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-[#e1ebe6]";
         
@@ -1850,7 +1926,6 @@
 
         // Footer
         mainFooter.className = "bg-[#171c1a] border-t border-[#25332d] py-4 px-8 text-xs text-[#8fa39b] mt-auto transition-colors duration-300";
-        document.getElementById('txt-footer-left-1').className = "font-bold text-white";
 
       } else {
         // LIGHT THEME
@@ -1880,7 +1955,7 @@
 
         // Filter Container
         filterContainer.className = "bg-white rounded-2xl border border-gray-200 p-5 shadow-xs transition-all duration-300";
-        document.getElementById('filter-header-row').className = "flex flex-col lg:flex-row lg:items-center justify-between gap-4";
+        document.getElementById('filter-header-row').className = "flex flex-col 2xl:flex-row 2xl:items-center justify-between gap-4";
         filterSubjectIcon.className = "material-symbols-outlined text-[20px] text-[#1e3e34]";
         document.getElementById('lbl-subject-select').className = "text-xs sm:text-sm font-bold text-gray-800";
         
@@ -1897,7 +1972,6 @@
 
         // Footer
         mainFooter.className = "bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300";
-        document.getElementById('txt-footer-left-1').className = "font-bold text-gray-800";
       }
     }
 
@@ -1912,6 +1986,7 @@
       if (lang === 'ar') {
         root.setAttribute('dir', 'rtl');
         root.setAttribute('lang', 'ar');
+        document.title = "الكتب والمنهج الدراسي | Books & Curriculum";
         body.className = body.className.replace('text-left', 'text-right');
         btnLang.querySelector('span:last-child').innerText = "English";
         txtTheme.innerText = currentTheme === 'dark' ? 'الوضع النهاري' : 'الوضع الداكن';
@@ -1922,9 +1997,9 @@
         document.getElementById('txt-user-name').innerText = "د. أحمد عبد الرحمن";
         document.getElementById('txt-user-role').innerText = "أستاذ المادة • منسق المراجع العلمية";
         
-        document.getElementById('txt-page-title').innerText = "المكتبة الرقمية والكتب الدراسية";
+        document.getElementById('txt-page-title').innerText = "الكتب والمنهج الدراسي";
         document.getElementById('txt-page-badge').innerText = "المراجع المعتمدة 2026";
-        document.getElementById('txt-page-desc').innerText = "تصفح وقراءة وتحميل الكتب الأكاديمية والملخصات المقررة لكافة التخصصات الجامعية";
+        document.getElementById('txt-page-desc').innerText = "كتب ومقررات المنهج الدراسي للبكالوريا المصرية، للقراءة والتحميل بصيغة PDF";
         
         document.getElementById('txt-upload-btn').innerText = "إضافة كتاب جديد";
         document.getElementById('txt-fav-filter').innerText = "المحفوظات";
@@ -1934,10 +2009,9 @@
 
         document.getElementById('nav-lbl-dashboard').innerText = "لوحة التحكم الأكاديمية";
         document.getElementById('nav-lbl-videos').innerText = "الفيديوهات التعليمية";
-        document.getElementById('nav-lbl-books').innerText = "المكتبة والمناهج الدراسية";
+        document.getElementById('nav-lbl-books').innerText = "الكتب والمنهج الدراسي";
+        document.getElementById('nav-lbl-profile').innerText = "ملفك الشخصي";
 
-        document.getElementById('txt-footer-left-1').innerText = "بوابة النظام الأكاديمي";
-        document.getElementById('txt-footer-left-2').innerText = "المكتبة الرقمية والمناهج المعتمدة";
         document.getElementById('txt-footer-right').innerText = "جميع الحقوق الأكاديمية محفوظة © 2026";
         document.getElementById('credits-title').innerText = "فريق التطوير";
         document.getElementById('credits-frontend-role').innerText = "front-end";
@@ -1960,6 +2034,7 @@
         // ENGLISH
         root.setAttribute('dir', 'ltr');
         root.setAttribute('lang', 'en');
+        document.title = "Books & Curriculum | الكتب والمنهج الدراسي";
         body.className = body.className.replace('text-right', 'text-left');
         btnLang.querySelector('span:last-child').innerText = "العربية";
         txtTheme.innerText = currentTheme === 'dark' ? 'Light Mode' : 'Dark Mode';
@@ -1970,9 +2045,9 @@
         document.getElementById('txt-user-name').innerText = "Dr. Ahmed Abdelrahman";
         document.getElementById('txt-user-role').innerText = "Course Professor • Library Coordinator";
 
-        document.getElementById('txt-page-title').innerText = "Academic Library & Textbooks";
+        document.getElementById('txt-page-title').innerText = "Books & Curriculum";
         document.getElementById('txt-page-badge').innerText = "Accredited Syllabi 2026";
-        document.getElementById('txt-page-desc').innerText = "Explore, read, and download university textbooks, references, and curated lecture manuals";
+        document.getElementById('txt-page-desc').innerText = "Read and download Egyptian Baccalaureate textbooks and curriculum PDFs";
 
         document.getElementById('txt-upload-btn').innerText = "Add New Book";
         document.getElementById('txt-fav-filter').innerText = "Bookmarks";
@@ -1982,10 +2057,9 @@
 
         document.getElementById('nav-lbl-dashboard').innerText = "Academic Dashboard";
         document.getElementById('nav-lbl-videos').innerText = "Lecture Videos";
-        document.getElementById('nav-lbl-books').innerText = "Library & Textbooks";
+        document.getElementById('nav-lbl-books').innerText = "Books & Curriculum";
+        document.getElementById('nav-lbl-profile').innerText = "Your Profile";
 
-        document.getElementById('txt-footer-left-1').innerText = "Academic Faculty Portal";
-        document.getElementById('txt-footer-left-2').innerText = "Digital Textbooks & Library";
         document.getElementById('txt-footer-right').innerText = "All Academic Rights Reserved © 2026";
         document.getElementById('credits-title').innerText = "Project team";
         document.getElementById('credits-frontend-role').innerText = "front-end";
@@ -2217,8 +2291,8 @@
       const grid = document.getElementById('books-grid');
       
       grid.innerHTML = filtered.map(item => {
-        const title = '';
-        const authors = '';
+        const title = isAr ? item.titleAr : item.titleEn;
+        const authors = isAr ? item.authorsAr : item.authorsEn;
         const edition = isAr ? item.editionAr : item.editionEn;
         const isBookmarked = bookmarkedBookIds.includes(item.id);
         const readBtnText = isAr ? 'قراءة الكتاب' : 'Read Book';
@@ -2240,7 +2314,7 @@
             <!-- Book Visual Area (3D Spine & Cover) -->
             <div class="p-4 pb-0 bg-gradient-to-b ${isDark ? 'from-[#141b18] to-transparent' : 'from-gray-50/70 to-transparent'}">
               <div class="h-52 w-full overflow-hidden rounded-xl bg-gray-900 relative cursor-pointer flex items-center justify-center" onclick="openBookModal('${item.id}')">
-                <div class="w-full h-full ${isDark ? 'bg-[#151c19]' : 'bg-gray-100'}" aria-hidden="true"></div>
+                ${renderBookCover(item, title, 'absolute inset-0 w-full h-full', isDark)}
                 
                 <!-- Book Spine shadow gradient -->
                 <div class="absolute inset-y-0 start-0 w-3 bg-black/40 book-cover-spine pointer-events-none"></div>
@@ -2269,23 +2343,22 @@
                 <!-- Top metadata: Edition & Rating -->
                 <div class="flex items-center justify-between gap-2 mb-2 text-[11px]">
                   <span class="font-semibold text-gray-500 truncate ${isDark ? 'text-[#8fa39b]' : 'text-gray-500'}">
-                    ${edition}
+                    ${escapeHtml(edition)}
                   </span>
-                  <div class="h-4 w-14 shrink-0"></div>
                 </div>
 
                 <!-- Title -->
                 <h3 
                   onclick="openBookModal('${item.id}')" 
                   class="font-bold text-sm leading-snug line-clamp-2 ${titleClass} cursor-pointer transition-colors mb-2" 
-                  title="${title}"
+                  title="${escapeHtml(title)}"
                   style="min-height: 2.5rem"
-                ></h3>
+                >${escapeHtml(title)}</h3>
 
                 <!-- Authors -->
                 <div class="flex items-center gap-1.5 text-xs ${isDark ? 'text-[#8fa39b]' : 'text-gray-600'} mb-3">
                   <span class="material-symbols-outlined text-[16px] text-emerald-600 shrink-0">person</span>
-                  <span class="line-clamp-1" style="min-height: 1rem"></span>
+                  <span class="line-clamp-1" style="min-height: 1rem">${escapeHtml(authors)}</span>
                 </div>
 
                 <div class="mb-4" style="min-height: 1.25rem"></div>
@@ -2321,9 +2394,10 @@
       const tbody = document.getElementById('books-table-body');
       
       tbody.innerHTML = filtered.map(item => {
-        const title = '';
-        const authors = '';
+        const title = isAr ? item.titleAr : item.titleEn;
+        const authors = isAr ? item.authorsAr : item.authorsEn;
         const edition = isAr ? item.editionAr : item.editionEn;
+        const subject = isAr ? item.subjectNameAr : item.subjectNameEn;
         const isBookmarked = bookmarkedBookIds.includes(item.id);
         const rowBg = isDark ? 
           "hover:bg-[#151c19] text-[#e1ebe6]" : 
@@ -2335,28 +2409,27 @@
             <td class="px-5 py-3">
               <div class="flex items-center gap-3">
                 <div class="w-10 h-14 rounded-md overflow-hidden bg-gray-900 shrink-0 border border-gray-300 relative shadow-2xs">
-                  <div class="w-full h-full bg-gray-100" aria-hidden="true"></div>
+                  ${renderBookCover(item, title, 'w-full h-full', isDark)}
                 </div>
                 <div class="min-w-0 max-w-xs">
-                  <div class="font-bold text-xs line-clamp-1 hover:text-emerald-600 transition-colors">${title}</div>
-                  <div class="text-[10px] text-gray-500 mt-0.5 line-clamp-1">${item.format}</div>
+                  <div class="font-bold text-xs line-clamp-1 hover:text-emerald-600 transition-colors">${escapeHtml(title)}</div>
                 </div>
               </div>
             </td>
 
             <!-- Authors -->
             <td class="px-4 py-3 text-xs text-gray-500">
-              <span class="line-clamp-1">${authors}</span>
+              <span class="line-clamp-1">${escapeHtml(authors)}</span>
             </td>
 
             <!-- Subject -->
             <td class="px-4 py-3">
-              <div class="h-5"></div>
+              <span>${escapeHtml(subject || '')}</span>
             </td>
 
             <!-- Edition -->
             <td class="px-4 py-3 text-xs text-gray-500">
-              <span>${edition}</span>
+              <span>${escapeHtml(edition)}</span>
             </td>
 
             <!-- Pages & Size -->
@@ -2433,6 +2506,29 @@
       if (badge) badge.innerText = bookmarkedBookIds.length;
     }
 
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[character]);
+    }
+
+    function renderBookCover(book, title, className, isDark) {
+      if (book.thumbnail) {
+        return `<img src="${escapeHtml(book.thumbnail)}" alt="${escapeHtml(title)}" class="${className} object-cover" loading="lazy" onerror="this.hidden=true">`;
+      }
+
+      return `
+        <div class="${className} flex flex-col items-center justify-center gap-3 px-4 text-center ${isDark ? 'bg-[#14261f] text-[#cbdad3]' : 'bg-gradient-to-br from-[#e9f2ee] to-[#d7e6df] text-[#1e3e34]'}">
+          <span class="material-symbols-outlined text-4xl">menu_book</span>
+          <span class="text-xs font-bold line-clamp-3">${escapeHtml(title)}</span>
+        </div>
+      `;
+    }
+
     // ================= INTERACTIVE BOOK READER MODAL =================
     function openBookModal(bookId) {
       const book = allBooks.find(b => b.id === bookId);
@@ -2490,15 +2586,40 @@
       }
 
       // Populate Data
-      document.getElementById('bmodal-title').innerText = '';
-      document.getElementById('bmodal-subtitle').innerText = '';
-      document.getElementById('bmodal-edition').innerText = '';
-      document.getElementById('bmodal-authors').innerText = '';
+      const title = isAr ? book.titleAr : book.titleEn;
+      const subjectName = isAr ? book.subjectNameAr : book.subjectNameEn;
+      document.getElementById('bmodal-title').innerText = title;
+      document.getElementById('bmodal-subtitle').innerText = `${subjectName || ''} • ${book.format}`;
+      document.getElementById('bmodal-edition').innerText = isAr ? book.editionAr : book.editionEn;
+      document.getElementById('bmodal-authors').innerText = isAr ? book.authorsAr : book.authorsEn;
       document.getElementById('bmodal-format').innerText = book.format;
       document.getElementById('bmodal-pages').innerText = `${book.pages} ${isAr ? 'صفحة' : 'pages'}`;
       document.getElementById('bmodal-size').innerText = book.fileSize;
-      document.getElementById('bmodal-rating').innerHTML = '';
+      document.getElementById('bmodal-rating').innerText = book.rating ? `★ ${book.rating}` : (isAr ? 'كتاب دراسي' : 'Textbook');
       document.getElementById('bmodal-description').innerText = isAr ? book.descriptionAr : book.descriptionEn;
+      const cover = document.getElementById('bmodal-cover-img');
+      const coverFallback = document.getElementById('bmodal-cover-fallback');
+      const hasCover = Boolean(book.thumbnail);
+      cover.classList.toggle('hidden', !hasCover);
+      coverFallback.classList.toggle('hidden', hasCover);
+      coverFallback.classList.toggle('flex', !hasCover);
+      document.getElementById('bmodal-cover-fallback-title').innerText = title;
+      cover.src = hasCover ? book.thumbnail : '';
+      cover.alt = title;
+      cover.onerror = () => {
+        cover.classList.add('hidden');
+        coverFallback.classList.remove('hidden');
+        coverFallback.classList.add('flex');
+      };
+
+      const pdfViewer = document.getElementById('book-pdf-viewer');
+      const pageSheet = document.getElementById('book-page-sheet');
+      const openPdfButton = document.getElementById('btn-reader-open');
+      pdfViewer.classList.toggle('hidden', !book.pdfPath);
+      pageSheet.classList.toggle('hidden', Boolean(book.pdfPath));
+      openPdfButton.classList.toggle('hidden', !book.pdfPath);
+      pdfViewer.src = book.pdfPath || 'about:blank';
+      openPdfButton.href = book.pdfPath || '#';
 
       // Render TOC
       const tocList = document.getElementById('bmodal-toc-list');
@@ -2595,6 +2716,15 @@
       const isAr = currentLang === 'ar';
       const title = isAr ? currentModalBook.titleAr : currentModalBook.titleEn;
       showToast(isAr ? `جاري بدء تحميل "${title}" (${currentModalBook.fileSize})...` : `Starting download for "${title}" (${currentModalBook.fileSize})...`, "download");
+
+      if (currentModalBook.pdfPath) {
+        const link = document.createElement('a');
+        link.href = currentModalBook.pdfPath;
+        link.download = currentModalBook.fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
       
       // Increment downloads
       currentModalBook.downloads++;
@@ -2614,6 +2744,15 @@
       const isAr = currentLang === 'ar';
       const title = isAr ? book.titleAr : book.titleEn;
       showToast(isAr ? `جاري تحميل "${title}" (${book.fileSize})...` : `Downloading "${title}" (${book.fileSize})...`, "download");
+
+      if (book.pdfPath) {
+        const link = document.createElement('a');
+        link.href = book.pdfPath;
+        link.download = book.fileName;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }
       
       book.downloads++;
       try {
