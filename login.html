@@ -24,16 +24,25 @@
     button, input { font: inherit; }
     button, a { -webkit-tap-highlight-color: transparent; }
     .login-shell {
+      --panel-gap: clamp(2rem, 7vw, 7rem);
       min-height: 100vh;
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       max-width: 1440px;
       margin-inline: auto;
       padding: clamp(1.25rem, 4vw, 3.5rem);
-      gap: clamp(2rem, 7vw, 7rem);
+      gap: var(--panel-gap);
       align-items: center;
     }
-    .login-panel { width: 100%; max-width: 440px; justify-self: center; }
+    .login-panel, .welcome-panel { transition: transform 620ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .login-panel { width: 100%; }
+    .login-panel-content { width: 100%; max-width: 440px; margin-inline: auto; }
+    .login-shell.signup-mode .login-panel { transform: translateX(calc(-100% - var(--panel-gap))); }
+    .login-shell.signup-mode .welcome-panel { transform: translateX(calc(100% + var(--panel-gap))); }
+    @media (min-width: 851px) {
+      #root-html[dir="ltr"] .login-shell.signup-mode .login-panel { transform: translateX(calc(100% + var(--panel-gap))); }
+      #root-html[dir="ltr"] .login-shell.signup-mode .welcome-panel { transform: translateX(calc(-100% - var(--panel-gap))); }
+    }
     .topbar {
       display: flex;
       align-items: center;
@@ -89,6 +98,32 @@
     .eyebrow .material-symbols-outlined { font-size: 1rem; }
     h1 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.25rem); font-weight: 900; letter-spacing: -0.04em; }
     .form-heading p { margin: 0.55rem 0 0; color: var(--muted); font-size: 0.92rem; }
+    .account-switch {
+      display: block;
+      margin: 1.2rem auto 0;
+      padding: 0.35rem 0.5rem;
+      border: 0;
+      color: var(--brand);
+      background: transparent;
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .account-switch:hover { text-decoration: underline; }
+    .welcome-switch {
+      margin-top: 1.4rem;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(255,255,255,0.42);
+      border-radius: 0.8rem;
+      color: #fff;
+      background: rgba(255,255,255,0.12);
+      font-size: 0.8rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background-color 160ms ease, transform 160ms ease;
+    }
+    .welcome-switch:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+    .welcome-switch[hidden], .account-switch[hidden] { display: none; }
     .field { margin-bottom: 1.15rem; }
     .field-label {
       display: flex;
@@ -261,19 +296,25 @@
     .status { display: inline-flex; align-items: center; gap: 0.45rem; }
     .status::before { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: #75e0b3; box-shadow: 0 0 0 4px rgba(117,224,179,0.12); content: ""; }
     @media (max-width: 850px) {
-      .login-shell { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem; }
-      .welcome-panel { min-height: 420px; padding: 2rem; }
+      .login-shell { display: flex; flex-direction: column; gap: 1.5rem; padding: 1.5rem; }
+      .login-panel, .welcome-panel { transition: transform 420ms ease, opacity 220ms ease; }
+      .login-shell .login-panel { transform: none; }
+      .login-shell.signup-mode .login-panel { order: 1; transform: translateY(0.5rem); }
+      .login-shell.signup-mode .welcome-panel { order: 0; transform: translateY(-0.5rem); }
+      .welcome-panel { min-height: 320px; padding: 2rem; }
       .portal-label { display: none; }
     }
     @media (max-width: 680px) {
-      .login-shell { display: flex; min-height: 100vh; flex-direction: column; gap: 1.5rem; padding: 1rem; }
+      .login-shell { min-height: 100vh; gap: 1.5rem; padding: 1rem; }
       .login-panel { order: 0; }
       .welcome-panel { order: 1; width: 100%; min-height: 245px; flex: 0 0 auto; padding: 1.35rem; border-radius: 1.35rem; }
       .welcome-copy { margin-block: 1.5rem; }
       .welcome-copy h2 { max-width: 23rem; margin-top: 0.45rem; font-size: 1.35rem; }
       .welcome-copy p, .feature-list, .welcome-footer { display: none; }
       .welcome-top .brand-mark { width: 2.35rem; height: 2.35rem; }
-      .login-panel { max-width: 460px; padding: 0.25rem 0.35rem 1rem; }
+      .login-panel-content { max-width: 460px; padding: 0.25rem 0.35rem 1rem; }
+      .login-shell.signup-mode .login-panel { order: 1; }
+      .login-shell.signup-mode .welcome-panel { order: 0; }
       .topbar { margin-bottom: 1.75rem; }
       .form-heading { margin-bottom: 1.5rem; }
     }
@@ -284,7 +325,8 @@
 </head>
 <body id="body-app">
   <main class="login-shell">
-    <section class="login-panel" aria-labelledby="login-title">
+    <section class="login-panel" id="account-panel" aria-labelledby="login-title">
+      <div class="login-panel-content">
       <div class="topbar">
         <a class="brand" href="index.html" aria-label="بوابة النظام الأكاديمي" data-ar-label="بوابة النظام الأكاديمي" data-en-label="Academic Portal">
           <span class="brand-mark"><span class="material-symbols-outlined" aria-hidden="true">school</span></span>
@@ -296,7 +338,7 @@
         </div>
       </div>
 
-      <div class="form-heading">
+      <div class="form-heading" id="login-heading">
         <span class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">waving_hand</span><span data-ar="مرحباً بعودتك" data-en="Welcome back">مرحباً بعودتك</span></span>
         <h1 id="login-title" data-ar="تسجيل الدخول" data-en="Sign in to your account">تسجيل الدخول</h1>
         <p data-ar="أدخل بياناتك للوصول إلى بوابتك الأكاديمية." data-en="Enter your details to access your academic portal.">أدخل بياناتك للوصول إلى بوابتك الأكاديمية.</p>
@@ -325,7 +367,49 @@
         <button class="submit-button" type="submit"><span data-ar="تسجيل الدخول" data-en="Sign in">تسجيل الدخول</span><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></button>
         <div class="form-message" id="form-message" role="status" aria-live="polite"></div>
       </form>
+      <button class="account-switch" id="show-signup" type="button" data-ar="ليس لديك حساب؟ إنشاء حساب جديد" data-en="New here? Create an account">ليس لديك حساب؟ إنشاء حساب جديد</button>
+      <div class="form-heading" id="signup-heading" hidden>
+        <span class="eyebrow"><span class="material-symbols-outlined" aria-hidden="true">person_add</span><span data-ar="انضم إلى البوابة" data-en="Join the portal">انضم إلى البوابة</span></span>
+        <h1 id="signup-title" data-ar="إنشاء حساب جديد" data-en="Create your account">إنشاء حساب جديد</h1>
+        <p data-ar="أنشئ حسابك للوصول إلى مواردك الأكاديمية." data-en="Create an account to access your academic resources.">أنشئ حسابك للوصول إلى مواردك الأكاديمية.</p>
+      </div>
+      <form id="signup-form" hidden>
+        <div class="field">
+          <label class="field-label" for="signup-name"><span data-ar="الاسم بالكامل" data-en="Full name">الاسم بالكامل</span></label>
+          <div class="field-control">
+            <span class="material-symbols-outlined field-icon" aria-hidden="true">person</span>
+            <input id="signup-name" name="name" type="text" autocomplete="name" minlength="2" required/>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="signup-email"><span data-ar="البريد الإلكتروني الأكاديمي" data-en="Academic email">البريد الإلكتروني الأكاديمي</span></label>
+          <div class="field-control">
+            <span class="material-symbols-outlined field-icon" aria-hidden="true">mail</span>
+            <input id="signup-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="name@faculty.edu" required/>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="signup-password"><span data-ar="كلمة المرور" data-en="Password">كلمة المرور</span></label>
+          <div class="field-control field-password">
+            <span class="material-symbols-outlined field-icon" aria-hidden="true">lock</span>
+            <input id="signup-password" name="password" type="password" autocomplete="new-password" minlength="8" placeholder="••••••••" required/>
+            <button class="password-toggle" id="signup-password-toggle" type="button" aria-label="إظهار كلمة المرور" title="إظهار كلمة المرور"><span class="material-symbols-outlined" aria-hidden="true">visibility</span></button>
+          </div>
+        </div>
+        <div class="field">
+          <label class="field-label" for="confirm-password"><span data-ar="تأكيد كلمة المرور" data-en="Confirm password">تأكيد كلمة المرور</span></label>
+          <div class="field-control field-password">
+            <span class="material-symbols-outlined field-icon" aria-hidden="true">lock_reset</span>
+            <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password" placeholder="••••••••" required/>
+            <button class="password-toggle" id="confirm-password-toggle" type="button" aria-label="إظهار كلمة المرور" title="إظهار كلمة المرور"><span class="material-symbols-outlined" aria-hidden="true">visibility</span></button>
+          </div>
+        </div>
+        <button class="submit-button" type="submit"><span data-ar="إنشاء حساب" data-en="Create account">إنشاء حساب</span><span class="material-symbols-outlined" aria-hidden="true">arrow_back</span></button>
+        <div class="form-message" id="signup-message" role="status" aria-live="polite"></div>
+      </form>
+      <button class="account-switch" id="show-login" type="button" data-ar="لديك حساب بالفعل؟ تسجيل الدخول" data-en="Already have an account? Sign in" hidden>لديك حساب بالفعل؟ تسجيل الدخول</button>
       <div class="secure-note"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span><span data-ar="دخول آمن إلى بوابة هيئة التدريس" data-en="Secure access to the faculty portal">دخول آمن إلى بوابة هيئة التدريس</span></div>
+      </div>
     </section>
 
     <aside class="welcome-panel" aria-label="بوابة هيئة التدريس" data-ar-label="بوابة هيئة التدريس" data-en-label="Faculty Portal">
@@ -338,8 +422,9 @@
       </div>
       <div class="welcome-copy">
         <span class="material-symbols-outlined" aria-hidden="true">auto_awesome</span>
-        <h2 data-ar="كل ما تحتاجه لإدارة يومك الأكاديمي، في مكان واحد." data-en="Everything you need to manage your academic day, all in one place.">كل ما تحتاجه لإدارة يومك الأكاديمي، في مكان واحد.</h2>
-        <p data-ar="تابع مقرراتك، نظّم مواردك، وابقَ على اطلاع بكل ما يخص العملية التعليمية من خلال بوابة واحدة مصممة لهيئة التدريس." data-en="Track your courses, organize resources, and stay up to date with one portal designed for faculty.">تابع مقرراتك، نظّم مواردك، وابقَ على اطلاع بكل ما يخص العملية التعليمية من خلال بوابة واحدة مصممة لهيئة التدريس.</p>
+        <h2 id="welcome-title" data-ar="كل ما تحتاجه لإدارة يومك الأكاديمي، في مكان واحد." data-en="Everything you need to manage your academic day, all in one place." data-signup-ar="أنشئ حسابك وابدأ رحلتك الأكاديمية معنا." data-signup-en="Create your account and start your academic journey with us.">كل ما تحتاجه لإدارة يومك الأكاديمي، في مكان واحد.</h2>
+        <p id="welcome-description" data-ar="تابع مقرراتك، نظّم مواردك، وابقَ على اطلاع بكل ما يخص العملية التعليمية من خلال بوابة واحدة مصممة لهيئة التدريس." data-en="Track your courses, organize resources, and stay up to date with one portal designed for faculty." data-signup-ar="سجّل بياناتك للانضمام إلى بوابة هيئة التدريس والوصول إلى مواردك التعليمية." data-signup-en="Register to join the faculty portal and access your learning resources.">تابع مقرراتك، نظّم مواردك، وابقَ على اطلاع بكل ما يخص العملية التعليمية من خلال بوابة واحدة مصممة لهيئة التدريس.</p>
+        <button class="welcome-switch" id="welcome-switch" type="button" data-ar="إنشاء حساب جديد" data-en="Create an account" data-signup-ar="العودة لتسجيل الدخول" data-signup-en="Back to sign in">إنشاء حساب جديد</button>
         <div class="feature-list">
           <div class="feature"><span class="material-symbols-outlined" aria-hidden="true">menu_book</span><span data-ar="المقررات والكتب الدراسية" data-en="Courses and learning materials">المقررات والكتب الدراسية</span></div>
           <div class="feature"><span class="material-symbols-outlined" aria-hidden="true">smart_display</span><span data-ar="الفيديوهات والموارد التعليمية" data-en="Videos and educational resources">الفيديوهات والموارد التعليمية</span></div>
@@ -355,8 +440,20 @@
     const themeIcon = document.getElementById('theme-icon');
     const languageToggle = document.getElementById('language-toggle');
     const passwordInput = document.getElementById('password');
-    const passwordToggle = document.getElementById('password-toggle');
+    const passwordToggles = [
+      [passwordInput, document.getElementById('password-toggle')],
+      [document.getElementById('signup-password'), document.getElementById('signup-password-toggle')],
+      [document.getElementById('confirm-password'), document.getElementById('confirm-password-toggle')]
+    ];
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const loginHeading = document.getElementById('login-heading');
+    const signupHeading = document.getElementById('signup-heading');
+    const accountPanel = document.getElementById('account-panel');
+    const shell = document.querySelector('.login-shell');
     const message = document.getElementById('form-message');
+    const signupMessage = document.getElementById('signup-message');
+    const confirmPassword = document.getElementById('confirm-password');
     let currentTheme = localStorage.getItem('site_theme') || 'light';
     let currentLang = localStorage.getItem('site_lang') || 'ar';
 
@@ -371,8 +468,13 @@
       languageToggle.textContent = isArabic ? 'EN' : 'ع';
       languageToggle.setAttribute('aria-label', isArabic ? 'Switch language' : 'تغيير اللغة');
       languageToggle.title = isArabic ? 'English' : 'العربية';
-      passwordToggle.setAttribute('aria-label', isArabic ? (passwordInput.type === 'password' ? 'إظهار كلمة المرور' : 'إخفاء كلمة المرور') : (passwordInput.type === 'password' ? 'Show password' : 'Hide password'));
-      passwordToggle.title = passwordToggle.getAttribute('aria-label');
+      passwordToggles.forEach(([input, toggle]) => {
+        const label = isArabic
+          ? (input.type === 'password' ? 'إظهار كلمة المرور' : 'إخفاء كلمة المرور')
+          : (input.type === 'password' ? 'Show password' : 'Hide password');
+        toggle.setAttribute('aria-label', label);
+        toggle.title = label;
+      });
       document.querySelectorAll('[data-ar][data-en]').forEach(element => {
         element.textContent = isArabic ? element.dataset.ar : element.dataset.en;
       });
@@ -381,7 +483,20 @@
       });
       document.getElementById('email').placeholder = isArabic ? 'name@faculty.edu' : 'name@faculty.edu';
       passwordInput.placeholder = isArabic ? '••••••••' : '••••••••';
-      document.querySelector('button[type="submit"] .material-symbols-outlined').textContent = isArabic ? 'arrow_back' : 'arrow_forward';
+      document.querySelectorAll('.submit-button .material-symbols-outlined').forEach(icon => {
+        icon.textContent = isArabic ? 'arrow_back' : 'arrow_forward';
+      });
+      const isSignupMode = shell.classList.contains('signup-mode');
+      document.getElementById('welcome-title').textContent = isSignupMode
+        ? (isArabic ? document.getElementById('welcome-title').dataset.signupAr : document.getElementById('welcome-title').dataset.signupEn)
+        : (isArabic ? document.getElementById('welcome-title').dataset.ar : document.getElementById('welcome-title').dataset.en);
+      document.getElementById('welcome-description').textContent = isSignupMode
+        ? (isArabic ? document.getElementById('welcome-description').dataset.signupAr : document.getElementById('welcome-description').dataset.signupEn)
+        : (isArabic ? document.getElementById('welcome-description').dataset.ar : document.getElementById('welcome-description').dataset.en);
+      const welcomeSwitch = document.getElementById('welcome-switch');
+      welcomeSwitch.textContent = isSignupMode
+        ? (isArabic ? welcomeSwitch.dataset.signupAr : welcomeSwitch.dataset.signupEn)
+        : (isArabic ? welcomeSwitch.dataset.ar : welcomeSwitch.dataset.en);
     }
 
     themeToggle.addEventListener('click', () => {
@@ -394,17 +509,53 @@
       localStorage.setItem('site_lang', currentLang);
       applyPreferences();
     });
-    passwordToggle.addEventListener('click', () => {
-      passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-      passwordToggle.querySelector('.material-symbols-outlined').textContent = passwordInput.type === 'password' ? 'visibility' : 'visibility_off';
-      applyPreferences();
+    passwordToggles.forEach(([input, toggle]) => {
+      toggle.addEventListener('click', () => {
+        input.type = input.type === 'password' ? 'text' : 'password';
+        toggle.querySelector('.material-symbols-outlined').textContent = input.type === 'password' ? 'visibility' : 'visibility_off';
+        applyPreferences();
+      });
     });
-    document.getElementById('login-form').addEventListener('submit', event => {
+    function setAccountMode(signup) {
+      shell.classList.toggle('signup-mode', signup);
+      loginForm.hidden = signup;
+      signupForm.hidden = !signup;
+      loginHeading.hidden = signup;
+      signupHeading.hidden = !signup;
+      document.getElementById('show-signup').hidden = signup;
+      document.getElementById('show-login').hidden = !signup;
+      accountPanel.setAttribute('aria-labelledby', signup ? 'signup-title' : 'login-title');
+      message.classList.remove('visible');
+      signupMessage.classList.remove('visible');
+      applyPreferences();
+    }
+    document.getElementById('show-signup').addEventListener('click', () => setAccountMode(true));
+    document.getElementById('show-login').addEventListener('click', () => setAccountMode(false));
+    document.getElementById('welcome-switch').addEventListener('click', () => {
+      setAccountMode(!shell.classList.contains('signup-mode'));
+    });
+    loginForm.addEventListener('submit', event => {
       event.preventDefault();
       message.textContent = currentLang === 'ar'
         ? 'واجهة تسجيل الدخول جاهزة، لكن لم يتم ربطها بخدمة مصادقة بعد.'
         : 'The sign-in page is ready, but it is not connected to an authentication service yet.';
       message.classList.add('visible');
+    });
+    function validateConfirmPassword() {
+      confirmPassword.setCustomValidity(
+        confirmPassword.value && confirmPassword.value !== document.getElementById('signup-password').value
+          ? (currentLang === 'ar' ? 'كلمتا المرور غير متطابقتين.' : 'Passwords do not match.')
+          : ''
+      );
+    }
+    confirmPassword.addEventListener('input', validateConfirmPassword);
+    document.getElementById('signup-password').addEventListener('input', validateConfirmPassword);
+    signupForm.addEventListener('submit', event => {
+      event.preventDefault();
+      signupMessage.textContent = currentLang === 'ar'
+        ? 'نموذج إنشاء الحساب جاهز، لكن لم يتم ربطه بخدمة تسجيل بعد.'
+        : 'The account creation form is ready, but it is not connected to a registration service yet.';
+      signupMessage.classList.add('visible');
     });
     document.getElementById('forgot-link').addEventListener('click', event => {
       event.preventDefault();
