@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="root-html" class="theme-light">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لوحة التحكم | بوابة النظام الأكاديمي</title>
+
+  <!-- Google Fonts: Cairo, Inter & Newsreader -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            forest: {
+              sidebar: "#414141",
+              sidebarHover: "#555555",
+              sidebarActive: "#4d4d4d",
+              primary: "#4d4d4d",
+              primaryHover: "#3d3d3d",
+              accent: "#5b5b5b",
+              mint: "#999999",
+              border: "#c8c8c8",
+              light: "#e5e5e5"
+            },
+            softdark: {
+              bg: "#1c1c1c",
+              surface: "#252525",
+              card: "#2d2d2d",
+              cardBorder: "#484744",
+              sidebar: "#242424",
+              sidebarBorder: "#494949",
+              sidebarActive: "#353535",
+              text: "#e8e8e8",
+              muted: "#b7b7b7"
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'Inter', 'sans-serif'],
+            serif: ['Newsreader', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(30, 62, 52, 0.25);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(52, 211, 153, 0.6);
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .animate-modal {
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #txt-brand-badge,
+    #txt-page-badge,
+    #fav-count-badge,
+    #fav-filter-indicator {
+      visibility: hidden !important;
+    }
+
+    /* ===== Profile Badge Panel ===== */
+    @keyframes profileSlideUp {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)   scale(1); }
+    }
+    @keyframes profileSlideDown {
+      from { opacity: 1; transform: translateY(0)   scale(1); }
+      to   { opacity: 0; transform: translateY(12px) scale(0.97); }
+    }
+    #profile-badge {
+      position: fixed;
+      /* mobile: just above the bottom nav bar */
+      bottom: calc(4.5rem + 12px);
+      inset-inline-start: 1rem;
+      width: 15rem;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0;
+    }
+    #profile-badge.open {
+      pointer-events: auto;
+      animation: profileSlideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #profile-badge.closing {
+      animation: profileSlideDown 0.18s ease-in forwards;
+    }
+    @media (min-width: 768px) {
+      /* desktop: fixed above the sidebar footer, aligned to sidebar start */
+      #profile-badge {
+        bottom: 5.5rem;      /* height of footer area + gap */
+        inset-inline-start: 0.75rem;
+        width: 15.5rem;
+      }
+    }
+    .profile-badge-inner {
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.32), 0 2px 8px rgba(0,0,0,0.18);
+    }
+    /* avatar ring gradient */
+    .profile-avatar-ring {
+      background: conic-gradient(from 135deg, #72a9dc, #2d69a8, #72a9dc);
+      border-radius: 50%;
+      padding: 2px;
+      display: inline-flex;
+    }
+    .profile-avatar-ring-inner {
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* stat item */
+    .pb-stat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.15rem;
+    }
+    .pb-stat-val {
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .pb-stat-lbl {
+      font-size: 0.6rem;
+      font-weight: 600;
+      opacity: 0.65;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    /* action row */
+    .pb-action {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 0.75rem;
+      border-radius: 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 140ms ease, color 140ms ease;
+      border: none;
+      width: 100%;
+      text-align: start;
+      background: transparent;
+    }
+    .project-credits {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
+      margin-top: 0.875rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e5e7eb;
+    }
+    .project-credits__brand {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      color: #1e3e34;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .project-credits__mark {
+      display: inline-flex;
+      width: 2rem;
+      height: 2rem;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #d1ded9;
+      border-radius: 0.625rem;
+      background: #e9f2ee;
+      color: #1e3e34;
+    }
+    .project-credits__team {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem 1.25rem;
+    }
+    .project-credit-role {
+      display: block;
+      color: #6b7280;
+      font-size: 0.625rem;
+      font-weight: 700;
+    }
+    .project-credit-name {
+      display: block;
+      color: #374151;
+      font-size: 0.6875rem;
+      font-weight: 700;
+    }
+    .dark .project-credits {
+      border-color: #27332e;
+      color: #8fa39b;
+    }
+    .dark .project-credits__brand,
+    .dark .project-credit-name {
+      color: #e1ebe6;
+    }
+    .dark .project-credits__mark {
+      border-color: #234235;
+      background: #14261f;
+      color: #34d399;
+    }
+    @media (max-width: 767px) {
+      body#body-app {
+        display: block;
+        padding-bottom: 4.5rem;
+      }
+      #sidebar {
+        position: fixed;
+        inset-inline: 0;
+        top: auto;
+        bottom: 0;
+        width: 100% !important;
+        height: auto;
+        min-height: 0;
+        flex-direction: row;
+        border-inline: 0;
+        border-top: 1px solid #224439;
+      }
+      #sidebar > div:first-child {
+        display: contents;
+      }
+      #sidebar-header-box {
+        display: none;
+      }
+      #sidebar-nav {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0;
+        padding: 0.35rem 0.5rem;
+      }
+      #sidebar-nav .nav-chevron,
+      #sidebar-nav .nav-dot,
+      #sidebar-footer-box {
+        display: none;
+      }
+      #sidebar-nav .nav-item {
+        min-width: 0;
+        min-height: 3.5rem;
+        flex: 1;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.25rem;
+        padding: 0.35rem 0.1rem;
+      }
+      #sidebar-nav .nav-item > div {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.2rem;
+      }
+      #sidebar-nav .nav-label {
+        display: block;
+        max-width: 100%;
+        font-size: 0.625rem;
+        line-height: 1.2;
+        text-align: center;
+      }
+      body > div.flex-1.flex.flex-col {
+        min-width: 0;
+      }
+      #main-header {
+        padding-inline: 1rem;
+      }
+      #main-header #txt-page-desc,
+      #main-header #txt-page-badge {
+        display: none;
+      }
+      #cards-main {
+        padding: 1rem;
+      }
+      #main-footer {
+        padding-inline: 1rem;
+      }
+      .project-credits {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .project-credits__team {
+        width: 100%;
+        gap: 0.5rem 0.75rem;
+      }
+    }
+    @media (max-width: 420px) {
+      #txt-lang-toggle {
+        display: none;
+      }
+      #btn-theme-toggle,
+      #btn-lang-toggle {
+        padding-inline: 0.65rem;
+      }
+    }
+    @media (max-width: 360px) {
+      #txt-quick-videos {
+        display: none;
+      }
+      #btn-quick-videos {
+        padding-inline: 0.65rem;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="theme.css"/>
+</head>
+<body id="body-app" class="min-h-screen flex text-right antialiased bg-[#ffffff] text-[#192420] transition-colors duration-300">
+
+  <!-- ================= 1. القائمة الجانبية (SIDEBAR) ================= -->
+  <aside id="sidebar" class="w-64 bg-[#132821] text-white flex flex-col justify-between shrink-0 min-h-screen sticky top-0 h-screen z-30 border-l border-[#1f3f35] select-none shadow-xl transition-all duration-300">
+    <!-- Top Section -->
+    <div class="p-5 flex flex-col gap-6">
+      <!-- Logo Header -->
+      <a href="dashboard.html" id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer">
+        <div id="sidebar-logo-icon" class="w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300 group-hover:bg-[#2c5f4e] transition-colors">
+          <span class="material-symbols-outlined text-2xl">school</span>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <span id="txt-brand-name" class="font-bold text-base text-white tracking-wide">النظام الأكاديمي</span>
+            <span id="txt-brand-badge" class="text-[10px] bg-[#244d3f] text-emerald-200 px-1.5 py-0.5 rounded border border-[#356655] font-semibold leading-tight">المنصة</span>
+          </div>
+          <span id="txt-brand-sub" class="text-xs text-emerald-100/60 mt-0.5">بوابة هيئة التدريس</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="flex flex-col gap-1.5" id="sidebar-nav">
+        <!-- Item 1 - لوحة التحكم الأكاديمية (Active on this page) -->
+        <a href="dashboard.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#244d3f] text-white font-bold shadow-inner transition-all border border-[#3a6e5b]/40 cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-300">dashboard</span>
+            <span class="nav-label text-sm" id="nav-lbl-dashboard">لوحة التحكم الأكاديمية</span>
+          </div>
+          <span class="nav-dot w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        </a>
+
+        <!-- Item 2 - الفيديوهات التعليمية (Link to videos.html) -->
+        <a href="videos.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">smart_display</span>
+            <span class="nav-label text-sm" id="nav-lbl-videos">الفيديوهات التعليمية</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+
+        <!-- Item 3 - الكتب والمنهج الدراسي (Link to books.html) -->
+        <a href="books.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">menu_book</span>
+            <span class="nav-label text-sm" id="nav-lbl-books">الكتب والمنهج الدراسي</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+        <a href="profile.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+          <div class="flex items-center gap-3">
+            <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">account_circle</span>
+            <span class="nav-label text-sm" id="nav-lbl-profile">ملفك الشخصي</span>
+          </div>
+          <span class="nav-chevron material-symbols-outlined text-[16px] text-emerald-100/40">chevron_left</span>
+        </a>
+      </nav>
+    </div>
+
+    <!-- Bottom Profile Box in Green -->
+    <div id="sidebar-footer-box" class="p-4 border-t border-[#224439] bg-[#0f211b]">
+      <button onclick="openModal('user')" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#1b382e] transition-colors cursor-pointer group">
+        <div class="flex items-center gap-3">
+          <div id="user-avatar-box" class="w-8 h-8 rounded-lg bg-[#244d3f] text-emerald-200 flex items-center justify-center text-sm font-bold border border-[#356655]/50">
+            <span class="material-symbols-outlined text-lg">person</span>
+          </div>
+          <div class="text-start">
+            <div id="txt-user-name" class="text-xs font-bold text-white group-hover:text-emerald-200 transition-colors">د. أحمد عبد الرحمن</div>
+            <div id="txt-user-role" class="text-[11px] text-emerald-100/50">أستاذ المادة • منسق الأقسام</div>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-emerald-100/50 text-[18px]">more_vert</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ================= 2. منطقة المحتوى الرئيسي (MAIN CONTENT) ================= -->
+  <div class="flex-1 flex flex-col min-w-0">
+
+    <!-- Top Bar with Buttons -->
+    <header id="main-header" class="bg-white border-b border-gray-100 sticky top-0 z-20 px-8 py-3.5 shadow-xs transition-colors duration-300">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+
+        <!-- Title & Badge -->
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-[#e9f2ee] text-[#1e3e34] flex items-center justify-center border border-[#d1ded9]" id="header-icon-box">
+            <span class="material-symbols-outlined text-xl">school</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 id="txt-page-title" class="text-xl font-bold tracking-tight text-gray-900">لوحة التحكم الأكاديمية</h1>
+              <span id="txt-page-badge" class="text-xs bg-[#e9f2ee] text-[#1e3e34] font-bold px-2.5 py-0.5 rounded-md border border-[#d1ded9]">الفصل الدراسي الحالي 2026</span>
+            </div>
+            <p id="txt-page-desc" class="text-xs text-gray-500 font-medium mt-0.5">البوابة الموحدة لإدارة وتوصيف المقررات والمناهج والأنشطة الجامعية</p>
+          </div>
+        </div>
+
+        <!-- Action & Toggle Buttons -->
+        <div class="flex items-center flex-wrap gap-2.5 text-xs">
+
+          <!-- زر الفيديوهات التعليمية (Direct Video Link) -->
+          <a href="videos.html" id="btn-quick-videos" title="الفيديوهات التعليمية" aria-label="الفيديوهات التعليمية" class="bg-[#1e3e34] hover:bg-[#162e27] text-white font-bold px-3.5 py-2 rounded-lg flex items-center gap-2 shadow-xs hover:shadow transition-all cursor-pointer">
+            <span class="material-symbols-outlined text-[18px]">smart_display</span>
+            <span id="txt-quick-videos">الفيديوهات التعليمية</span>
+          </a>
+
+          <!-- زر تبديل الوضع الليلي / الفاتح (THEME TOGGLE) -->
+          <button onclick="toggleTheme()" id="btn-theme-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-white hover:bg-gray-50 text-gray-800 border-gray-200" title="تبديل الوضع (Light / Dark)">
+            <span class="material-symbols-outlined text-[18px] text-emerald-600" id="icon-theme">dark_mode</span>
+            <span id="txt-theme-toggle" class="sr-only">الوضع الداكن</span>
+          </button>
+
+          <!-- زر تبديل اللغة (LANGUAGE TOGGLE: AR / EN) -->
+          <button onclick="toggleLanguage()" id="btn-lang-toggle" class="px-3.5 py-2 rounded-lg font-bold flex items-center gap-2 border shadow-xs transition-all cursor-pointer bg-gray-50 hover:bg-gray-100 text-gray-800 border-gray-200" title="تبديل اللغة (العربية / English)">
+            <span class="material-symbols-outlined text-[18px] text-[#1e3e34]" id="icon-lang">translate</span>
+            <span id="txt-lang-toggle">English</span>
+          </button>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- Cards Grid -->
+    <main id="cards-main" class="p-8 flex-1">
+      <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-ratings">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
+            </div>
+            <button type="button" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
+              <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            </button>
+          </div>
+        </div>
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-books">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
+            </div>
+            <a href="books.html" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
+              <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            </a>
+          </div>
+        </div>
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-videos">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
+            </div>
+            <a href="videos.html" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
+              <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            </a>
+          </div>
+        </div>
+        <div class="card-item bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col group" id="card-pdf">
+          <div class="h-56 sm:h-64 w-full overflow-hidden bg-gray-100 dark:bg-[#151c19]" aria-hidden="true"></div>
+          <div class="p-6 flex-1 flex flex-col justify-between">
+            <div>
+              <h3 class="card-title text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors" data-card-title data-ar="" data-en="" style="min-height: 1.75rem"></h3>
+              <p class="text-xs sm:text-sm text-gray-500 leading-relaxed mt-2" style="min-height: 2.5rem"></p>
+            </div>
+            <button type="button" class="card-action-btn mt-6 w-full py-3 px-4 bg-[#1e3e34] hover:bg-[#162e27] text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow">
+              <span class="btn-card-text" data-card-action data-ar="فتح القسم" data-en="Open section">فتح القسم</span>
+              <span class="material-symbols-outlined text-[18px] btn-card-icon group-hover:-translate-x-1 transition-transform">arrow_back</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="main-footer" class="bg-white border-t border-gray-200 py-4 px-8 text-xs text-gray-500 mt-auto transition-colors duration-300">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+          <span id="txt-footer-left-1" class="font-bold text-gray-800">بوابة النظام الأكاديمي الموحد</span>
+          <span>•</span>
+          <span id="txt-footer-left-2">الإدارة العامة للمناهج ونظم المعلومات</span>
+        </div>
+        <div>
+          <span id="txt-footer-right">جميع الحقوق محفوظة © 2026</span>
+        </div>
+      </div>
+      <div class="project-credits">
+        <div class="project-credits__brand">
+          <span class="project-credits__mark"><span class="material-symbols-outlined text-[18px]" aria-hidden="true">code</span></span>
+          <span id="credits-title">فريق التطوير</span>
+        </div>
+        <div class="project-credits__team">
+          <div><span id="credits-frontend-role" class="project-credit-role">front-end</span><span id="credits-frontend-names" class="project-credit-name">أحمد محمد رفعت · أحمد محمد صلاح</span></div>
+          <div><span id="credits-backend-role" class="project-credit-role">back-end</span><span id="credits-backend-name" class="project-credit-name">سيف محمود</span></div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ================= MODAL DIALOG ================= -->
+  <div id="interactive-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs hidden transition-opacity duration-200">
+    <div id="modal-container" class="bg-white text-gray-900 rounded-2xl max-w-lg w-full p-6 border border-gray-200 shadow-2xl animate-modal relative">
+      <!-- Close Button -->
+      <button onclick="closeModal()" class="modal-close-btn absolute top-4 end-4 w-8 h-8 rounded-lg bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-500 transition cursor-pointer">
+        <span class="material-symbols-outlined text-lg">close</span>
+      </button>
+
+      <div class="flex items-center gap-3 mb-4">
+        <div id="modal-icon-box" class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-2xl" id="modal-icon">verified</span>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold" id="modal-title">تفاصيل القسم</h3>
+          <p class="text-xs text-gray-500" id="modal-subtitle">المعلومات الأكاديمية والتشغيلية</p>
+        </div>
+      </div>
+
+      <div class="border-t border-b border-gray-100 py-4 my-2 text-sm leading-relaxed" id="modal-body">
+        محتوى تفاعلي متوافق مع نظام التصميم المعتمد.
+      </div>
+
+      <div class="flex justify-end gap-2 mt-5" id="modal-footer-btns">
+        <button onclick="closeModal()" id="btn-modal-cancel" class="px-4 py-2 text-xs font-semibold rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition cursor-pointer">
+          إغلاق
+        </button>
+        <button onclick="handleModalConfirm()" id="btn-modal-confirm" class="px-4 py-2 text-xs font-bold rounded-lg bg-[#1e3e34] text-white hover:opacity-90 transition cursor-pointer">
+          تأكيد
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PROFILE BADGE PANEL ================= -->
+  <div id="profile-badge" role="dialog" aria-modal="true" aria-label="الملف الشخصي">
+    <div class="profile-badge-inner" id="profile-badge-inner">
+
+      <!-- Header gradient band -->
+      <div id="pb-header" style="background: linear-gradient(135deg, #1c4d80 0%, #2d69a8 60%, #3779bd 100%); padding: 1.1rem 1rem 0.7rem;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between;">
+          <!-- Avatar -->
+          <div class="profile-avatar-ring">
+            <div class="profile-avatar-ring-inner" id="pb-avatar-inner" style="width:3rem; height:3rem; background:#1b2d42;">
+              <span class="material-symbols-outlined" id="pb-avatar-icon" style="font-size:1.6rem; color:#91bee9;">person</span>
+            </div>
+          </div>
+          <!-- Close -->
+          <button onclick="closeProfileBadge()" id="pb-close-btn" style="width:1.75rem;height:1.75rem;border-radius:0.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.5);transition:background 140ms;" onmouseover="this.style.background='rgba(255,255,255,0.15)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+            <span class="material-symbols-outlined" style="font-size:1rem;">close</span>
+          </button>
+        </div>
+        <!-- Name & role -->
+        <div style="margin-top:0.55rem;">
+          <div style="display:flex; align-items:center; gap:0.4rem;">
+            <span id="pb-name" style="font-size:0.875rem; font-weight:800; color:#ffffff; line-height:1.2;">د. أحمد عبد الرحمن</span>
+            <span style="display:inline-flex; align-items:center; background:rgba(145,190,233,0.15); border:1px solid rgba(145,190,233,0.3); border-radius:99px; padding:0.05rem 0.45rem;">
+              <span class="material-symbols-outlined" style="font-size:0.7rem; color:#91bee9; margin-inline-end:0.2rem;">verified</span>
+              <span id="pb-badge-lbl" style="font-size:0.6rem; font-weight:700; color:#91bee9; letter-spacing:0.03em;">معتمد</span>
+            </span>
+          </div>
+          <div id="pb-role" style="font-size:0.675rem; color:rgba(255,255,255,0.55); margin-top:0.2rem; font-weight:600;">أستاذ المادة • منسق الأقسام</div>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div id="pb-stats" style="display:flex; gap:0; border-bottom: 1px solid; padding: 0.65rem 0.5rem;">
+        <div class="pb-stat">
+          <span class="pb-stat-val" id="pb-stat1-val">8</span>
+          <span class="pb-stat-lbl" id="pb-stat1-lbl">مقررات</span>
+        </div>
+        <div style="width:1px; background:currentColor; opacity:0.12; margin:0.15rem 0;"></div>
+        <div class="pb-stat">
+          <span class="pb-stat-val" id="pb-stat2-val">96%</span>
+          <span class="pb-stat-lbl" id="pb-stat2-lbl">إنجاز</span>
+        </div>
+        <div style="width:1px; background:currentColor; opacity:0.12; margin:0.15rem 0;"></div>
+        <div class="pb-stat">
+          <span class="pb-stat-val" id="pb-stat3-val">2026</span>
+          <span class="pb-stat-lbl" id="pb-stat3-lbl">الفصل</span>
+        </div>
+      </div>
+
+      <!-- Info rows -->
+      <div id="pb-info" style="padding: 0.5rem 0.875rem; display:flex; flex-direction:column; gap:0.3rem; font-size:0.68rem;">
+        <div style="display:flex; align-items:center; gap:0.4rem; opacity:0.75;">
+          <span class="material-symbols-outlined" style="font-size:0.9rem;">mail</span>
+          <span id="pb-email">ahmed.rahman@faculty.edu</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem; opacity:0.75;">
+          <span class="material-symbols-outlined" style="font-size:0.9rem;">school</span>
+          <span id="pb-dept">قسم العلوم الأكاديمية</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <span class="material-symbols-outlined" style="font-size:0.9rem; color:#72a9dc;">radio_button_checked</span>
+          <span id="pb-status" style="color:#72a9dc; font-weight:700;">متصل ونشط</span>
+        </div>
+      </div>
+
+      <!-- Divider -->
+      <div id="pb-divider" style="margin: 0 0.875rem; height:1px;"></div>
+
+      <!-- Action buttons -->
+      <div style="padding: 0.4rem 0.5rem 0.6rem;">
+        <button class="pb-action" id="pb-action-profile" onclick="window.location.href='profile.html'">
+          <span class="material-symbols-outlined" style="font-size:1rem;">account_circle</span>
+          <span id="pb-lbl-profile">ملفك الشخصي</span>
+        </button>
+        <button class="pb-action" id="pb-action-signout" onclick="window.location.href='login.html'" style="margin-top:0.15rem;">
+          <span class="material-symbols-outlined" style="font-size:1rem;">logout</span>
+          <span id="pb-lbl-signout">تسجيل الخروج</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Separate External JavaScript File -->
+  <script src="main.js"></script>
+</body>
+</html>

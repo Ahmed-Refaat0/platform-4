@@ -98,7 +98,19 @@
       font-size: 0.8rem;
       font-weight: 800;
     }
-    .field-control { position: relative; }
+    .field-control {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 0.95rem;
+      background: var(--surface-raised);
+      transition: border-color 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+    .field-control:focus-within {
+      border-color: var(--brand);
+      background: var(--surface);
+      box-shadow: 0 0 0 4px rgba(45, 105, 168, 0.13);
+    }
     .field-icon {
       position: absolute;
       top: 50%;
@@ -110,19 +122,20 @@
     }
     .field input {
       width: 100%;
-      min-height: 3.35rem;
+      min-height: 3.65rem;
       padding: 0.75rem 1rem;
       padding-inline-start: 2.85rem;
-      border: 1px solid var(--line);
-      border-radius: 0.85rem;
+      border: 0;
+      border-radius: inherit;
       outline: none;
       color: var(--ink);
-      background: var(--surface);
-      font-size: 0.87rem;
-      transition: border-color 160ms ease, box-shadow 160ms ease;
+      background: transparent;
+      font-size: 1rem;
+      transition: color 160ms ease;
     }
     .field input::placeholder { color: #9aa2ad; }
-    .field input:focus { border-color: var(--brand); box-shadow: 0 0 0 4px rgba(45, 105, 168, 0.12); }
+    .field-control:focus-within .field-icon { color: var(--brand); }
+    .field input:focus { box-shadow: none; }
     .password-toggle {
       position: absolute;
       top: 50%;
@@ -248,13 +261,14 @@
     .status { display: inline-flex; align-items: center; gap: 0.45rem; }
     .status::before { width: 0.45rem; height: 0.45rem; border-radius: 50%; background: #75e0b3; box-shadow: 0 0 0 4px rgba(117,224,179,0.12); content: ""; }
     @media (max-width: 850px) {
-      .login-shell { grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 2rem; padding: 1.5rem; }
-      .welcome-panel { min-height: 620px; padding: 2rem; }
+      .login-shell { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 1.5rem; }
+      .welcome-panel { min-height: 420px; padding: 2rem; }
       .portal-label { display: none; }
     }
     @media (max-width: 680px) {
       .login-shell { display: flex; min-height: 100vh; flex-direction: column; gap: 1.5rem; padding: 1rem; }
-      .welcome-panel { order: 0; width: 100%; min-height: 245px; flex: 0 0 auto; padding: 1.35rem; border-radius: 1.35rem; }
+      .login-panel { order: 0; }
+      .welcome-panel { order: 1; width: 100%; min-height: 245px; flex: 0 0 auto; padding: 1.35rem; border-radius: 1.35rem; }
       .welcome-copy { margin-block: 1.5rem; }
       .welcome-copy h2 { max-width: 23rem; margin-top: 0.45rem; font-size: 1.35rem; }
       .welcome-copy p, .feature-list, .welcome-footer { display: none; }
@@ -293,7 +307,7 @@
           <label class="field-label" for="email"><span data-ar="البريد الإلكتروني الأكاديمي" data-en="Academic email">البريد الإلكتروني الأكاديمي</span></label>
           <div class="field-control">
             <span class="material-symbols-outlined field-icon" aria-hidden="true">mail</span>
-            <input id="email" name="email" type="email" autocomplete="username" placeholder="name@faculty.edu" required/>
+            <input id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="name@faculty.edu" required/>
           </div>
         </div>
         <div class="field">

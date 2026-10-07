@@ -389,7 +389,7 @@
     <!-- Top Section -->
     <div class="p-5 flex flex-col gap-6">
       <!-- Logo Header -->
-      <a href="index.html" id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer">
+      <a href="dashboard.html" id="sidebar-header-box" class="flex items-center gap-3 pb-5 border-b border-[#224439] group cursor-pointer">
         <div id="sidebar-logo-icon" class="w-10 h-10 rounded-xl bg-[#244d3f] border border-[#356655] flex items-center justify-center shrink-0 shadow-sm text-emerald-300 group-hover:bg-[#2c5f4e] transition-colors">
           <span class="material-symbols-outlined text-2xl">school</span>
         </div>
@@ -404,8 +404,8 @@
 
       <!-- Navigation Links -->
       <nav class="flex flex-col gap-1.5" id="sidebar-nav">
-        <!-- Item 1 - الرئيسية (Links back to index.html) -->
-        <a href="index.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
+        <!-- Item 1 - الرئيسية (Links back to dashboard.html) -->
+        <a href="dashboard.html" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-emerald-100/75 hover:text-white hover:bg-[#1b382e] font-semibold transition-all cursor-pointer">
           <div class="flex items-center gap-3">
             <span class="nav-icon material-symbols-outlined text-[20px] text-emerald-400/80">dashboard</span>
             <span class="nav-label text-sm" id="nav-lbl-dashboard">لوحة التحكم الأكاديمية</span>
@@ -582,7 +582,7 @@
         </div>
       </div>
 
-      <!-- Cards Grid (matches exact 4-columns layout from index.html) -->
+      <!-- Cards Grid (matches exact 4-columns layout from dashboard.html) -->
       <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
         <!-- Dynamic Cards rendered via JavaScript -->
       </div>
@@ -1554,7 +1554,7 @@
         const watchBtnText = isAr ? 'مشاهدة المحاضرة' : 'Watch Lecture';
         const arrowIcon = isAr ? 'arrow_back' : 'arrow_forward';
 
-        // Dark vs Light styling matching index.html
+        // Dark vs Light styling matching dashboard.html
         const cardBgClass = isDark ? 
           "bg-[#1b221f] border-[#27332e] hover:border-[#2dd4bf]/40" : 
           "bg-white border-gray-200 hover:shadow-lg";
